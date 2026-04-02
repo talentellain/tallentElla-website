@@ -29,24 +29,15 @@ const PortfolioCard = ({
   const mouseXSpring = useSpring(x, { stiffness: 150, damping: 20 });
   const mouseYSpring = useSpring(y, { stiffness: 150, damping: 20 });
   
-  // Base transforms from cylinder layout
-  const rotateY_base = diff * -35;
-  const baseRotateY_motion = useSpring(rotateY_base, { stiffness: 260, damping: 30 });
-  
-  // Update base motion value when index changes
-  if (baseRotateY_motion.get() !== rotateY_base) {
-    baseRotateY_motion.set(rotateY_base);
-  }
-
-  const xOffset = `calc(${diff} * clamp(180px, 50vw, 340px))`;
-  const zOffset = isActive ? 150 : isNear ? 0 : -150;
-  const scale = isActive ? 1.1 : isNear ? 0.75 : 0.55;
-  const opacity = isActive ? 1 : isNear ? 0.6 : 0.2;
-
   // Interactive tilt
   const tiltX = useTransform(mouseYSpring, [-0.5, 0.5], [7, -7]);
   const tiltY = useTransform(mouseXSpring, [-0.5, 0.5], [-7, 7]);
-  const combinedRotateY = useTransform([baseRotateY_motion, tiltY], ([base, tilt]) => base + tilt);
+
+  // Position offsets using element-relative percentage for bulletproof stacking
+  const xOffset = `${diff * 85}%`;
+  const zOffset = isActive ? 150 : isNear ? 0 : -150;
+  const scale = isActive ? 1.1 : isNear ? 0.85 : 0.65;
+  const opacity = isActive ? 1 : isNear ? 0.6 : 0.2;
 
   const handleMouseMove = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -74,14 +65,10 @@ const PortfolioCard = ({
   return (
     <motion.div
       layoutId={item.id}
-      onClick={() => isActive ? setSelectedId(item.id) : setActiveIndex(index)}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
       animate={{ 
         x: xOffset,
         z: zOffset,
-        // rotateY is handled in style for mixing with tilt
+        rotateY: diff * -35,
         scale: scale,
         opacity: opacity,
       }}
@@ -93,51 +80,65 @@ const PortfolioCard = ({
       }}
       style={{ 
         position: 'absolute',
-        width: 'clamp(240px, 70vw, 380px)',
+        width: 'clamp(260px, 60vw, 380px)',
         aspectRatio: '1/1.2',
-        borderRadius: '32px',
-        overflow: 'hidden',
-        cursor: 'pointer',
-        backgroundColor: '#111',
-        border: isActive ? '2px solid rgba(132, 0, 255, 0.5)' : '1px solid rgba(255,255,255,0.1)',
-        boxShadow: isActive ? '0 30px 60px rgba(132, 0, 255, 0.2)' : '0 10px 30px rgba(0,0,0,0.5)',
-        transformStyle: 'preserve-3d',
         zIndex: 10 - Math.abs(diff),
         filter: selectedId && selectedId !== item.id ? 'blur(10px) brightness(0.3)' : 'none',
-        rotateX: tiltX,
-        rotateY: combinedRotateY,
+        transformStyle: 'preserve-3d',
+        perspective: 1200
       }}
     >
-      {item.type === 'video' ? (
-        <video 
-          ref={videoRef}
-          src={item.content}
-          poster={item.thumbnail}
-          muted
-          loop
-          playsInline
-          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-        />
-      ) : (
-        <img src={item.content} alt={item.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-      )}
-
-      {/* Rolling Overlay */}
-      <motion.div 
-        animate={{ opacity: isActive ? 1 : 0 }}
-        style={{ 
-          position: 'absolute', 
-          inset: 0, 
-          background: 'linear-gradient(to top, rgba(0,0,0,0.95) 0%, transparent 60%)',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'flex-end',
-          padding: '1.5rem',
-          pointerEvents: 'none'
+      <motion.div
+        onMouseMove={handleMouseMove}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onClick={() => isActive ? setSelectedId(item.id) : setActiveIndex(index)}
+        style={{
+          width: '100%',
+          height: '100%',
+          cursor: 'pointer',
+          borderRadius: '32px',
+          overflow: 'hidden',
+          backgroundColor: '#111',
+          border: isActive ? '2px solid rgba(132, 0, 255, 0.5)' : '1px solid rgba(255,255,255,0.1)',
+          boxShadow: isActive ? '0 30px 60px rgba(132, 0, 255, 0.2)' : '0 10px 30px rgba(0,0,0,0.5)',
+          rotateX: tiltX,
+          rotateY: tiltY,
+          transformStyle: 'preserve-3d',
         }}
+        whileTap={{ scale: isActive ? 0.98 : 1 }}
       >
-        <h2 style={{ color: 'white', margin: 0, fontSize: 'clamp(1.15rem, 5vw, 1.5rem)', fontWeight: 800 }}>{item.title}</h2>
-        <p style={{ color: 'rgba(255,255,255,0.6)', margin: '0.25rem 0 0 0', fontSize: 'clamp(0.75rem, 3vw, 0.9rem)', lineHeight: 1.3 }}>{item.description}</p>
+        {item.type === 'video' ? (
+          <video 
+            ref={videoRef}
+            src={item.content}
+            poster={item.thumbnail}
+            muted
+            loop
+            playsInline
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          />
+        ) : (
+          <img src={item.content} alt={item.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+        )}
+
+        {/* Rolling Overlay */}
+        <motion.div 
+          animate={{ opacity: isActive ? 1 : 0 }}
+          style={{ 
+            position: 'absolute', 
+            inset: 0, 
+            background: 'linear-gradient(to top, rgba(0,0,0,0.95) 0%, transparent 60%)',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'flex-end',
+            padding: '1.5rem',
+            pointerEvents: 'none'
+          }}
+        >
+          <h2 style={{ color: 'white', margin: 0, fontSize: 'clamp(1.15rem, 5vw, 1.5rem)', fontWeight: 800 }}>{item.title}</h2>
+          <p style={{ color: 'rgba(255,255,255,0.6)', margin: '0.25rem 0 0 0', fontSize: 'clamp(0.75rem, 3vw, 0.9rem)', lineHeight: 1.3 }}>{item.description}</p>
+        </motion.div>
       </motion.div>
     </motion.div>
   );

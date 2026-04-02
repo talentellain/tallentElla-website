@@ -168,7 +168,18 @@ const Navbar = () => {
             }}
         >
             {/* Logo */}
-            <Link to="/" style={{ textDecoration: 'none' }}>
+            <Link 
+                to="/" 
+                onClick={(e) => {
+                    if (location.pathname === '/') {
+                        e.preventDefault();
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    } else {
+                        window.scrollTo(0, 0);
+                    }
+                }} 
+                style={{ textDecoration: 'none' }}
+            >
                 <motion.div 
                     style={{ 
                         display: 'flex',
