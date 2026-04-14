@@ -82,17 +82,17 @@ const ProjectCard = ({ project, index, scrollProgress }) => {
       <div 
         className="mobile-padding-sm"
         style={{ 
-          backgroundColor: '#050508', // Guaranteed solid deep background
+          backgroundColor: '#050508',
           borderRadius: '32px', 
           border: '1px solid rgba(255, 255, 255, 0.18)',
-          padding: '3rem',
-          boxShadow: '0 60px 120px rgba(0,0,0,1)', // Very heavy shadow to block depth
+          padding: 'clamp(1.25rem, 4vw, 3rem)',
+          boxShadow: '0 60px 120px rgba(0,0,0,1)',
           overflow: 'hidden',
           position: 'relative'
         }}
       >
         <div className="flex-col-mobile" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '1.5rem', marginBottom: '3rem' }}>
-          <div style={{ display: 'flex', gap: '2.5rem', alignItems: 'center' }}>
+          <div style={{ display: 'flex', gap: 'clamp(1rem, 3vw, 2.5rem)', alignItems: 'center' }}>
             <span style={{ fontSize: '2.5rem', fontWeight: 900, opacity: 0.15, lineHeight: 1 }}>{project.id}</span>
             <div>
               <span style={{ fontSize: '0.7rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.3em', color: 'var(--accent)', display: 'block', marginBottom: '0.6rem', opacity: 0.6 }}>Case Study</span>
@@ -105,17 +105,19 @@ const ProjectCard = ({ project, index, scrollProgress }) => {
             onMouseLeave={handleMouseLeave}
             whileHover={{ scale: 1.05, backgroundColor: 'white', color: 'black' }}
             style={{ 
-              padding: '1rem 2.2rem', 
+              padding: 'clamp(0.6rem, 2vw, 1rem) clamp(1rem, 3vw, 2.2rem)', 
               borderRadius: '100px', 
               border: '1px solid rgba(255,255,255,0.15)', 
               background: 'transparent', 
               color: 'white', 
               fontWeight: 700,
-              fontSize: '0.85rem',
+              fontSize: 'clamp(0.75rem, 2vw, 0.85rem)',
               display: 'flex',
               alignItems: 'center',
               gap: '0.8rem',
-              cursor: 'pointer'
+              cursor: 'pointer',
+              whiteSpace: 'nowrap',
+              flexShrink: 0
             }}
           >
             EXPLORE <ArrowUpRight size={20} />

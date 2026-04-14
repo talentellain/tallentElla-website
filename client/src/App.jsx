@@ -4,10 +4,12 @@ import Navbar from './components/Navbar';
 import SmoothScroll from './components/SmoothScroll';
 import Home from './pages/Home';
 import ServicePage from './pages/ServicePage';
+import StaticBackground from './components/StaticBackground';
 
 function App() {
   return (
     <Router>
+      <StaticBackground />
       <SmoothScroll>
         <div className="page-container">
           <Navbar />

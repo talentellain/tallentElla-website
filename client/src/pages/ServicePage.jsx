@@ -5,7 +5,7 @@ import ReviewsSection from '../components/ReviewsSection';
 import SocialMediaPortfolio from '../components/SocialMediaPortfolio';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const MotionCheck = motion.create(Check);
 
@@ -56,7 +56,7 @@ const PortfolioCard = ({ work, index, total, scrollProgress, exitPoint }) => {
           backgroundColor: '#050508', 
           borderRadius: '32px', 
           border: '1px solid rgba(255, 255, 255, 0.18)',
-          padding: '3rem',
+          padding: 'clamp(1.25rem, 4vw, 3rem)',
           boxShadow: '0 60px 120px rgba(0,0,0,1)',
           overflow: 'hidden',
           position: 'relative'
@@ -117,6 +117,81 @@ const PortfolioCard = ({ work, index, total, scrollProgress, exitPoint }) => {
   );
 };
 
+const PricingCard = ({ plan, idx }) => {
+  const [expanded, setExpanded] = useState(false);
+
+  return (
+    <motion.div
+      whileHover={{ scale: 1.02 }}
+      className={`pricing-card ${expanded ? 'expanded' : ''}`}
+      onClick={() => setExpanded(!expanded)}
+      style={{ 
+        padding: '2.5rem 2rem', 
+        backgroundColor: idx === 1 ? '#0a0a0c' : 'white', 
+        color: idx === 1 ? 'white' : '#0a0a0c',
+        borderRadius: '32px', 
+        border: '1px solid rgba(0,0,0,0.05)',
+        boxShadow: '0 20px 60px rgba(0,0,0,0.03)',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+        textAlign: 'left',
+        position: 'relative',
+        cursor: 'pointer'
+      }}
+    >
+      {idx === 1 && <span style={{ position: 'absolute', top: '1.5rem', right: '1.5rem', backgroundColor: '#8400ff', color: 'white', padding: '0.35rem 1rem', borderRadius: '100px', fontSize: '0.7rem', fontWeight: 800 }}>MOST POPULAR</span>}
+      <h3 style={{ fontSize: '1.5rem', marginBottom: '0.2rem', marginTop: '0' }}>{plan.name}</h3>
+      {plan.subtitle && <p style={{ fontSize: '0.85rem', color: idx === 1 ? '#aaa' : '#777', margin: '0 0 1rem 0' }}>{plan.subtitle}</p>}
+      
+      <div className="pricing-value" style={{ fontSize: '2.5rem', fontWeight: 900, margin: '0.4rem 0', display: 'flex', alignItems: 'baseline', gap: '0.5rem' }}>
+        {plan.price}
+        {plan.billing && <span style={{ fontSize: '1rem', fontWeight: 500, color: idx === 1 ? '#888' : '#888' }}>{plan.billing}</span>}
+      </div>
+      
+      <div className="know-more-mobile" style={{ 
+        width: '100%', 
+        marginTop: '0.5rem',
+        paddingTop: '0.8rem',
+        borderTop: `1px dashed ${idx === 1 ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.1)'}`,
+        color: idx === 1 ? '#fff' : '#0a0a0c',
+        fontWeight: 700,
+        fontSize: '0.85rem',
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: '0.5rem'
+      }}>
+        Tap to know more <span style={{ color: '#8400ff', fontSize: '1rem' }}>↓</span>
+      </div>
+      
+      <div className="pricing-features-wrap" style={{ width: '100%' }}>
+        <div style={{ width: '100%', height: '1px', backgroundColor: idx === 1 ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)', margin: '1.25rem 0' }}></div>
+        
+        <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 2rem 0', display: 'flex', flexDirection: 'column', gap: '0.85rem', width: '100%' }}>
+          {plan.features.map((feature, fIdx) => (
+            <li key={fIdx} style={{ fontSize: '0.9rem', color: idx === 1 ? '#bbb' : '#555', display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '0.6rem' }}>
+              <Check size={16} style={{ color: '#8400ff', flexShrink: 0 }} /> {feature}
+            </li>
+          ))}
+        </ul>
+        <button style={{ 
+          width: '100%', 
+          padding: '1rem', 
+          borderRadius: '100px', 
+          border: 'none', 
+          backgroundColor: idx === 1 ? 'white' : '#0a0a0c', 
+          color: idx === 1 ? '#0a0a0c' : 'white',
+          fontWeight: 800,
+          cursor: 'pointer',
+          fontSize: '0.9rem'
+        }}>
+          GET STARTED
+        </button>
+      </div>
+    </motion.div>
+  );
+};
+
 const ServicePage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -161,7 +236,16 @@ const ServicePage = () => {
       
       {/* 1. Internal Header Section */}
       <div style={{ position: 'relative', minHeight: '200vh', zIndex: 10 }}>
-        <section className="section-overlap" style={{ backgroundColor: '#0c0c10', paddingTop: '180px', paddingBottom: '120px' }}>
+        <section className="section-overlap svc-header-section" style={{ backgroundColor: '#0c0c10', paddingTop: 'clamp(130px, 18vh, 180px)', paddingBottom: 'clamp(80px, 12vh, 120px)' }}>
+          <style>{`
+            @media (max-width: 768px) {
+              .svc-header-section {
+                padding-top: 160px !important;
+                padding-bottom: 80px !important;
+                justify-content: center !important;
+              }
+            }
+          `}</style>
           <div style={{ maxWidth: '1400px', margin: '0 auto', width: '100%', padding: '0 5%' }}>
             <motion.div
               initial={{ opacity: 0, x: -50 }}
@@ -246,7 +330,7 @@ const ServicePage = () => {
 
             <div className="value-grid-fix" style={{ 
               display: 'grid', 
-              gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))', 
+              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', 
               gap: '1.25rem', 
               marginTop: '2rem' 
             }}>
@@ -267,9 +351,9 @@ const ServicePage = () => {
                     hover: { 
                       scale: 1.03, 
                       x: 10,
-                      backgroundColor: '#0a0a0c', // Black on hover
-                      borderColor: 'rgba(0, 0, 0, 0.1)',
-                      boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)'
+                      backgroundColor: '#8763df', // Logo matching purple
+                      borderColor: 'transparent',
+                      boxShadow: '0 20px 40px rgba(135, 99, 223, 0.3)'
                     }
                   }}
                   style={{ 
@@ -295,7 +379,7 @@ const ServicePage = () => {
                       },
                       hover: { 
                         scale: 1.1,
-                        backgroundColor: 'rgba(132, 0, 255, 0.2)'
+                        backgroundColor: 'rgba(255, 255, 255, 0.25)'
                       }
                     }}
                     className="value-icon"
@@ -314,7 +398,7 @@ const ServicePage = () => {
                       variants={{
                         initial: { color: '#8400ff' },
                         view: { color: '#8400ff' },
-                        hover: { color: '#8400ff' }
+                        hover: { color: '#ffffff' }
                       }}
                     />
                   </motion.div>
@@ -449,66 +533,26 @@ const ServicePage = () => {
           height: '100vh',
           backgroundColor: '#f8f9fc', 
           color: '#0a0a0c', 
-          paddingTop: '100px', 
-          paddingBottom: '80px',
+          paddingTop: 'clamp(60px, 10vh, 100px)', 
+          paddingBottom: 'clamp(40px, 6vh, 80px)',
           borderTopLeftRadius: borderPricingRad,
           borderTopRightRadius: borderPricingRad,
           boxShadow: '0 -20px 80px rgba(0,0,0,0.08)',
           overflow: 'hidden'
         }}>
           <div style={{ maxWidth: '1400px', margin: '0 auto', width: '100%', padding: '0 5%' }}>
+             <p style={{ color: '#8400ff', textAlign: 'center', marginBottom: '0.5rem', fontSize: '0.85rem', fontWeight: 800, letterSpacing: '0.15em', textTransform: 'uppercase' }}>
+               {service.id === 'visual-identity-design' ? "BRANDING SERVICES" : service.title.toUpperCase()}
+             </p>
              <h2 style={{ fontSize: 'clamp(2.5rem, 5vw, 3.5rem)', fontWeight: 800, textAlign: 'center', marginBottom: '0', color: '#0a0a0c', lineHeight: 1.2 }}>
-                Subscription Plans
+                {service.id === 'website-development' ? "Choose a perfect plan" : service.id === 'social-media-management' ? "Monthly Packages" : service.id === 'visual-identity-design' ? "Build Your Brand Identity" : "Subscription Plans"}
              </h2>
-             <p style={{ color: '#55555f', textAlign: 'center', marginBottom: '2.5rem', fontSize: '1.1rem' }}>
-               Pick a plan that fits your vision.
+             <p style={{ color: '#55555f', textAlign: 'center', marginBottom: '2.5rem', fontSize: '1.1rem', marginTop: '0.5rem' }}>
              </p>
              
              <div className="auto-grid pricing-grid-fix" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2rem', width: '100%' }}>
                 {service.plans.map((plan, idx) => (
-                  <motion.div
-                    key={idx}
-                    whileHover={{ scale: 1.02 }}
-                    className="pricing-card"
-                    style={{ 
-                      padding: '2.5rem 2rem', 
-                      backgroundColor: idx === 1 ? '#0a0a0c' : 'white', 
-                      color: idx === 1 ? 'white' : '#0a0a0c',
-                      borderRadius: '32px', 
-                      border: '1px solid rgba(0,0,0,0.05)',
-                      boxShadow: '0 20px 60px rgba(0,0,0,0.03)',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      textAlign: 'center',
-                      position: 'relative'
-                    }}
-                  >
-                    {idx === 1 && <span style={{ position: 'absolute', top: '1.25rem', backgroundColor: '#8400ff', color: 'white', padding: '0.35rem 1rem', borderRadius: '100px', fontSize: '0.7rem', fontWeight: 800 }}>MOST POPULAR</span>}
-                    <h3 style={{ fontSize: '1.5rem', marginBottom: '0.4rem', marginTop: idx === 1 ? '1rem' : '0' }}>{plan.name}</h3>
-                    <div className="pricing-value" style={{ fontSize: '2.8rem', fontWeight: 900, margin: '0.4rem 0' }}>{plan.price}</div>
-                    <div style={{ width: '30px', height: '2px', backgroundColor: '#8400ff', margin: '1.25rem 0' }}></div>
-                    <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 2rem 0', display: 'flex', flexDirection: 'column', gap: '0.85rem', width: '100%' }}>
-                      {plan.features.map((feature, fIdx) => (
-                        <li key={fIdx} style={{ fontSize: '0.9rem', color: idx === 1 ? '#888' : '#555', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.6rem' }}>
-                          <Check size={16} style={{ color: '#8400ff' }} /> {feature}
-                        </li>
-                      ))}
-                    </ul>
-                    <button style={{ 
-                      width: '100%', 
-                      padding: '1rem', 
-                      borderRadius: '100px', 
-                      border: 'none', 
-                      backgroundColor: idx === 1 ? 'white' : '#0a0a0c', 
-                      color: idx === 1 ? '#0a0a0c' : 'white',
-                      fontWeight: 800,
-                      cursor: 'pointer',
-                      fontSize: '0.9rem'
-                    }}>
-                      GET STARTED
-                    </button>
-                  </motion.div>
+                  <PricingCard key={idx} plan={plan} idx={idx} />
                 ))}
              </div>
           </div>

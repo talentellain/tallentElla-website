@@ -1,34 +1,64 @@
-import React from 'react';
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import React, { useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
+import gsap from 'gsap';
 import { ArrowRight, ChevronDown } from 'lucide-react';
-import heroBg from '../assets/hero-bg.png';
-import landingVideo from '../assets/hero2.mp4';
+import fgImage from '../assets/fg.png';
 
 const Hero = () => {
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  
-  const springConfig = { damping: 40, stiffness: 150 };
-  const smoothMouseX = useSpring(mouseX, springConfig);
-  const smoothMouseY = useSpring(mouseY, springConfig);
-  
-  const rotateX = useTransform(smoothMouseY, [-0.5, 0.5], ["10deg", "-10deg"]);
-  const rotateY = useTransform(smoothMouseX, [-0.5, 0.5], ["-10deg", "10deg"]);
-  const translateX = useTransform(smoothMouseX, [-0.5, 0.5], ["-40px", "40px"]);
-  const translateY = useTransform(smoothMouseY, [-0.5, 0.5], ["-40px", "40px"]);
+  const heroWrapperRef = useRef(null);
+  const titleWrapRef = useRef(null);
+  const mountainRef = useRef(null);
+  const contentRefs = useRef([]);
 
-  const handleMouseMove = (e) => {
-    const { clientX, clientY } = e;
-    const { innerWidth, innerHeight } = window;
-    mouseX.set((clientX / innerWidth) - 0.5);
-    mouseY.set((clientY / innerHeight) - 0.5);
+  // Reset array on render to avoid stale refs
+  contentRefs.current = [];
+  const addToContentRefs = (el) => {
+    if (el && !contentRefs.current.includes(el)) {
+      contentRefs.current.push(el);
+    }
   };
+
+  useEffect(() => {
+    const tl = gsap.timeline();
+
+    // Initial setups for GSAP
+    gsap.set(titleWrapRef.current, { opacity: 0, y: 60, scale: 1.1 });
+    gsap.set(heroWrapperRef.current, { scale: 1.05 }); 
+    gsap.set(mountainRef.current, { y: '25%' }); 
+    gsap.set(contentRefs.current, { opacity: 0, y: 40 });
+
+    tl.to(titleWrapRef.current, {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      duration: 1.6,
+      ease: 'expo.out',
+    })
+    .to(heroWrapperRef.current, {
+      scale: 0.95,
+      duration: 2.2,
+      ease: 'power2.inOut',
+    }, '-=0.4')
+    .to(mountainRef.current, {
+      y: '0%',
+      duration: 2.2,
+      ease: 'power2.inOut',
+    }, '<')
+    .to(contentRefs.current, {
+      opacity: 1,
+      y: 0,
+      duration: 1.2,
+      stagger: 0.15,
+      ease: 'expo.out',
+    }, '-=0.2'); // Intro elements wait and emerge right as mountain finishes
+
+    return () => tl.kill();
+  }, []);
 
   return (
     <div id="hero" style={{ position: 'relative', minHeight: '200vh', zIndex: 10, marginBottom: '-100vh' }}>
       <section 
         className="section-overlap" 
-        onMouseMove={handleMouseMove}
         style={{ 
           zIndex: 10,
           position: 'sticky',
@@ -36,181 +66,215 @@ const Hero = () => {
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundAttachment: 'fixed',
-          perspective: '1500px',
           overflow: 'hidden',
-          height: '100vh'
+          height: '100vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
         }}
       >
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            opacity: 0.7,
-            zIndex: -1,
-            pointerEvents: 'none'
-          }}
+        {/* Main scaled container */}
+        <div 
+          ref={heroWrapperRef}
+          style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0, transformOrigin: 'center center' }}
         >
-          <source src={landingVideo} type="video/mp4" />
-        </video>
-
-        
-        <div style={{ maxWidth: '1400px', width: '100%', padding: '0 5%', textAlign: 'center', margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '80vh', transformStyle: 'preserve-3d' }}>
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-            style={{ 
-              rotateX,
-              rotateY,
-              x: translateX,
-              y: translateY,
-              transformStyle: 'preserve-3d'
-            }}
-          >
-            <motion.span 
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-              className="accent-gradient"
-              style={{ fontWeight: 800, letterSpacing: '0.4em', fontSize: '0.75rem', marginBottom: '1.5rem', display: 'block', textTransform: 'uppercase', width: '100%' }}
-            >
-              Digital Excellence Redefined
-            </motion.span>
-            
-            <motion.h1 
-              className="hero-title-shimmer"
-              style={{ 
-                fontSize: 'clamp(3rem, 9.5vw, 6.5rem)', 
-                marginBottom: '0',
-                lineHeight: 0.85,
-                fontWeight: 800,
-                letterSpacing: '-0.04em',
-                paddingBottom: '0.1em',
-                perspective: '1000px',
+          {/* LAYER 10: Behind Mountain (Title + Subtitle) */}
+          <div style={{ position: 'absolute', zIndex: 10, top: 0, left: 0, width: '100%', height: '100%' }}>
+            <div style={{ position: 'relative', maxWidth: '1600px', width: '100%', margin: '0 auto', height: '100%', transformStyle: 'preserve-3d' }}>
+              <div className="hero-title-block" style={{ 
+                position: 'absolute', 
+                top: '36%',
+                left: '50%', 
+                transform: 'translate(-50%, -50%)', 
+                width: '100%', 
                 display: 'flex',
-                flexWrap: 'wrap',
+                flexDirection: 'column',
+                alignItems: 'center',
                 justifyContent: 'center',
-                columnGap: '0.25em'
-              }}
-            >
-              <span style={{ display: 'inline-block', whiteSpace: 'nowrap' }}>
-                {"TALENT".split("").map((letter, i) => (
-                  <motion.span
-                    key={i}
-                    initial={{ opacity: 0, y: 100, rotateX: -90 }}
-                    animate={{ opacity: 1, y: 0, rotateX: 0 }}
-                    transition={{ 
-                      duration: 1.2, 
-                      delay: 0.2 + (i * 0.08),
-                      ease: [0.2, 0.65, 0.3, 0.9]
-                    }}
-                    style={{ display: 'inline-block', transformOrigin: '50% 100%' }}
-                  >
-                    {letter}
-                  </motion.span>
-                ))}
-              </span>
-              <span style={{ display: 'inline-block', whiteSpace: 'nowrap' }}>
-                {"ELLA".split("").map((letter, i) => (
-                  <motion.span
-                    key={i + 10}
-                    initial={{ opacity: 0, y: 100, rotateX: -90 }}
-                    animate={{ opacity: 1, y: 0, rotateX: 0 }}
-                    transition={{ 
-                      duration: 1.2, 
-                      delay: 0.8 + (i * 0.08),
-                      ease: [0.2, 0.65, 0.3, 0.9]
-                    }}
-                    style={{ display: 'inline-block', transformOrigin: '50% 100%' }}
-                  >
-                    {letter}
-                  </motion.span>
-                ))}
-              </span>
-            </motion.h1>
-
-            <p style={{ 
-              fontFamily: "'Outfit', sans-serif",
-              fontSize: '1.05rem', 
-              maxWidth: '600px', 
-              margin: '2rem auto 2.5rem auto', 
-              lineHeight: '1.6',
-              fontWeight: 400,
-              color: 'rgba(255, 255, 255, 0.7)'
-            }}>
-              We bridge the gap between imagination and execution, crafting digital experiences that resonate and scale your business to new heights.
-            </p>
-            
-            <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
-            <motion.button 
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="btn-primary"
-              style={{ fontSize: '1rem', padding: '15px 40px' }}
-            >
-              Start Your Journey <ArrowRight size={20} />
-            </motion.button>
+                textAlign: 'center',
+                padding: '0 5%'
+              }}>
+                <div 
+                  ref={addToContentRefs}
+                  className="accent-gradient"
+                  style={{ fontWeight: 800, letterSpacing: '0.4em', fontSize: 'clamp(0.6rem, 1.5vw, 0.85rem)', marginBottom: '1rem', display: 'block', textTransform: 'uppercase' }}
+                >
+                  Digital Excellence Redefined
+                </div>
+                
+                <h1 
+                  ref={titleWrapRef}
+                  className="hero-title-3d"
+                  style={{ 
+                    fontSize: 'clamp(2.2rem, 8.5vw, 12rem)', 
+                    marginBottom: '0',
+                    lineHeight: 0.85,
+                    fontWeight: 900,
+                    letterSpacing: '-0.02em',
+                    paddingBottom: '0.1em'
+                  }}
+                >
+                  TALENTELLA
+                </h1>
+              </div>
             </div>
-          </motion.div>
+          </div>
+
+          {/* LAYER 20: Foreground Mountains Overlay */}
+          <div 
+            ref={mountainRef}
+            className="hero-mountain"
+            style={{
+              position: 'absolute',
+              bottom: '-2%', 
+              left: '-2%', 
+              width: '104%', 
+              height: '80%', 
+              pointerEvents: 'none',
+              zIndex: 20, 
+              backgroundImage: `url(${fgImage})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'bottom center',
+              backgroundRepeat: 'no-repeat'
+            }}
+          />
+
+          {/* LAYER 30: Intro and Content Over Mountain */}
+          <div style={{ position: 'absolute', zIndex: 30, top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none' }}>
+            <div style={{ position: 'relative', maxWidth: '1600px', width: '100%', margin: '0 auto', height: '100%' }}>
+              
+              {/* Bottom Left Content */}
+              <div 
+                ref={addToContentRefs}
+                style={{ 
+                  position: 'absolute', 
+                  bottom: '12%', 
+                  left: '4%', 
+                  textAlign: 'left', 
+                  maxWidth: '340px',
+                  pointerEvents: 'auto'
+                }}
+              >
+                <h3 style={{ fontSize: 'clamp(0.75rem, 2.5vw, 1rem)', fontWeight: 800, margin: '0 0 0.5rem 0', letterSpacing: '0.05em', textTransform: 'uppercase', color: '#fff' }}>
+                  A Creative Digital Agency.
+                </h3>
+                <p style={{ 
+                  fontFamily: "'Outfit', sans-serif",
+                  fontSize: 'clamp(0.75rem, 2vw, 0.95rem)', 
+                  margin: '0 0 1.5rem 0', 
+                  lineHeight: '1.6',
+                  fontWeight: 400,
+                  color: 'rgba(255, 255, 255, 0.6)'
+                }}>
+                  We bridge the gap between imagination and execution, crafting digital experiences that resonate and scale your business to new heights.
+                </p>
+                
+                <motion.button 
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  style={{ 
+                    fontSize: '0.85rem', 
+                    padding: '12px 28px', 
+                    display: 'inline-flex', 
+                    alignItems: 'center', 
+                    gap: '0.5rem',
+                    backgroundColor: '#fff',
+                    color: '#000',
+                    borderRadius: '50px',
+                    fontWeight: 600,
+                    border: 'none',
+                    cursor: 'pointer'
+                  }}
+                >
+                  Start Journey <ArrowRight size={16} />
+                </motion.button>
+              </div>
+
+              {/* Bottom Right Content */}
+              <div 
+                ref={addToContentRefs} 
+                className="hidden-mobile"
+                style={{ 
+                  position: 'absolute', 
+                  bottom: '20%', 
+                  right: '5%', 
+                  textAlign: 'right', 
+                  maxWidth: '300px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'flex-end',
+                  gap: '1.5rem',
+                  pointerEvents: 'auto'
+                }}
+              >
+                <div style={{ textAlign: 'right' }}>
+                  <h3 style={{ fontSize: '1rem', fontWeight: 800, margin: '0 0 0.5rem 0', letterSpacing: '0.05em', textTransform: 'uppercase', color: '#fff' }}>
+                    Digital Realm
+                  </h3>
+                  <p style={{ fontSize: '0.85rem', color: 'rgba(255, 255, 255, 0.6)', margin: 0, lineHeight: 1.6 }}>
+                    Est. 2026. Elevating brands through immersive platforms and cutting-edge design.
+                  </p>
+                </div>
+                
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                  <span style={{ fontSize: '0.7rem', letterSpacing: '0.15em', color: 'rgba(255,255,255,0.8)', textTransform: 'uppercase', fontWeight: 600 }}>
+                    Scroll to explore
+                  </span>
+                  <motion.div 
+                    animate={{ y: [0, 8, 0] }}
+                    transition={{ repeat: Infinity, duration: 2 }}
+                    onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
+                    style={{ 
+                      cursor: 'pointer', 
+                      width: '36px', 
+                      height: '36px', 
+                      borderRadius: '50%', 
+                      border: '1px solid rgba(255,255,255,0.3)', 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      justifyContent: 'center',
+                      backgroundColor: 'transparent'
+                    }}
+                  >
+                    <ChevronDown size={18} color="white" />
+                  </motion.div>
+                </div>
+              </div>
+
+            </div>
+          </div>
         </div>
-
-        <motion.div 
-          animate={{ y: [0, 10, 0] }}
-          transition={{ repeat: Infinity, duration: 2 }}
-          onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
-          style={{ position: 'absolute', bottom: '3rem', opacity: 0.4, cursor: 'pointer', color: 'white' }}
-        >
-          <ChevronDown size={32} />
-        </motion.div>
-
-        {/* Right Side Decoration */}
-        <motion.div 
-          className="hidden-mobile"
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 1.5, duration: 1 }}
-          style={{ 
-            position: 'absolute', 
-            right: '3%', 
-            top: '50%', 
-            transform: 'translateY(-50%)',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '2rem',
-            zIndex: 5
-          }}
-        >
-          <span style={{ 
-            writingMode: 'vertical-rl', 
-            fontSize: '0.65rem', 
-            letterSpacing: '0.5em', 
-            fontWeight: 700,
-            color: 'rgba(255, 255, 255, 0.4)',
-            textTransform: 'uppercase',
-            opacity: 0.6
-          }}>
-            EST. 2026 // DIGITAL REALM
-          </span>
-          <div style={{ 
-            width: '1px', 
-            height: '100px', 
-            background: 'linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.3), transparent)',
-            opacity: 0.3
-          }}></div>
-        </motion.div>
       </section>
+
+      {/* Responsive overrides for hero title position and mountain zoom */}
+      <style>{`
+        /* Tablet: push title down a bit, zoom mountain */
+        @media (max-width: 1024px) {
+          .hero-title-block {
+            top: 42% !important;
+          }
+          .hero-mountain {
+            height: 90% !important;
+            bottom: -4% !important;
+            width: 108% !important;
+            left: -4% !important;
+          }
+        }
+        /* Mobile: push title further down, mountain covers more */
+        @media (max-width: 768px) {
+          .hero-title-block {
+            top: 48% !important;
+          }
+          .hero-mountain {
+            height: 100% !important;
+            bottom: -5% !important;
+            width: 112% !important;
+            left: -6% !important;
+          }
+        }
+      `}</style>
     </div>
   );
-
 };
 
 export default Hero;

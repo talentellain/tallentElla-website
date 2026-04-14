@@ -1,5 +1,5 @@
 import React from 'react';
-import bgImage from '../assets/tebg.jpg';
+import bgImage from '../assets/bg5.png'; // Assuming bg5.png since bg5.jpg didn't exist in assets
 
 const StaticBackground = () => {
   return (
@@ -11,10 +11,12 @@ const StaticBackground = () => {
         width: '100%',
         height: '100%',
         zIndex: 0,
-        backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(${bgImage})`,
+        backgroundColor: '#000', // Ensure dark theme behind
+        backgroundImage: `url(${bgImage})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundAttachment: 'fixed',
+        opacity: 0.7,
       }}
     />
   );

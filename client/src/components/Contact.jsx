@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Mail, Phone, MapPin, Send, Instagram, Twitter, Linkedin } from 'lucide-react';
 
@@ -9,6 +9,27 @@ const Contact = () => {
     offset: ["start end", "start start"]
   });
   const borderProgress = useTransform(scrollYProgress, [0, 1], ["60px", "0px"]);
+
+  const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    phone: '',
+    message: ''
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const subject = `New Inquiry from ${formData.fullName}`;
+    const body = `Name: ${formData.fullName}\nEmail: ${formData.email}\nPhone: ${formData.phone}\n\nMessage:\n${formData.message}`;
+    window.location.href = `mailto:talentella.in@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  };
 
   return (
     <div id="contact" ref={containerRef} style={{ position: 'relative', minHeight: '250vh', zIndex: 40, marginBottom: '-100vh' }}>
@@ -50,7 +71,7 @@ const Contact = () => {
         />
 
         <div style={{ maxWidth: '1400px', width: '100%', margin: '0 auto', position: 'relative', zIndex: 2 }}>
-          <div className="auto-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '8rem', alignItems: 'center' }}>
+          <div className="auto-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 'clamp(2rem, 6vw, 8rem)', alignItems: 'center' }}>
             
             {/* Left Side: Massive Heading */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
@@ -70,28 +91,38 @@ const Contact = () => {
                   margin: 0
                 }}>
                   {["LET'S", "GET IN", "TOUCH"].map((line, lineIdx) => (
-                    <div key={lineIdx} style={{ display: 'block', overflow: 'hidden' }}>
+                    <motion.div 
+                      key={lineIdx} 
+                      initial="hidden"
+                      whileInView="visible"
+                      viewport={{ once: false }}
+                      style={{ display: 'block', overflow: 'hidden' }}
+                    >
                       {line.split("").map((letter, i) => (
                         <motion.span
                           key={i}
-                          initial={{ opacity: 0, y: 80 }}
-                          whileInView={{ opacity: 1, y: 0 }}
-                          viewport={{ once: false }}
-                          transition={{ 
-                            duration: 0.8, 
-                            delay: (lineIdx * 5 + i) * 0.04,
-                            ease: [0.16, 1, 0.3, 1] 
+                          variants={{
+                            hidden: { opacity: 0, y: '100%' },
+                            visible: { 
+                              opacity: 1, 
+                              y: 0, 
+                              transition: { 
+                                duration: 0.8, 
+                                delay: (lineIdx * 5 + i) * 0.04,
+                                ease: [0.16, 1, 0.3, 1] 
+                              } 
+                            }
                           }}
                           style={{ display: 'inline-block', whiteSpace: letter === ' ' ? 'pre' : 'normal' }}
                         >
                           {letter}
                         </motion.span>
                       ))}
-                    </div>
+                    </motion.div>
                   ))}
                 </h2>
                 <a 
-                  href="mailto:talentella@gmail.in" 
+                  href="mailto:talentella.in@gmail.com" 
                   style={{ 
                     display: 'inline-block', 
                     marginTop: '2.5rem', 
@@ -102,7 +133,7 @@ const Contact = () => {
                     opacity: 0.8
                   }}
                 >
-                  talentella@gmail.in
+                  talentella.in@gmail.com
                 </a>
               </motion.div>
             </div>
@@ -115,11 +146,15 @@ const Contact = () => {
               transition={{ duration: 1, delay: 0.2 }}
               style={{ width: '100%', maxWidth: '550px' }}
             >
-              <form style={{ display: 'flex', flexDirection: 'column', gap: '3.5rem' }}>
+              <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '3.5rem' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
                   <label style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#999' }}>Full Name*</label>
                   <input 
                     type="text" 
+                    name="fullName"
+                    value={formData.fullName}
+                    onChange={handleChange}
+                    required
                     style={{ 
                       background: 'none', 
                       border: 'none', 
@@ -140,6 +175,10 @@ const Contact = () => {
                     <label style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#999' }}>Email*</label>
                     <input 
                       type="email" 
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
                       style={{ 
                         background: 'none', 
                         border: 'none', 
@@ -155,6 +194,9 @@ const Contact = () => {
                     <label style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#999' }}>Phone</label>
                     <input 
                       type="tel" 
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
                       style={{ 
                         background: 'none', 
                         border: 'none', 
@@ -172,6 +214,10 @@ const Contact = () => {
                   <label style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#999' }}>Message</label>
                   <textarea 
                     rows="2" 
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
                     style={{ 
                       background: 'none', 
                       border: 'none', 
@@ -186,6 +232,7 @@ const Contact = () => {
                 </div>
 
                 <motion.button 
+                  type="submit"
                   whileHover={{ backgroundColor: '#0a0a0c', color: 'white' }}
                   whileTap={{ scale: 0.98 }}
                   style={{ 

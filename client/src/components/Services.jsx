@@ -1,8 +1,7 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Code, Share2, Palette, Settings, ArrowUpRight, Zap } from 'lucide-react';
-import { gsap } from 'gsap';
+import { Code, Share2, Palette, Settings, Zap } from 'lucide-react';
 import { servicesData } from '../data/servicesData';
 
 const iconMap = {
@@ -13,113 +12,45 @@ const iconMap = {
   Zap
 };
 
-const ServiceCard = ({ s, index }) => {
-  const cardRef = useRef(null);
+const ServiceCard = ({ s }) => {
   const IconComponent = iconMap[s.icon] || Zap;
-
-  const handleMouseEnter = () => {
-    if (!cardRef.current) return;
-    gsap.to(cardRef.current, {
-        y: -10,
-        borderColor: 'rgba(132, 0, 255, 0.3)',
-        boxShadow: '0 20px 40px rgba(132, 0, 255, 0.08)',
-        backgroundColor: '#fafaff',
-        duration: 0.4
-    });
-  };
-
-  const handleMouseLeave = () => {
-    gsap.to(cardRef.current, {
-        y: 0,
-        borderColor: 'rgba(0, 0, 0, 0.06)',
-        boxShadow: '0 0px 0px rgba(0, 0, 0, 0)',
-        backgroundColor: '#ffffff',
-        duration: 0.4
-    });
-  };
-
-  const handleMouseMove = (e) => {
-    if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    cardRef.current.style.setProperty('--glow-x', `${x}px`);
-    cardRef.current.style.setProperty('--glow-y', `${y}px`);
-  };
+  
+  const displayTitle = s.title.toUpperCase().split(' ').map((word, idx) => (
+    <React.Fragment key={idx}>
+      {word}
+      <br />
+    </React.Fragment>
+  ));
 
   return (
-    <Link to={`/service/${s.id}`} style={{ textDecoration: 'none' }}>
-      <motion.div 
-        ref={cardRef}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        onMouseMove={handleMouseMove}
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.1 }}
-        transition={{ 
-          delay: (index % 3) * 0.1, 
-          duration: 0.6
-        }}
-        className="interactive-card service-card"
-        style={{ 
-          backgroundColor: '#ffffff',
-          padding: '2.5rem 2rem',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '1.2rem',
-          position: 'relative',
-          minHeight: '280px',
-          justifyContent: 'flex-start',
-          border: '1px solid rgba(0, 0, 0, 0.06)',
-          borderRadius: '24px',
-          overflow: 'hidden',
-          textAlign: 'left'
-        }}
-      >
-        <div className="card-spotlight" />
-        
-        <div className="icon-wrapper" style={{ 
-          width: '50px', 
-          height: '50px', 
-          borderRadius: '12px', 
-          backgroundColor: 'rgba(132, 0, 255, 0.1)', 
-          display: 'flex', 
-          alignItems: 'center', 
-          justifyContent: 'center',
-          color: '#8400ff',
-          position: 'relative',
-          zIndex: 2
-        }}>
-          <IconComponent size={24} />
+    <Link to={`/service/${s.id}`} style={{ textDecoration: 'none', display: 'block', height: '100%', outline: 'none' }}>
+      <div className="modern-service-card" style={{
+        position: 'relative',
+        height: '100%',
+        width: '100%',
+        overflow: 'hidden',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        cursor: 'pointer',
+        borderRadius: '24px'
+      }}>
+        {/* Giant Text */}
+        <div className="card-giant-text">
+          {displayTitle}
         </div>
-        
-        <div className="service-card-content">
-          <h3 style={{ fontSize: '1.4rem', fontWeight: 700, position: 'relative', zIndex: 2, color: '#0a0a0c' }}>{s.title}</h3>
-          <p style={{ color: '#55555f', fontSize: '0.9rem', lineHeight: '1.6', position: 'relative', zIndex: 2, marginBottom: 'auto' }}>
+
+        {/* Inner Content (Icon + Text) — revealed on hover */}
+        <div className="card-hover-content">
+          <div className="blob-icon-wrapper">
+            <IconComponent size={56} color="#000000" strokeWidth={2.5} />
+          </div>
+          <p className="card-hover-desc">
             {s.description}
           </p>
         </div>
-        
-        <div className="learn-more" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#8400ff', fontWeight: 700, fontSize: '0.85rem', position: 'relative', zIndex: 2 }}>
-          LEARN MORE <ArrowUpRight size={16} />
-        </div>
-
-        <style>{`
-          .interactive-card::before {
-              content: '';
-              position: absolute;
-              top: 0; left: 0; right: 0; bottom: 0;
-              background: radial-gradient(400px circle at var(--glow-x) var(--glow-y), rgba(132, 0, 255, 0.05), transparent 40%);
-              opacity: 0;
-              transition: opacity 0.3s;
-              pointer-events: none;
-          }
-          .interactive-card:hover::before {
-              opacity: 1;
-          }
-        `}</style>
-      </motion.div>
+      </div>
     </Link>
   );
 };
@@ -130,14 +61,14 @@ const Services = () => {
     target: containerRef,
     offset: ["start end", "start start"]
   });
-  const borderProgress = useTransform(scrollYProgress, [0, 1], ["60px", "0px"]);
+  const borderProgress = useTransform(scrollYProgress, [0, 1], ["50px", "0px"]);
 
   return (
     <div id="services" ref={containerRef} style={{ position: 'relative', minHeight: '200vh', zIndex: 20, marginBottom: '-100vh' }}>
       <motion.section className="section-overlap" style={{ 
         zIndex: 20, 
-        backgroundColor: '#f8f9fc', 
-        padding: '12vh 5%', 
+        backgroundColor: '#0a0a0c',
+        padding: '12vh 2% 5vh 2%',
         overflow: 'hidden', 
         borderTopLeftRadius: borderProgress, 
         borderTopRightRadius: borderProgress,
@@ -150,13 +81,13 @@ const Services = () => {
         justifyContent: 'center',
         alignItems: 'center'
       }}>
-        <div style={{ maxWidth: '1400px', width: '100%', margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+        <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           
-          <div className="services-header" style={{ marginBottom: '6rem', maxWidth: '800px' }}>
+          <div className="services-header" style={{ flexShrink: 0, marginBottom: '2vh', maxWidth: '800px', textAlign: 'center', padding: '0 5%' }}>
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              style={{ fontSize: 'clamp(3rem, 10vw, 5rem)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '-0.02em', color: '#0a0a0c' }}
+              style={{ fontSize: 'clamp(1.6rem, 6vw, 4rem)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '-0.02em', color: '#ffffff' }}
             >
               OUR SERVICES
             </motion.h2>
@@ -166,24 +97,136 @@ const Services = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              style={{ color: '#55555f', fontSize: '1.2rem', lineHeight: '1.6', fontWeight: 500, marginTop: '1.5rem', maxWidth: '600px', margin: '1.5rem auto 0' }}
+              style={{ color: '#888888', fontSize: 'clamp(0.75rem, 2vw, 1rem)', lineHeight: '1.4', fontWeight: 500, marginTop: '0.5rem', maxWidth: '600px', margin: '0.5rem auto 0' }}
             >
               Premium marketing and branding solutions to scale your digital presence.
             </motion.p>
           </div>
 
-          <div className="auto-grid" style={{ 
-            width: '100%', 
-            display: 'grid', 
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', 
-            gap: '1.5rem',
-            justifyContent: 'center'
-          }}>
+          {/* Cards Grid */}
+          <div className="services-grid-new" style={{ flexGrow: 1, minHeight: 0 }}>
             {servicesData.map((s, i) => (
               <ServiceCard key={s.id} s={s} index={i} />
             ))}
           </div>
+
         </div>
+
+        <style>{`
+          /* === Grid Layout === */
+          .services-grid-new {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            background-color: transparent;
+            gap: 2vh;
+            width: 100%;
+          }
+
+          @media (max-width: 1024px) {
+            .services-grid-new {
+              grid-template-columns: repeat(2, 1fr);
+              grid-template-rows: auto auto;
+            }
+          }
+
+          @media (max-width: 768px) {
+            .services-grid-new {
+              grid-template-columns: 1fr;
+              grid-template-rows: repeat(3, 1fr);
+              gap: 1.5vw;
+            }
+          }
+
+          /* === Card Base === */
+          .modern-service-card {
+            background-color: #1f1f1f;
+            transition: background-color 0.4s ease;
+          }
+          .modern-service-card:hover {
+            background-color: #8763df;
+          }
+
+          /* === Giant Title Text === */
+          .card-giant-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: clamp(1.2rem, 3.5vw, 2.8rem);
+            font-weight: 900;
+            color: #eeeeee;
+            line-height: 1;
+            letter-spacing: -0.02em;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            pointer-events: none;
+            transition: left 0.7s cubic-bezier(0.8, 0, 0.2, 1), transform 0.7s cubic-bezier(0.8, 0, 0.2, 1), opacity 0.5s ease;
+            z-index: 1;
+            width: 100%;
+            text-align: center;
+          }
+
+          @media (max-width: 768px) {
+            .card-giant-text {
+              font-size: clamp(1.4rem, 6vw, 2rem);
+            }
+          }
+
+          /* === Hover: slide text right === */
+          .modern-service-card:hover .card-giant-text {
+            left: 100%;
+            transform: translate(0%, -50%);
+            opacity: 0.05;
+          }
+
+          /* === Hover reveal content === */
+          .card-hover-content {
+            opacity: 0;
+            transform: translateY(20px) scale(0.95);
+            transition: opacity 0.4s ease 0s, transform 0.4s ease 0s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            z-index: 5;
+            padding: 0 8%;
+            text-align: center;
+          }
+
+          .modern-service-card:hover .card-hover-content {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            transition: opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s;
+          }
+
+          /* === Blob Icon === */
+          .blob-icon-wrapper {
+            width: clamp(60px, 8vw, 100px);
+            height: clamp(60px, 8vw, 100px);
+            background-color: #ffcc00;
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: morph-blob 8s ease-in-out infinite alternate;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+          }
+
+          @keyframes morph-blob {
+            0%   { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+            33%  { border-radius: 58% 42% 75% 25% / 76% 46% 54% 24%; }
+            66%  { border-radius: 50% 50% 33% 67% / 55% 27% 73% 45%; }
+            100% { border-radius: 33% 67% 58% 42% / 63% 68% 32% 37%; }
+          }
+
+          .card-hover-desc {
+            color: #ffffff;
+            font-size: clamp(0.7rem, 1.8vw, 0.95rem);
+            font-weight: 600;
+            line-height: 1.5;
+            margin: 0;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+          }
+        `}</style>
       </motion.section>
     </div>
   );

@@ -57,8 +57,27 @@ export const servicesData = [
       }
     ],
     plans: [
-      { name: 'Basic Site', price: '$1,500', features: ['5 Pages', 'Responsive Design', 'Basic SEO'] },
-      { name: 'Enterprise', price: '$4,500+', features: ['Custom Logic', 'Full Backend', 'Scalable Arch'] }
+      { 
+        name: 'Basic', 
+        subtitle: 'For small businesses',
+        price: 'Rs 5,000', 
+        billing: 'one-time',
+        features: ['5 Page Responsive Website', 'Mobile Optimization', 'Contact Form', 'Basic SEO Setup', '1 Month Support'] 
+      },
+      { 
+        name: 'Professional', 
+        subtitle: 'For growing businesses',
+        price: 'Rs 20,000', 
+        billing: 'one-time',
+        features: ['10 Page Custom Website', 'CMS Integration', 'Payment Gateway', 'Advanced SEO + Analytics', '3 Months Support'] 
+      },
+      { 
+        name: 'Enterprise', 
+        subtitle: 'For large organizations',
+        price: 'Rs 40,000', 
+        billing: 'one-time',
+        features: ['Responsive+ 3D', 'E-commerce Platform', 'Custom Integrations', 'Priority Support', '6 Months Support'] 
+      }
     ]
   },
   {
@@ -139,8 +158,27 @@ export const servicesData = [
       }
     ],
     plans: [
-      { name: 'Starter', price: '$500/mo', features: ['3 Posts/Week', 'Engagement', 'Monthly Report'] },
-      { name: 'Pro', price: '$1,200/mo', features: ['Daily Content', 'Ad Management', 'Weekly Insights'] }
+      { 
+        name: 'Starter', 
+        subtitle: 'Perfect for startups',
+        price: 'Rs 10,000', 
+        billing: '/month',
+        features: ['2 Platforms (IG + FB)', '12 Posts/Month', 'Basic Graphic Design', 'Caption Writing', 'Monthly Report'] 
+      },
+      { 
+        name: 'Growth', 
+        subtitle: 'For scaling brands',
+        price: 'Rs 20,000', 
+        billing: '/month',
+        features: ['4 Platforms (All Major)', '24 Posts/Month', 'Premium Graphics + Reels', 'Community Management', 'Weekly Analytics'] 
+      },
+      { 
+        name: 'Premium', 
+        subtitle: 'Full-service solution',
+        price: 'Rs 35,000', 
+        billing: '/month',
+        features: ['All Platforms', '24 Posts + Videos', 'Video Production', 'Paid Ads Management', 'Dedicated Manager'] 
+      }
     ]
   },
   {
@@ -176,8 +214,27 @@ export const servicesData = [
       }
     ],
     plans: [
-      { name: 'Identity Kit', price: '$1,200', features: ['Logo Design', 'Basic Guidelines'] },
-      { name: 'Full System', price: '$3,000', features: ['Full Guidelines', 'Marketing Templates', 'Asset Library'] }
+      { 
+        name: 'Logo Package', 
+        subtitle: 'Quick brand start',
+        price: 'Rs 3,000', 
+        billing: 'one-time',
+        features: ['2 Logo Concepts', '2 Revision Rounds', 'All File Formats', 'Color Variations', 'Business Card Design'] 
+      },
+      { 
+        name: 'Brand Identity', 
+        subtitle: 'Complete brand system',
+        price: 'Rs 10,000', 
+        billing: 'one-time',
+        features: ['4 Logo Concepts', 'Brand Guidelines Book', 'Color + Typography System', 'Stationery Design', 'Social Media Templates', '4 Revisions'] 
+      },
+      { 
+        name: 'Complete Rebrand', 
+        subtitle: 'Total transformation',
+        price: 'Rs 30,000', 
+        billing: 'one-time',
+        features: ['6 Logo Concepts', 'Complete Brand Guidelines', 'Business Card & Letterhead', 'Social Media Kit (10 Posts)', 'Presentation Template', '1 Month Free Support'] 
+      }
     ]
   }
 ];

@@ -53,7 +53,7 @@ const Footer = () => {
             top: 0,
             marginTop: '1px',
             backgroundColor: '#050508', 
-            minHeight: '100vh',
+            height: '100vh', // strictly lock to full screen
             borderTop: '1px solid rgba(255, 255, 255, 0.05)',
             boxShadow: '0 -40px 100px rgba(0,0,0,0.5)',
             borderTopLeftRadius: borderRad,
@@ -99,8 +99,8 @@ const Footer = () => {
                         <motion.button 
                             className="btn-primary" 
                             style={{ 
-                                padding: '1.8rem 4.5rem', 
-                                fontSize: '1.25rem',
+                                padding: 'clamp(1rem, 3vw, 1.8rem) clamp(2rem, 5vw, 4.5rem)', 
+                                fontSize: 'clamp(1rem, 2vw, 1.25rem)',
                                 borderRadius: '100px',
                                 background: 'white',
                                 color: 'black',
@@ -143,10 +143,10 @@ const Footer = () => {
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                         <span style={{ fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.2em', color: 'var(--muted)' }}>Connect</span>
                         <div style={{ display: 'flex', gap: '1.5rem', color: 'white' }}>
-                            <motion.div whileHover={{ scale: 1.2, color: 'var(--accent)' }} style={{ cursor: 'pointer' }}><Instagram size={20} /></motion.div>
+                            <motion.a href="https://www.instagram.com/talentella.in?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" whileHover={{ scale: 1.2, color: 'var(--accent)' }} style={{ cursor: 'pointer', color: 'inherit' }}><Instagram size={20} /></motion.a>
                             <motion.div whileHover={{ scale: 1.2, color: 'var(--accent)' }} style={{ cursor: 'pointer' }}><Twitter size={20} /></motion.div>
-                            <motion.div whileHover={{ scale: 1.2, color: 'var(--accent)' }} style={{ cursor: 'pointer' }}><Linkedin size={20} /></motion.div>
-                            <motion.div whileHover={{ scale: 1.2, color: 'var(--accent)' }} style={{ cursor: 'pointer' }}><Mail size={20} /></motion.div>
+                            <motion.a href="https://www.linkedin.com/company/talentella/?lipi=urn%3Ali%3Apage%3Ad_flagship3_search_srp_all%3BoCez94fpRBmgazPJzx3LPw%3D%3D" target="_blank" rel="noopener noreferrer" whileHover={{ scale: 1.2, color: 'var(--accent)' }} style={{ cursor: 'pointer', color: 'inherit' }}><Linkedin size={20} /></motion.a>
+                            <motion.a href="mailto:talentella.in@gmail.com" whileHover={{ scale: 1.2, color: 'var(--accent)' }} style={{ cursor: 'pointer', color: 'inherit' }}><Mail size={20} /></motion.a>
                         </div>
                     </div>
                     
