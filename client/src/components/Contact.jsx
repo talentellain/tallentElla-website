@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Mail, Phone, MapPin, Send, Instagram, Twitter, Linkedin } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
+import emailjs from '@emailjs/browser';
 
 const Contact = () => {
   const containerRef = useRef(null);
@@ -16,6 +17,8 @@ const Contact = () => {
     phone: '',
     message: ''
   });
+  
+  const [status, setStatus] = useState('idle'); // idle | loading | success | error
 
   const handleChange = (e) => {
     setFormData({
@@ -26,13 +29,33 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const subject = `New Inquiry from ${formData.fullName}`;
-    const body = `Name: ${formData.fullName}\nEmail: ${formData.email}\nPhone: ${formData.phone}\n\nMessage:\n${formData.message}`;
-    window.location.href = `mailto:talentella.in@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    setStatus('loading');
+
+    const serviceId  = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+    const publicKey  = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+    const templateParams = {
+      from_name: formData.fullName,
+      from_email: formData.email,
+      phone: formData.phone,
+      message: formData.message,
+    };
+
+    emailjs.send(serviceId, templateId, templateParams, publicKey)
+      .then((result) => {
+        setStatus('success');
+        setFormData({ fullName: '', email: '', phone: '', message: '' });
+        setTimeout(() => setStatus('idle'), 5000); // clear success msg after 5s
+      }, (error) => {
+        console.error(error.text);
+        setStatus('error');
+        setTimeout(() => setStatus('idle'), 5000);
+      });
   };
 
   return (
-    <div id="contact" ref={containerRef} style={{ position: 'relative', minHeight: '250vh', zIndex: 40, marginBottom: '-100vh' }}>
+    <div id="contact" ref={containerRef} className="relative z-40" style={{ minHeight: '250vh', marginBottom: '-100vh' }}>
       <motion.section className="section-overlap" style={{ 
         position: 'sticky',
         top: 0,
@@ -56,47 +79,32 @@ const Contact = () => {
             rotate: [0, 5, 0]
           }}
           transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute left-[5%] bottom-[20%] w-[180px] h-[180px] z-1 blur-[30px] opacity-15"
           style={{
-            position: 'absolute',
-            left: '5%',
-            bottom: '20%',
-            width: '180px',
-            height: '180px',
             background: 'linear-gradient(135deg, #aa3bff 0%, #7d26cd 100%)',
             borderRadius: '40% 60% 70% 30% / 40% 50% 60% 50%',
-            filter: 'blur(30px)',
-            opacity: 0.15,
-            zIndex: 1
           }}
         />
 
-        <div style={{ maxWidth: '1400px', width: '100%', margin: '0 auto', position: 'relative', zIndex: 2 }}>
-          <div className="auto-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 'clamp(2rem, 6vw, 8rem)', alignItems: 'center' }}>
+        <div className="max-w-[1400px] w-full mx-auto relative z-10 px-6 sm:px-10">
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-16 xl:gap-32 items-center">
             
             {/* Left Side: Massive Heading */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+            <div className="flex flex-col gap-10 text-left">
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: false }}
                 transition={{ duration: 1 }}
               >
-                <h2 style={{ 
-                  fontSize: 'clamp(3.5rem, 8vw, 6rem)', 
-                  fontWeight: 900, 
-                  lineHeight: 0.9, 
-                  textTransform: 'uppercase', 
-                  letterSpacing: '-0.04em',
-                  color: '#0a0a0c',
-                  margin: 0
-                }}>
+                <h2 className="text-[clamp(4rem,9vw,7.5rem)] font-black leading-[0.85] uppercase tracking-tighter text-[#0a0a0c] m-0">
                   {["LET'S", "GET IN", "TOUCH"].map((line, lineIdx) => (
                     <motion.div 
                       key={lineIdx} 
                       initial="hidden"
                       whileInView="visible"
                       viewport={{ once: false }}
-                      style={{ display: 'block', overflow: 'hidden' }}
+                      className="block overflow-hidden pb-2"
                     >
                       {line.split("").map((letter, i) => (
                         <motion.span
@@ -113,7 +121,7 @@ const Contact = () => {
                               } 
                             }
                           }}
-                          style={{ display: 'inline-block', whiteSpace: letter === ' ' ? 'pre' : 'normal' }}
+                          className={`inline-block ${letter === ' ' ? 'whitespace-pre' : 'whitespace-normal'}`}
                         >
                           {letter}
                         </motion.span>
@@ -123,136 +131,118 @@ const Contact = () => {
                 </h2>
                 <a 
                   href="mailto:talentella.in@gmail.com" 
-                  style={{ 
-                    display: 'inline-block', 
-                    marginTop: '2.5rem', 
-                    fontSize: 'clamp(1.2rem, 3vw, 1.8rem)', 
-                    color: '#0a0a0c', 
-                    textDecoration: 'underline',
-                    fontWeight: 600,
-                    opacity: 0.8
-                  }}
+                  className="inline-block mt-12 text-[clamp(1.2rem,2.5vw,1.8rem)] text-[#0a0a0c] font-semibold border-b-[3px] border-[#0a0a0c] pb-1 hover:text-neutral-400 hover:border-neutral-400 transition-colors"
                 >
                   talentella.in@gmail.com
                 </a>
               </motion.div>
             </div>
 
-            {/* Right Side: Minimalist Form */}
+            {/* Right Side: Ultra Premium Minimalist Layout */}
             <motion.div 
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: false }}
               transition={{ duration: 1, delay: 0.2 }}
-              style={{ width: '100%', maxWidth: '550px' }}
+              className="w-full max-w-[650px] mx-auto xl:mx-0"
             >
-              <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '3.5rem' }}>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
-                  <label style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#999' }}>Full Name*</label>
+              <form 
+                onSubmit={handleSubmit} 
+                className="flex flex-col gap-10 w-full"
+              >
+                
+                {/* Full Name */}
+                <div className="relative w-full group">
                   <input 
                     type="text" 
                     name="fullName"
                     value={formData.fullName}
                     onChange={handleChange}
                     required
-                    style={{ 
-                      background: 'none', 
-                      border: 'none', 
-                      borderBottom: '1px solid #ddd', 
-                      padding: '0.8rem 0',
-                      color: '#0a0a0c',
-                      fontSize: '1.1rem',
-                      outline: 'none',
-                      transition: 'border-color 0.3s ease'
-                    }} 
-                    onFocus={(e) => e.target.style.borderColor = '#0a0a0c'}
-                    onBlur={(e) => e.target.style.borderColor = '#ddd'}
+                    placeholder="Your Name *"
+                    disabled={status === 'loading'}
+                    className="w-full bg-transparent border-b-[2px] border-black/10 py-5 text-xl md:text-2xl text-[#0a0a0c] font-medium placeholder-black/30 outline-none transition-all duration-300 focus:border-[#0a0a0c] disabled:opacity-50"
+                    style={{ padding: '20px 0' }}
                   />
                 </div>
 
-                <div className="grid-col-mobile" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem' }}>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
-                    <label style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#999' }}>Email*</label>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-10 w-full">
+                  {/* Email */}
+                  <div className="relative w-full group">
                     <input 
                       type="email" 
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      style={{ 
-                        background: 'none', 
-                        border: 'none', 
-                        borderBottom: '1px solid #ddd', 
-                        padding: '0.8rem 0',
-                        color: '#0a0a0c',
-                        fontSize: '1.1rem',
-                        outline: 'none'
-                      }} 
+                      placeholder="Email Address *"
+                      disabled={status === 'loading'}
+                      className="w-full bg-transparent border-b-[2px] border-black/10 py-5 text-xl md:text-2xl text-[#0a0a0c] font-medium placeholder-black/30 outline-none transition-all duration-300 focus:border-[#0a0a0c] disabled:opacity-50"
+                      style={{ padding: '20px 0' }}
                     />
                   </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
-                    <label style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#999' }}>Phone</label>
+                  {/* Phone */}
+                  <div className="relative w-full group">
                     <input 
                       type="tel" 
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      style={{ 
-                        background: 'none', 
-                        border: 'none', 
-                        borderBottom: '1px solid #ddd', 
-                        padding: '0.8rem 0',
-                        color: '#0a0a0c',
-                        fontSize: '1.1rem',
-                        outline: 'none'
-                      }} 
+                      placeholder="Phone Number"
+                      disabled={status === 'loading'}
+                      className="w-full bg-transparent border-b-[2px] border-black/10 py-5 text-xl md:text-2xl text-[#0a0a0c] font-medium placeholder-black/30 outline-none transition-all duration-300 focus:border-[#0a0a0c] disabled:opacity-50"
+                      style={{ padding: '20px 0' }}
                     />
                   </div>
                 </div>
 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
-                  <label style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#999' }}>Message</label>
+                {/* Message */}
+                <div className="relative w-full group">
                   <textarea 
-                    rows="2" 
+                    rows="3" 
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
                     required
-                    style={{ 
-                      background: 'none', 
-                      border: 'none', 
-                      borderBottom: '1px solid #ddd', 
-                      padding: '0.8rem 0',
-                      color: '#0a0a0c',
-                      fontSize: '1.1rem',
-                      outline: 'none',
-                      resize: 'none'
-                    }} 
+                    placeholder="Tell us about your project *"
+                    disabled={status === 'loading'}
+                    className="w-full bg-transparent border-b-[2px] border-black/10 py-5 text-xl md:text-2xl text-[#0a0a0c] font-medium placeholder-black/30 outline-none resize-none transition-all duration-300 focus:border-[#0a0a0c] disabled:opacity-50"
+                    style={{ padding: '20px 0' }}
                   />
                 </div>
 
-                <motion.button 
+                {/* Status Messages */}
+                {status === 'success' && (
+                  <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex items-center gap-3 text-[#0a0a0c] bg-green-100/50 p-5 rounded-2xl font-bold">
+                    <CheckCircle size={24} className="text-green-600" />
+                    <span>Message received loud and clear!</span>
+                  </motion.div>
+                )}
+                {status === 'error' && (
+                  <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex items-center gap-3 text-[#0a0a0c] bg-red-100/50 p-5 rounded-2xl font-bold">
+                    <AlertCircle size={24} className="text-red-500" />
+                    <span>Failed to route. Try sending an email directly.</span>
+                  </motion.div>
+                )}
+
+                {/* Submit Button */}
+                <button 
                   type="submit"
-                  whileHover={{ backgroundColor: '#0a0a0c', color: 'white' }}
-                  whileTap={{ scale: 0.98 }}
-                  style={{ 
-                    background: 'none', 
-                    color: '#0a0a0c', 
-                    border: '1.5px solid #0a0a0c', 
-                    borderRadius: '100px', 
-                    padding: '1.2rem 3rem', 
-                    fontSize: '0.9rem', 
-                    fontWeight: 800, 
-                    letterSpacing: '0.2rem',
-                    textTransform: 'uppercase',
-                    cursor: 'pointer',
-                    marginTop: '1rem',
-                    transition: 'all 0.3s ease',
-                    alignSelf: 'flex-start'
-                  }}
+                  disabled={status === 'loading'}
+                  className="mt-6 flex items-center justify-between w-full md:w-auto self-end bg-[#0a0a0c] text-white rounded-full transition-all duration-300 hover:bg-black hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50"
+                  style={{ padding: '20px 32px 20px 42px' }}
                 >
-                  SEND
-                </motion.button>
+                  <span className="text-sm md:text-base font-extrabold tracking-[0.2em] uppercase mr-6">
+                    {status === 'loading' ? 'Transmitting...' : 'Send Inquiry'}
+                  </span>
+                  {status === 'loading' ? (
+                    <Loader2 className="animate-spin text-white" size={24} />
+                  ) : (
+                    <div className="bg-white/20 p-3 rounded-full flex items-center justify-center">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-white"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                    </div>
+                  )}
+                </button>
               </form>
             </motion.div>
           </div>

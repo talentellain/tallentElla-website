@@ -126,10 +126,10 @@ const Hero = () => {
             className="hero-mountain"
             style={{
               position: 'absolute',
-              bottom: '-2%', 
-              left: '-2%', 
-              width: '104%', 
-              height: '80%', 
+              bottom: '-20%', 
+              left: '-20%', 
+              width: '140%', 
+              height: '120%', 
               pointerEvents: 'none',
               zIndex: 20, 
               backgroundImage: `url(${fgImage})`,
@@ -251,25 +251,25 @@ const Hero = () => {
         /* Tablet: push title down a bit, zoom mountain */
         @media (max-width: 1024px) {
           .hero-title-block {
-            top: 42% !important;
+            top: 34% !important;
           }
           .hero-mountain {
-            height: 90% !important;
-            bottom: -4% !important;
-            width: 108% !important;
-            left: -4% !important;
+            height: 140% !important;
+            bottom: -25% !important;
+            width: 160% !important;
+            left: -30% !important;
           }
         }
         /* Mobile: push title further down, mountain covers more */
         @media (max-width: 768px) {
           .hero-title-block {
-            top: 48% !important;
+            top: 36% !important;
           }
           .hero-mountain {
-            height: 100% !important;
-            bottom: -5% !important;
-            width: 112% !important;
-            left: -6% !important;
+            height: 160% !important;
+            bottom: -30% !important;
+            width: 200% !important;
+            left: -50% !important;
           }
         }
       `}</style>
