@@ -1,53 +1,44 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
-import project1 from '../assets/project1.png';
-import project2 from '../assets/project2.png';
-import project3 from '../assets/project3.png';
-import socialVideo from '../assets/social.mp4';
-import socialVideo2 from '../assets/social2.mp4';
-import socialVideo3 from '../assets/social3.mp4';
-import socialVideo4 from '../assets/social4.mp4';
+import dentwise from '../assets/dentwise.png';
+import k72 from '../assets/k72.png';
+import onepiece from '../assets/onepiece.png';
 
 const projects = [
   {
     id: '01',
-    client: 'Skyline Architecture',
-    desc: 'Luxury architectural visualization and firm portfolio.',
-    image: project1,
+    client: 'DentWise AI',
+    desc: 'Intelligent dental assistant platform with 24/7 AI-patient interaction.',
+    image: dentwise,
+    link: 'https://smart-dent-ai-app.vercel.app/',
   },
   {
     id: '02',
-    client: 'StreetVibe E-commerce',
-    desc: 'High-energy streetwear brand with dynamic shop flow.',
-    video: socialVideo2,
+    client: 'K72 Agency',
+    desc: 'Award-winning creative agency portal with cinematic animations.',
+    image: k72,
+    link: 'https://react-animated-web-l9i8.vercel.app/',
   },
   {
     id: '03',
-    client: 'FinFlow Dashboard',
-    desc: 'Next-gen fintech data visualization and analytics.',
-    video: socialVideo3,
-  },
-  {
-    id: '04',
-    client: 'Aura Social Mastery',
-    desc: 'High-energy social growth and branding system.',
-    video: socialVideo4,
+    client: 'One Piece Legacy',
+    desc: 'Immersive storytelling experience for the legendary pirate saga.',
+    image: onepiece,
+    link: 'https://one-piece-eight-henna.vercel.app/',
   }
 ];
 
 const ProjectCard = ({ project, index, scrollProgress }) => {
   const videoRef = useRef(null);
-  // Recalibrated for 4 cards: 0, 1, 2, 3
-  const start = index === 0 ? 0 : (index === 1 ? 0.05 : (index === 2 ? 0.3 : 0.55));
-  const end = index === 0 ? 0.05 : (index === 1 ? 0.3 : (index === 2 ? 0.55 : 0.8));
+  // Re-calibrated for 3 cards: finish all by 0.6 to handle overlap height
+  const start = index === 0 ? 0 : (index === 1 ? 0.1 : 0.35);
+  const end = index === 0 ? 0 : (index === 1 ? 0.35 : 0.6);
   
-  // y: Card 0 is fixed. Others fly in.
   const y = useTransform(scrollProgress, [start, end], [index === 0 ? 0 : 700, 0]);
   const scale = useTransform(scrollProgress, [start, end], [index === 0 ? 1 : 0.94, 1]);
   
-  // Stacking effect
-  const nextStart = index === 0 ? 0.05 : (index === 1 ? 0.3 : (index === 2 ? 0.55 : 0.8));
+  const nextStart = index === 0 ? 0.1 : (index === 1 ? 0.35 : 0.6);
   const stackScale = useTransform(scrollProgress, [nextStart, nextStart + 0.15], [1, 0.96]);
   const stackY = useTransform(scrollProgress, [nextStart, nextStart + 0.15], [0, -20]);
   const combinedScale = useTransform(() => stackScale.get() * scale.get());
@@ -63,11 +54,15 @@ const ProjectCard = ({ project, index, scrollProgress }) => {
     }
   };
 
+  const handleExplore = () => {
+    window.open(project.link, '_blank', 'noopener,noreferrer');
+  };
+
   return (
     <motion.div 
       style={{ 
         position: 'absolute', 
-        top: `calc(12vh + ${index * 2.5}rem)`, // Staggered offset so they don't overlap totally
+        top: `calc(12vh + ${index * 2.5}rem)`, 
         left: '50%',
         x: '-50%',
         width: '90%', 
@@ -95,15 +90,17 @@ const ProjectCard = ({ project, index, scrollProgress }) => {
           <div style={{ display: 'flex', gap: 'clamp(1rem, 3vw, 2.5rem)', alignItems: 'center' }}>
             <span style={{ fontSize: '2.5rem', fontWeight: 900, opacity: 0.15, lineHeight: 1 }}>{project.id}</span>
             <div>
-              <span style={{ fontSize: '0.7rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.3em', color: 'var(--accent)', display: 'block', marginBottom: '0.6rem', opacity: 0.6 }}>Case Study</span>
+              <span style={{ fontSize: '0.7rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.3em', color: 'var(--accent)', display: 'block', marginBottom: '0.6rem', opacity: 0.6 }}>Project Reveal</span>
               <h3 style={{ fontSize: 'clamp(1.5rem, 4vw, 2.5rem)', fontWeight: 800, letterSpacing: '-0.02em' }}>{project.client}</h3>
             </div>
           </div>
           
           <motion.button 
+            onClick={handleExplore}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
             whileHover={{ scale: 1.05, backgroundColor: 'white', color: 'black' }}
+            whileTap={{ scale: 0.95 }}
             style={{ 
               padding: 'clamp(0.6rem, 2vw, 1rem) clamp(1rem, 3vw, 2.2rem)', 
               borderRadius: '100px', 
@@ -117,7 +114,8 @@ const ProjectCard = ({ project, index, scrollProgress }) => {
               gap: '0.8rem',
               cursor: 'pointer',
               whiteSpace: 'nowrap',
-              flexShrink: 0
+              flexShrink: 0,
+              zIndex: 20
             }}
           >
             EXPLORE <ArrowUpRight size={20} />
@@ -125,6 +123,7 @@ const ProjectCard = ({ project, index, scrollProgress }) => {
         </div>
 
         <div 
+          onClick={handleExplore}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
           style={{ 
@@ -133,7 +132,8 @@ const ProjectCard = ({ project, index, scrollProgress }) => {
             borderRadius: '20px', 
             overflow: 'hidden',
             backgroundColor: '#111',
-            border: '1px solid rgba(255, 255, 255, 0.05)'
+            border: '1px solid rgba(255, 255, 255, 0.05)',
+            cursor: 'pointer'
           }}
         >
           {project.video ? (
@@ -176,7 +176,7 @@ const Projects = () => {
       position: 'relative', 
       minHeight: '500vh', 
       zIndex: 22,
-      marginBottom: '-100vh' // Pulls the next section over the pinned stack
+      marginBottom: '-100vh' 
     }}>
       <motion.section style={{ 
         position: 'sticky', 
