@@ -133,7 +133,7 @@ const Contact = () => {
                   href="mailto:talentella.in@gmail.com" 
                   className="inline-block mt-12 text-[clamp(1.2rem,2.5vw,1.8rem)] text-[#0a0a0c] font-semibold border-b-[3px] border-[#0a0a0c] pb-1 hover:text-neutral-400 hover:border-neutral-400 transition-colors"
                 >
-                  talentella.in@gmail.com
+                   talentella.in@gmail.com
                 </a>
               </motion.div>
             </div>
