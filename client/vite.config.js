@@ -6,25 +6,18 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   build: {
-    sourcemap: false,
-    minify: 'oxc',
+    target: 'esnext',
+    minify: 'esbuild',
     cssMinify: true,
-    assetsInlineLimit: 4096,
+    sourcemap: false,
     chunkSizeWarningLimit: 1000,
     rollupOptions: {
       output: {
         manualChunks(id) {
-          if (id.includes('node_modules/react') || id.includes('node_modules/react-dom')) {
-            return 'react-vendor';
-          }
-          if (id.includes('node_modules/react-router-dom')) {
-            return 'router';
-          }
-          if (id.includes('node_modules/framer-motion') || id.includes('node_modules/gsap')) {
-            return 'animation';
-          }
-          if (id.includes('node_modules/@emailjs')) {
-            return 'emailjs';
+          if (id.includes('node_modules')) {
+            if (id.includes('react')) return 'vendor-react';
+            if (id.includes('framer-motion') || id.includes('gsap')) return 'vendor-animation';
+            return 'vendor';
           }
         }
       }
