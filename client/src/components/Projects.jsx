@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import dentwise from '../assets/dentwise.png';
-import k72 from '../assets/k72.png';
+import k72 from '../assets/K72.png';
 import onepiece from '../assets/onepiece.png';
 
 const projects = [
