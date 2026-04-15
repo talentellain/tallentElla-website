@@ -3,8 +3,8 @@ import { Helmet } from 'react-helmet-async';
 
 const SITE_NAME = 'TalentElla';
 const SITE_URL = 'https://talentella.in';
-const DEFAULT_IMAGE = `${SITE_URL}/logo.png`;
-const TITLE_SUFFIX = 'TalentElla — 360° Marketing Agency';
+const DEFAULT_IMAGE = `${SITE_URL}/logo.jpg`;
+const TITLE_SUFFIX = '360° Marketing Agency India';
 
 const SEO = ({
   title,
@@ -20,8 +20,8 @@ const SEO = ({
   serviceSchema = null,
   noindex = false,
 }) => {
-  // Format: "[Page Topic] | TalentElla — 360° Marketing Agency"
-  const formattedTitle = title || (pageTitle ? `${pageTitle} | ${TITLE_SUFFIX}` : `360° Marketing Agency India | ${TITLE_SUFFIX}`);
+  // Format: "TalentElla | [Page Topic] — 360° Marketing Agency"
+  const formattedTitle = title || (pageTitle ? `${SITE_NAME} | ${pageTitle} — ${TITLE_SUFFIX}` : `${SITE_NAME} — ${TITLE_SUFFIX}`);
   const canonicalUrl = url.endsWith('/') ? url : `${url}/`;
 
   // BreadcrumbList schema
