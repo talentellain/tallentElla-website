@@ -1,0 +1,37 @@
+# TalentElla — 360° Marketing Agency
+# https://talentella.in
+
+User-agent: *
+Allow: /
+
+# Block build artifacts & internal paths
+Disallow: /dist/
+Disallow: /node_modules/
+Disallow: /src/
+Disallow: /.env
+
+# Allow search engine bots to crawl all pages
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Allow AI crawlers for GEO (Generative Engine Optimization)
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+# Sitemap
+Sitemap: https://talentella.in/sitemap.xml
+
+# Host
+Host: https://talentella.in
