@@ -165,7 +165,7 @@ const Hero = () => {
                   fontWeight: 400,
                   color: 'rgba(255, 255, 255, 0.6)'
                 }}>
-                  TalentElla is a full-service digital marketing agency offering integrated marketing solutions — from brand development and social media marketing to lead generation and influencer marketing across India.
+                   TalentElla is a full-service digital marketing agency offering integrated marketing solutions — from brand development and social media marketing to lead generation and influencer marketing across India.
                 </p>
                 
                 {/* SEO CTA Button */}
