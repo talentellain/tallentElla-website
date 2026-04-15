@@ -132,16 +132,16 @@ h1, h2, h3, h4, h5, h6 {
    On mobile: sticky disabled, sections flow normally with auto height.
    ─────────────────────────────────────────────────────────────────────── */
 .sticky-outer {
-  position: relative;
+  position: sticky;
+  top: 0;
   min-height: 200vh; /* 100vh content + 100vh overlap room */
   margin-bottom: -100vh; /* pulls next section into the overlap window */
   width: 100%;
-  overflow: visible;
+  overflow: hidden;
 }
 
 .sticky-section {
-  position: sticky;
-  top: 0;
+  position: relative; 
   height: 100vh;
   width: 100%;
   display: flex;
@@ -152,48 +152,21 @@ h1, h2, h3, h4, h5, h6 {
 
 @media (max-width: 768px) {
   .sticky-outer {
-    position: relative !important;
+    position: sticky !important;
+    top: 0;
     min-height: 200vh;
     margin-bottom: -100vh;
     overflow: visible !important;
   }
   .sticky-section {
-    position: sticky !important;
+    position: relative !important;
     height: 100vh;
     height: 100dvh;
     min-height: 100vh;
     border-top-left-radius: 0 !important;
     border-top-right-radius: 0 !important;
-    justify-content: center !important;
+    justify-content: flex-start !important;
     overflow: hidden;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-  }
-  .sticky-section::-webkit-scrollbar,
-  .sticky-section *::-webkit-scrollbar {
-    display: none !important;
-  }
-  .mobile-swipe {
-    display: flex !important;
-    flex-wrap: nowrap !important;
-    overflow-x: auto !important;
-    scroll-snap-type: x mandatory;
-    gap: 1rem !important;
-    padding-bottom: 1rem !important;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-  .mobile-swipe::-webkit-scrollbar {
-    display: none;
-  }
-  .mobile-swipe > * {
-    flex: 0 0 85% !important;
-    scroll-snap-align: center;
-  }
-  .mobile-grid-2 {
-    display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 1rem !important;
   }
 }
 
@@ -276,7 +249,17 @@ h1, h2, h3, h4, h5, h6 {
   z-index: -1;
 }
 
-
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 10px;
+}
 
 /* Buttons */
 .btn-primary {
@@ -366,7 +349,7 @@ html.lenis {
     margin-bottom: 0 !important;
   }
   .mobile-unstick .section-overlap {
-    position: sticky !important;
+    position: relative !important;
     height: auto !important;
     min-height: 100vh !important;
     padding-bottom: 4rem !important;
@@ -603,7 +586,7 @@ html.lenis {
 
   /* Services mobile: unwrap the sticky fullscreen layout */
   .services-section-mobile-unwrap {
-    position: sticky !important;
+    position: relative !important;
     height: auto !important;
     min-height: auto !important;
     overflow: visible !important;
@@ -658,7 +641,7 @@ html.lenis {
 
   /* Inner sticky section: go back to normal flow */
   .contact-section-sticky {
-    position: sticky !important;
+    position: relative !important;
     min-height: auto !important;
     height: auto !important;
     overflow: visible !important;
@@ -683,27 +666,7 @@ html.lenis {
     width: 100% !important;
     justify-content: center !important;
     gap: 1rem !important;
-    padding: 18px 28px !important;
-    margin-top: 1rem !important;
+    flex-shrink: 0 !important;
   }
-}
-
-/* Premium Minimal Scrollbar for internal containers */
-.premium-scrollbar::-webkit-scrollbar {
-    width: 4px;
-}
-.premium-scrollbar::-webkit-scrollbar-track {
-    background: transparent;
-}
-.premium-scrollbar::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-}
-.premium-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: rgba(0, 0, 0, 0.2);
-}
-.premium-scrollbar {
-    scrollbar-width: thin;
-    scrollbar-color: rgba(0, 0, 0, 0.1) transparent;
-    overscroll-behavior: contain;
-}
+  .maint-icon svg {
+    width: 22px !important;

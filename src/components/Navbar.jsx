@@ -118,9 +118,11 @@ const Navbar = () => {
     useEffect(() => {
         const handleScroll = () => {
             const sections = [
-                { id: 'footer', isLight: false },
-                { id: 'contact', isLight: true },
-                { id: 'process', isLight: false },
+                { id: 'footer', isLight: true },
+                { id: 'contact', isLight: false },
+                { id: 'faq', isLight: true },
+                { id: 'why-talentella', isLight: false },
+                { id: 'process', isLight: true },
                 { id: 'projects', isLight: false },
                 { id: 'services', isLight: true },
                 { id: 'hero', isLight: false },
@@ -215,6 +217,7 @@ const Navbar = () => {
                 }}
                 className="glass-card hidden-mobile"
                 style={{ 
+                    position: 'relative',
                     display: 'flex', 
                     gap: '2.5rem', 
                     padding: '0.4rem 2rem', 

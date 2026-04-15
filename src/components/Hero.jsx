@@ -58,20 +58,14 @@ const Hero = () => {
   }, []);
 
   return (
-    <div id="hero" style={{ position: 'relative', minHeight: '100vh', zIndex: 10 }}>
+    <div id="hero" className="sticky-outer" style={{ zIndex: 10 }}>
       <section 
-        className="section-overlap" 
+        className="sticky-section" 
         style={{ 
-          zIndex: 10,
-          position: 'sticky',
-          top: 0,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundAttachment: 'fixed',
           overflow: 'hidden',
-          height: '100vh',
-          display: 'flex',
-          alignItems: 'center',
           justifyContent: 'center'
         }}
       >

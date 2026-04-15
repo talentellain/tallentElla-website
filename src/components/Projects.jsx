@@ -32,7 +32,7 @@ const projects = [
   }
 ];
 
-const ProjectCard = ({ project, index, scrollProgress }) => {
+const ProjectCard = ({ project, index, scrollProgress, isMobile }) => {
   const videoRef = useRef(null);
   // Re-calibrated for 3 cards: finish all by 0.6 to handle overlap height
   const start = index === 0 ? 0 : (index === 1 ? 0.1 : 0.35);
@@ -65,7 +65,7 @@ const ProjectCard = ({ project, index, scrollProgress }) => {
     <motion.div 
       style={{ 
         position: 'absolute', 
-        top: `calc(12vh + ${index * 2.5}rem)`, 
+        top: `calc(15vh + ${index * 2.5}rem)`, 
         left: '50%',
         x: '-50%',
         width: '90%', 
@@ -131,7 +131,7 @@ const ProjectCard = ({ project, index, scrollProgress }) => {
           onMouseLeave={handleMouseLeave}
           style={{ 
             width: '100%', 
-            aspectRatio: '2/1.05', 
+            aspectRatio: isMobile ? '16/11' : '2/1.1', 
             borderRadius: '20px', 
             overflow: 'hidden',
             backgroundColor: '#111',
@@ -173,37 +173,37 @@ const Projects = () => {
     target: containerRef,
     offset: ["start end", "start start"]
   });
+  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
   const borderProgress = useTransform(borderScrollProgress, [0, 1], ["60px", "0px"]);
 
   return (
     <div id="projects" ref={containerRef} style={{ 
-      position: 'relative', 
-      minHeight: '500vh', 
-      zIndex: 22
+      position: 'relative',
+      minHeight: '600vh', 
+      marginBottom: '-100vh',
+      zIndex: 30 // Higher than Services (20)
     }}>
-      <motion.section style={{ 
-        position: 'sticky', 
-        top: 0, 
-        height: '100vh', 
-        width: '100%',
-        backgroundColor: '#050508',
-        overflow: 'hidden',
-        display: 'flex', 
-        flexDirection: 'column',
-        alignItems: 'center',
-        borderTopLeftRadius: borderProgress,
-        borderTopRightRadius: borderProgress,
-        borderTop: '1px solid rgba(255, 255, 255, 0.05)'
-      }}>
+      <motion.section 
+        className="sticky-section"
+        style={{ 
+          backgroundColor: '#050508',
+          overflow: 'hidden',
+          borderTopLeftRadius: isMobile ? '0px' : borderProgress,
+          borderTopRightRadius: isMobile ? '0px' : borderProgress,
+          borderTop: '1px solid rgba(255, 255, 255, 0.05)',
+          height: '100dvh'
+        }}
+      >
         {/* Heading Area */}
         <div 
           style={{ 
             textAlign: 'center', 
-            height: '25vh', 
+            height: '38vh', 
             display: 'flex', 
             flexDirection: 'column', 
             justifyContent: 'flex-end',
-            paddingBottom: '2vh'
+            paddingBottom: '2vh',
+            alignItems: 'center'
           }}
         >
           <h2 
@@ -233,24 +233,22 @@ const Projects = () => {
               </motion.span>
             ))}
           </h2>
-          <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.85rem', marginTop: '0.5rem', maxWidth: '500px', textAlign: 'center' }}>
+          <p style={{ 
+            color: 'rgba(255,255,255,0.4)', 
+            fontSize: '0.85rem', 
+            marginTop: '0.75rem', 
+            maxWidth: '500px', 
+            textAlign: 'center',
+            marginInline: 'auto'
+          }}>
             Real results from India's leading integrated marketing solutions agency
           </p>
-          <motion.span 
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 0.4 }}
-            viewport={{ once: false }}
-            transition={{ delay: 0.8, duration: 1 }}
-            style={{ fontSize: '0.65rem', letterSpacing: '0.5em', textTransform: 'uppercase', marginTop: '0.5rem' }}
-          >
-            Digital Craftsmanship
-          </motion.span>
         </div>
 
         {/* Project Cards Stack */}
         <div style={{ position: 'relative', width: '100%', height: '80vh' }}>
           {projects.map((p, i) => (
-            <ProjectCard key={p.id} project={p} index={i} scrollProgress={scrollYProgress} />
+            <ProjectCard key={p.id} project={p} index={i} scrollProgress={scrollYProgress} isMobile={isMobile} />
           ))}
         </div>
       </motion.section>

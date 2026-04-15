@@ -63,20 +63,19 @@ const Footer = () => {
 
     return (
         <motion.footer id="footer" ref={containerRef} style={{ 
-            zIndex: 50, 
-            position: 'sticky',
-            top: 0,
-            marginTop: '1px',
-            backgroundColor: '#050508', 
-            height: '100vh', // strictly lock to full screen
-            borderTop: '1px solid rgba(255, 255, 255, 0.05)',
-            boxShadow: '0 -40px 100px rgba(0,0,0,0.5)',
+            zIndex: 80, 
+            position: 'relative', // Slide over the previous sticky section
+            backgroundColor: '#f5f5f0', 
+            minHeight: '100vh', 
+            borderTop: '1px solid rgba(0, 0, 0, 0.05)',
+            boxShadow: '0 -40px 100px rgba(0,0,0,0.05)',
             borderTopLeftRadius: borderRad,
             borderTopRightRadius: borderRad,
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',
-            padding: '5rem 5% 3rem'
+            padding: '5rem 5% 3rem',
+            overflow: 'hidden'
         }}>
             {/* Subtle Center Glow */}
             <div style={{ 
@@ -102,8 +101,7 @@ const Footer = () => {
                         The Next Step
                     </span>
                     <h2 
-                        className="hero-title-shimmer" 
-                        style={{ fontSize: 'clamp(3rem, 10vw, 7rem)', marginBottom: '4rem', lineHeight: 1, fontWeight: 800, letterSpacing: '-0.02em' }}
+                        style={{ fontSize: 'clamp(3rem, 10vw, 7rem)', marginBottom: '4rem', lineHeight: 1, fontWeight: 800, letterSpacing: '-0.02em', color: '#121212' }}
                     >
                         Ready to <br /> Scale?
                     </h2>
@@ -118,14 +116,14 @@ const Footer = () => {
                                 padding: 'clamp(1rem, 3vw, 1.8rem) clamp(2rem, 5vw, 4.5rem)', 
                                 fontSize: 'clamp(1rem, 2vw, 1.25rem)',
                                 borderRadius: '100px',
-                                background: 'white',
-                                color: 'black',
+                                background: '#121212',
+                                color: '#ffffff',
                                 border: 'none',
                                 fontWeight: 800,
                                 display: 'flex',
                                 alignItems: 'center',
                                 gap: '1rem',
-                                boxShadow: '0 20px 40px rgba(0,0,0,0.4)',
+                                boxShadow: '0 20px 40px rgba(0,0,0,0.2)',
                                 cursor: 'pointer'
                             }}
                         >
@@ -141,34 +139,34 @@ const Footer = () => {
                 display: 'flex', 
                 justifyContent: 'space-between', 
                 alignItems: 'flex-end',
-                borderTop: '1px solid rgba(255,255,255,0.05)',
+                borderTop: '1px solid rgba(0,0,0,0.05)',
                 paddingTop: '3rem',
                 flexWrap: 'wrap',
                 gap: '2rem'
             }}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                    <div style={{ fontWeight: 800, letterSpacing: '-1px', fontSize: '1.5rem', display: 'flex', alignItems: 'center' }}>
-                        TALENT<span style={{ color: 'var(--accent)', marginLeft: '4px' }}>ELLA</span>
-                        <div style={{ width: '6px', height: '6px', background: 'var(--accent)', borderRadius: '50%', marginLeft: '4px' }}></div>
+                    <div style={{ fontWeight: 800, letterSpacing: '-1px', fontSize: '1.5rem', display: 'flex', alignItems: 'center', color: '#121212' }}>
+                        TALENT<span style={{ color: '#8763df', marginLeft: '4px' }}>ELLA</span>
+                        <div style={{ width: '6px', height: '6px', background: '#8763df', borderRadius: '50%', marginLeft: '4px' }}></div>
                     </div>
-                    <p style={{ color: 'var(--muted)', fontSize: '0.9rem', maxWidth: '300px' }}>
+                    <p style={{ color: '#4a4a4a', fontSize: '0.9rem', maxWidth: '300px' }}>
                         India's 360° marketing agency crafting digital excellence through imagination, strategy, and precision.
                     </p>
                 </div>
 
                 <div style={{ display: 'flex', gap: '3rem', flexWrap: 'wrap' }}>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                        <span style={{ fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.2em', color: 'var(--muted)' }}>Connect</span>
-                        <div style={{ display: 'flex', gap: '1.5rem', color: 'white' }}>
-                            <motion.a href="https://www.instagram.com/talentella.in?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" whileHover={{ scale: 1.2, color: 'var(--accent)' }} style={{ cursor: 'pointer', color: 'inherit' }}><Instagram size={20} /></motion.a>
-                            <motion.a href="https://www.linkedin.com/company/talentella/?lipi=urn%3Ali%3Apage%3Ad_flagship3_search_srp_all%3BoCez94fpRBmgazPJzx3LPw%3D%3D" target="_blank" rel="noopener noreferrer" whileHover={{ scale: 1.2, color: 'var(--accent)' }} style={{ cursor: 'pointer', color: 'inherit' }}><Linkedin size={20} /></motion.a>
-                            <motion.a href="mailto:talentella.in@gmail.com" whileHover={{ scale: 1.2, color: 'var(--accent)' }} style={{ cursor: 'pointer', color: 'inherit' }}><Mail size={20} /></motion.a>
+                        <span style={{ fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.2em', color: '#666666' }}>Connect</span>
+                        <div style={{ display: 'flex', gap: '1.5rem', color: '#121212' }}>
+                            <motion.a href="https://www.instagram.com/talentella.in?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" whileHover={{ scale: 1.2, color: '#8763df' }} style={{ cursor: 'pointer', color: 'inherit' }}><Instagram size={20} /></motion.a>
+                            <motion.a href="https://www.linkedin.com/company/talentella/?lipi=urn%3Ali%3Apage%3Ad_flagship3_search_srp_all%3BoCez94fpRBmgazPJzx3LPw%3D%3D" target="_blank" rel="noopener noreferrer" whileHover={{ scale: 1.2, color: '#8763df' }} style={{ cursor: 'pointer', color: 'inherit' }}><Linkedin size={20} /></motion.a>
+                            <motion.a href="mailto:talentella.in@gmail.com" whileHover={{ scale: 1.2, color: '#8763df' }} style={{ cursor: 'pointer', color: 'inherit' }}><Mail size={20} /></motion.a>
                         </div>
                     </div>
                     
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', textAlign: 'left' }}>
-                        <span style={{ fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.2em', color: 'var(--muted)' }}>Legal</span>
-                        <div style={{ fontSize: '0.85rem', color: 'var(--muted)' }}>
+                        <span style={{ fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.2em', color: '#666666' }}>Legal</span>
+                        <div style={{ fontSize: '0.85rem', color: '#666666' }}>
                             © 2026 TALENT ELLA. ALL RIGHTS RESERVED.
                         </div>
                     </div>

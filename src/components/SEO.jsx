@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 
 const SITE_NAME = 'TalentElla';
@@ -36,6 +36,26 @@ const SEO = ({
     })),
   } : null;
 
+  useEffect(() => {
+    const linkEn = document.createElement('link');
+    linkEn.rel = 'alternate';
+    linkEn.hreflang = 'en-IN';
+    linkEn.href = canonicalUrl;
+    
+    const linkX = document.createElement('link');
+    linkX.rel = 'alternate';
+    linkX.hreflang = 'x-default';
+    linkX.href = canonicalUrl;
+    
+    document.head.appendChild(linkEn);
+    document.head.appendChild(linkX);
+    
+    return () => {
+      if (document.head.contains(linkEn)) document.head.removeChild(linkEn);
+      if (document.head.contains(linkX)) document.head.removeChild(linkX);
+    };
+  }, [canonicalUrl]);
+
   return (
     <Helmet>
       {/* Primary Meta */}
@@ -45,10 +65,6 @@ const SEO = ({
       <meta name="author" content="TalentElla" />
       <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'} />
       <link rel="canonical" href={canonicalUrl} />
-
-      {/* hreflang */}
-      <link rel="alternate" hreflang="en-IN" href={canonicalUrl} />
-      <link rel="alternate" hreflang="x-default" href={canonicalUrl} />
 
       {/* Open Graph */}
       <meta property="og:type" content={type} />

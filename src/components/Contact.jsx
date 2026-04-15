@@ -134,15 +134,25 @@ const Contact = () => {
   };
 
 
+  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
+
   return (
-    <div id="contact" ref={outerRef} className="sticky-outer" style={{ zIndex: 35 }}>
+    <div id="contact" ref={outerRef} className="sticky-outer" style={{ zIndex: 70 }}>
       <motion.section
         className="sticky-section"
-        style={{ backgroundColor: '#f8f9fc', borderTop: '1px solid rgba(0,0,0,0.05)', borderTopLeftRadius: borderRad, borderTopRightRadius: borderRad, color: '#0a0a0c' }}
+        style={{ 
+          backgroundColor: '#050508', 
+          borderTop: '1px solid rgba(255,255,255,0.05)', 
+          borderTopLeftRadius: isMobile ? '0px' : borderRad, 
+          borderTopRightRadius: isMobile ? '0px' : borderRad, 
+          color: '#ffffff',
+          justifyContent: 'center',
+          height: '100dvh'
+        }}
       >
-        <div style={{ width: '100%', height: '100%', overflowY: 'auto', padding: '10vh 5%' }}>
+        <div style={{ width: '100%', height: '100%', overflowY: 'auto', padding: 'clamp(5rem, 20vh, 10rem) 5%' }}>
           <div style={{ maxWidth: '1400px', width: '100%', margin: '0 auto', position: 'relative' }}>
-          <div className="grid grid-cols-1 xl:grid-cols-2 gap-16 xl:gap-32 items-center">
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-12 xl:gap-32 items-center">
             
             {/* Left Side: Massive Heading */}
             <div className="flex flex-col gap-6 text-left">
@@ -152,7 +162,7 @@ const Contact = () => {
                 viewport={{ once: false }}
                 transition={{ duration: 1 }}
               >
-                <h2 className="text-[clamp(4rem,9vw,7.5rem)] font-black leading-[0.85] uppercase tracking-tighter text-[#0a0a0c] m-0">
+                <h2 className="text-[clamp(3rem,10vw,7.5rem)] font-black leading-[0.85] uppercase tracking-tighter text-white m-0">
                   {["LET'S", "GET IN", "TOUCH"].map((line, lineIdx) => (
                     <motion.div 
                       key={lineIdx} 
@@ -186,14 +196,14 @@ const Contact = () => {
                 </h2>
                 <a 
                   href="mailto:talentella.in@gmail.com" 
-                  className="inline-block mt-12 text-[clamp(1.2rem,2.5vw,1.8rem)] text-[#0a0a0c] font-semibold border-b-[3px] border-[#0a0a0c] pb-1 hover:text-neutral-400 hover:border-neutral-400 transition-colors"
+                  className="inline-block mt-8 text-[clamp(1rem,2vw,1.6rem)] text-white/90 font-semibold border-b-[2px] border-white/40 pb-1 hover:text-white hover:border-white transition-colors"
                 >
                    talentella.in@gmail.com
                 </a>
               </motion.div>
             </div>
 
-            {/* Right Side: Ultra Premium Minimalist Layout */}
+            {/* Right Side: Form centered vertically with the heading */}
             <motion.div 
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -203,7 +213,7 @@ const Contact = () => {
             >
               <form 
                 onSubmit={handleSubmit} 
-                className="flex flex-col gap-6 w-full"
+                className="flex flex-col gap-8 w-full"
               >
                 {/* Honeypot — hidden from real users, bots fill this */}
                 <input
@@ -228,46 +238,37 @@ const Contact = () => {
                     maxLength={100}
                     placeholder="Your Name *"
                     disabled={status === 'loading'}
-                    className="w-full bg-transparent border-b-[2px] border-black/10 py-3 text-lg md:text-xl text-[#0a0a0c] font-medium placeholder-black/30 outline-none transition-all duration-300 focus:border-[#0a0a0c] disabled:opacity-50"
-                    style={{ padding: '12px 0' }}
+                    className="w-full bg-transparent border-b-[2px] border-white/10 py-4 text-lg md:text-xl text-white font-medium placeholder-white/20 outline-none transition-all duration-300 focus:border-white disabled:opacity-50"
                   />
                 </div>
 
-                {/* Row 1: Email + Phone */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
-                  {/* Email */}
-                  <div className="relative w-full group">
-                    <input 
-                      type="email" 
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                      maxLength={150}
-                      placeholder="Email Address *"
-                      disabled={status === 'loading'}
-                      className="w-full bg-transparent border-b-[2px] border-black/10 py-3 text-lg md:text-xl text-[#0a0a0c] font-medium placeholder-black/30 outline-none transition-all duration-300 focus:border-[#0a0a0c] disabled:opacity-50"
-                      style={{ padding: '12px 0' }}
-                    />
-                  </div>
-                  {/* Phone */}
-                  <div className="relative w-full group">
-                    <input 
-                      type="tel" 
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      maxLength={20}
-                      placeholder="Phone Number"
-                      disabled={status === 'loading'}
-                      className="w-full bg-transparent border-b-[2px] border-black/10 py-3 text-lg md:text-xl text-[#0a0a0c] font-medium placeholder-black/30 outline-none transition-all duration-300 focus:border-[#0a0a0c] disabled:opacity-50"
-                      style={{ padding: '12px 0' }}
-                    />
-                  </div>
+                {/* Email + Phone */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
+                  <input 
+                    type="email" 
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    maxLength={150}
+                    placeholder="Email Address *"
+                    disabled={status === 'loading'}
+                    className="w-full bg-transparent border-b-[2px] border-white/10 py-4 text-lg md:text-xl text-white font-medium placeholder-white/20 outline-none transition-all duration-300 focus:border-white disabled:opacity-50"
+                  />
+                  <input 
+                    type="tel" 
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    maxLength={20}
+                    placeholder="Phone Number"
+                    disabled={status === 'loading'}
+                    className="w-full bg-transparent border-b-[2px] border-white/10 py-4 text-lg md:text-xl text-white font-medium placeholder-white/20 outline-none transition-all duration-300 focus:border-white disabled:opacity-50"
+                  />
                 </div>
 
-                {/* Row 2: Confirm Email (half width) */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+                {/* Confirm Email */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
                   <div className="relative w-full group">
                     <input 
                       type="email" 
@@ -280,15 +281,14 @@ const Contact = () => {
                       disabled={status === 'loading'}
                       autoComplete="off"
                       onPaste={e => e.preventDefault()}
-                      className={`w-full bg-transparent border-b-[2px] py-3 text-lg md:text-xl text-[#0a0a0c] font-medium placeholder-black/30 outline-none transition-all duration-300 disabled:opacity-50 ${
+                      className={`w-full bg-transparent border-b-[2px] py-4 text-lg md:text-xl text-white font-medium placeholder-white/20 outline-none transition-all duration-300 disabled:opacity-50 ${
                         formData.confirmEmail && formData.email.toLowerCase() !== formData.confirmEmail.toLowerCase()
-                          ? 'border-red-400 focus:border-red-500'
-                          : 'border-black/10 focus:border-[#0a0a0c]'
+                          ? 'border-red-500/50 focus:border-red-500'
+                          : 'border-white/10 focus:border-white'
                       }`}
-                      style={{ padding: '12px 0' }}
                     />
                     {formData.confirmEmail && formData.email.toLowerCase() !== formData.confirmEmail.toLowerCase() && (
-                      <span style={{ fontSize: '0.75rem', color: '#ef4444', position: 'absolute', bottom: '-18px', left: 0 }}>
+                      <span style={{ fontSize: '0.75rem', color: '#ef4444', position: 'absolute', bottom: '-22px', left: 0 }}>
                         Emails don't match
                       </span>
                     )}
@@ -306,39 +306,38 @@ const Contact = () => {
                     maxLength={500}
                     placeholder="Tell us about your project *"
                     disabled={status === 'loading'}
-                    className="w-full bg-transparent border-b-[2px] border-black/10 py-3 text-lg md:text-xl text-[#0a0a0c] font-medium placeholder-black/30 outline-none resize-none transition-all duration-300 focus:border-[#0a0a0c] disabled:opacity-50"
-                    style={{ padding: '12px 0' }}
+                    className="w-full bg-transparent border-b-[2px] border-white/10 py-4 text-lg md:text-xl text-white font-medium placeholder-white/20 outline-none resize-none transition-all duration-300 focus:border-white disabled:opacity-50"
                   />
                 </div>
 
                 {/* Status Messages */}
                 {validationError && (
-                  <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex items-center gap-3 text-[#0a0a0c] bg-orange-100/60 p-5 rounded-2xl font-semibold text-sm">
+                  <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex items-center gap-3 text-white bg-orange-950/30 border border-orange-500/20 p-5 rounded-2xl font-semibold text-sm">
                     <AlertCircle size={20} className="text-orange-500 flex-shrink-0" />
                     <span>{validationError}</span>
                   </motion.div>
                 )}
                 {status === 'success' && (
-                  <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex items-center gap-3 text-[#0a0a0c] bg-green-100/50 p-5 rounded-2xl font-bold">
-                    <CheckCircle size={24} className="text-green-600" />
+                  <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex items-center gap-3 text-white bg-green-900/30 border border-green-500/20 p-5 rounded-2xl font-bold">
+                    <CheckCircle size={24} className="text-green-500" />
                     <span>Message received loud and clear!</span>
                   </motion.div>
                 )}
                 {status === 'error' && (
-                  <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex items-center gap-3 text-[#0a0a0c] bg-red-100/50 p-5 rounded-2xl font-bold">
+                  <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex items-center gap-3 text-white bg-red-900/30 border border-red-500/20 p-5 rounded-2xl font-bold">
                     <AlertCircle size={24} className="text-red-500" />
                     <span>Failed to route. Try sending an email directly.</span>
                   </motion.div>
                 )}
 
-                {/* reCAPTCHA */}
-                <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+                {/* reCAPTCHA - Centered */}
+                <div style={{ display: 'flex', justifyContent: 'center', margin: '1rem 0' }}>
                   <ReCAPTCHA
                     ref={recaptchaRef}
-                    sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
+                    sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY || "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"}
                     onChange={(token) => { setRecaptchaToken(token); setValidationError(''); }}
                     onExpired={() => setRecaptchaToken(null)}
-                    theme="light"
+                    theme="dark"
                   />
                 </div>
 
@@ -346,17 +345,17 @@ const Contact = () => {
                 <button 
                   type="submit"
                   disabled={status === 'loading' || !recaptchaToken}
-                  className="mt-6 flex items-center justify-between w-full bg-[#0a0a0c] text-white rounded-full transition-all duration-300 hover:bg-black hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 contact-submit-btn"
+                  className="mt-2 flex items-center justify-between w-full bg-white text-black rounded-full transition-all duration-300 hover:bg-neutral-200 hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50"
                   style={{ padding: '20px 32px 20px 42px' }}
                 >
-                  <span className="text-sm md:text-base font-extrabold tracking-[0.2em] uppercase mr-6">
+                  <span className="text-sm md:text-base font-black tracking-[0.25em] uppercase">
                     {status === 'loading' ? 'Transmitting...' : 'Send Inquiry'}
                   </span>
                   {status === 'loading' ? (
-                    <Loader2 className="animate-spin text-white" size={24} />
+                    <Loader2 className="animate-spin text-black" size={24} />
                   ) : (
-                    <div className="bg-white/20 p-3 rounded-full flex items-center justify-center">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-white"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                    <div className="bg-black text-white p-3 rounded-full flex items-center justify-center">
+                      <Send size={18} />
                     </div>
                   )}
                 </button>

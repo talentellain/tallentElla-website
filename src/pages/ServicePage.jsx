@@ -19,38 +19,7 @@ const iconMap = {
 /* ──────────────────────────────────────────────
    GEO: Answer-First Block for AI citation
    ────────────────────────────────────────────── */
-const AnswerBlock = ({ answerBlock }) => {
-  if (!answerBlock) return null;
-  return (
-    <div 
-      itemScope 
-      itemType="https://schema.org/Question"
-      style={{
-        maxWidth: '800px',
-        margin: '0 auto 2rem',
-        padding: 'clamp(1.25rem, 3vw, 2rem)',
-        backgroundColor: 'rgba(132, 0, 255, 0.06)',
-        border: '1px solid rgba(132, 0, 255, 0.15)',
-        borderRadius: '20px',
-      }}
-    >
-      <h2 
-        itemProp="name"
-        style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)', fontWeight: 700, color: '#fff', marginBottom: '0.75rem' }}
-      >
-        {answerBlock.question}
-      </h2>
-      <div itemScope itemType="https://schema.org/Answer" itemProp="acceptedAnswer">
-        <p 
-          itemProp="text"
-          style={{ color: 'rgba(255,255,255,0.65)', fontSize: 'clamp(0.85rem, 1.5vw, 1rem)', lineHeight: 1.7, margin: 0 }}
-        >
-          {answerBlock.answer}
-        </p>
-      </div>
-    </div>
-  );
-};
+// Removed standalone AnswerBlock to merge into hero
 
 /* ──────────────────────────────────────────────
    FAQ Accordion for Service Pages
@@ -61,11 +30,11 @@ const ServiceFAQ = ({ faqs }) => {
 
   return (
     <div style={{ maxWidth: '800px', margin: '0 auto', width: '100%' }}>
-      <div style={{ textAlign: 'center', marginBottom: 'clamp(1.5rem, 3vh, 2.5rem)' }}>
-        <span className="accent-gradient" style={{ fontWeight: 700, letterSpacing: '0.3em', textTransform: 'uppercase', fontSize: '0.7rem', display: 'block', marginBottom: '0.75rem' }}>
+      <div style={{ textAlign: 'center', marginBottom: 'clamp(2rem, 4vh, 3.5rem)' }}>
+        <span className="accent-gradient" style={{ fontWeight: 700, letterSpacing: '0.3em', textTransform: 'uppercase', fontSize: '0.75rem', display: 'block', marginBottom: '0.75rem' }}>
           FAQ
         </span>
-        <h2 style={{ fontSize: 'clamp(1.8rem, 4vw, 2.5rem)', fontWeight: 800, color: '#0a0a0c', marginBottom: '0.5rem' }}>
+        <h2 style={{ fontSize: 'clamp(2rem, 7vw, 2.8rem)', fontWeight: 800, color: '#0a0a0c', marginBottom: '0.5rem', lineHeight: 1.1 }}>
           Frequently Asked Questions
         </h2>
       </div>
@@ -93,7 +62,7 @@ const ServiceFAQ = ({ faqs }) => {
               }}
             >
               <h3 style={{
-                fontSize: 'clamp(0.9rem, 1.8vw, 1.05rem)', fontWeight: 600, margin: 0, lineHeight: 1.4, flex: 1,
+                fontSize: 'clamp(1.15rem, 4vw, 1.25rem)', fontWeight: 700, margin: 0, lineHeight: 1.4, flex: 1, color: '#0a0a0c'
               }}>
                 {faq.question}
               </h3>
@@ -118,10 +87,10 @@ const ServiceFAQ = ({ faqs }) => {
                   style={{ overflow: 'hidden' }}
                 >
                   <p style={{
-                    color: '#555',
-                    fontSize: 'clamp(0.85rem, 1.5vw, 0.95rem)',
+                    color: '#444',
+                    fontSize: 'clamp(1.05rem, 3.5vw, 1.15rem)',
                     lineHeight: 1.7,
-                    paddingBottom: 'clamp(0.9rem, 2vw, 1.25rem)',
+                    paddingBottom: 'clamp(1rem, 2.5vw, 1.5rem)',
                     margin: 0,
                     maxWidth: '750px',
                   }}>
@@ -140,7 +109,8 @@ const ServiceFAQ = ({ faqs }) => {
 /* ──────────────────────────────────────────────
    Related Services (Internal Linking)
    ────────────────────────────────────────────── */
-const RelatedServices = ({ currentId }) => {
+const RelatedServices = ({ currentId, isMobile }) => {
+  const navigate = useNavigate();
   const related = servicesData.filter(s => s.id !== currentId);
   const currentService = servicesData.find(s => s.id === currentId);
   const linkedIds = currentService?.relatedServices || [];
@@ -148,11 +118,19 @@ const RelatedServices = ({ currentId }) => {
   const displayServices = linkedServices.length >= 2 ? linkedServices : related.slice(0, 2);
 
   return (
-    <div style={{ maxWidth: '800px', margin: '2rem auto 0', width: '100%' }}>
-      <h3 style={{ fontSize: '1rem', fontWeight: 700, color: '#0a0a0c', marginBottom: '1rem', textAlign: 'center', letterSpacing: '0.05em' }}>
-        Explore More Services
-      </h3>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem' }}>
+    <div style={{ maxWidth: '1200px', margin: '4rem auto 0', width: '100%' }}>
+      <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+        <h3 style={{ fontSize: 'clamp(1.5rem, 4vw, 2.2rem)', fontWeight: 800, color: '#0a0a0c', marginBottom: '0.5rem', letterSpacing: '-0.02em' }}>
+          Explore More Services
+        </h3>
+        <p style={{ color: '#666', fontSize: '1rem' }}>Discover more ways we can help you grow your brand.</p>
+      </div>
+
+      <div style={{ 
+        display: 'grid', 
+        gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)', 
+        gap: isMobile ? '1.5rem' : '2rem' 
+      }}>
         {displayServices.map((s) => {
           const Icon = iconMap[s.icon] || Zap;
           return (
@@ -160,32 +138,50 @@ const RelatedServices = ({ currentId }) => {
               key={s.id}
               to={`/services/${s.id}`}
               style={{ textDecoration: 'none' }}
-              aria-label={`Explore TalentElla's ${s.title} — ${s.seo?.primaryKeyword || 'marketing'} services`}
+              onClick={() => window.scrollTo(0, 0)}
             >
               <motion.div
-                whileHover={{ y: -4, backgroundColor: '#f0ecf9' }}
+                whileHover={{ y: -8, boxShadow: '0 25px 50px rgba(132, 0, 255, 0.12)', borderColor: 'rgba(132, 0, 255, 0.2)' }}
                 style={{
-                  padding: '1.25rem 1.5rem',
-                  borderRadius: '16px',
+                  padding: isMobile ? '2rem' : '2.5rem',
+                  borderRadius: '28px',
                   backgroundColor: '#fff',
                   border: '1px solid rgba(0,0,0,0.06)',
-                  transition: 'all 0.3s ease',
+                  transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
                   display: 'flex',
-                  alignItems: 'center',
-                  gap: '1rem',
+                  flexDirection: 'column',
+                  alignItems: 'flex-start',
+                  gap: '1.5rem',
+                  height: '100%',
+                  textAlign: 'left'
                 }}
               >
                 <div style={{
-                  width: '40px', height: '40px', borderRadius: '10px',
+                  width: '56px', height: '56px', borderRadius: '14px',
                   backgroundColor: 'rgba(132, 0, 255, 0.08)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   color: '#8400ff', flexShrink: 0
                 }}>
-                  <Icon size={20} />
+                  <Icon size={28} />
                 </div>
                 <div>
-                  <div style={{ fontWeight: 700, color: '#0a0a0c', fontSize: '0.95rem' }}>{s.title}</div>
-                  <div style={{ color: '#888', fontSize: '0.75rem', marginTop: '0.2rem' }}>{s.seo?.primaryKeyword}</div>
+                  <div style={{ fontWeight: 800, color: '#0a0a0c', fontSize: '1.35rem', marginBottom: '0.75rem', letterSpacing: '-0.01em' }}>
+                    {s.title}
+                  </div>
+                  <p style={{ color: '#555', fontSize: '0.95rem', lineHeight: 1.6, margin: 0 }}>
+                    {s.description.split('.')[0]}. {/* Direct simple description */}
+                  </p>
+                </div>
+                <div style={{ 
+                  marginTop: 'auto', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: '0.5rem', 
+                  color: '#8400ff', 
+                  fontWeight: 700, 
+                  fontSize: '0.9rem' 
+                }}>
+                  View Details <ArrowUpRight size={18} />
                 </div>
               </motion.div>
             </Link>
@@ -314,51 +310,71 @@ const PricingCard = ({ plan, idx }) => {
       className={`pricing-card ${expanded ? 'expanded' : ''}`}
       onClick={() => setExpanded(!expanded)}
       style={{ 
-        padding: '2.5rem 2rem', 
+        padding: '2.2rem 1.6rem 2rem', 
         backgroundColor: idx === 1 ? '#0a0a0c' : 'white', 
         color: idx === 1 ? 'white' : '#0a0a0c',
-        borderRadius: '32px', 
+        borderRadius: '28px', 
         border: '1px solid rgba(0,0,0,0.05)',
-        boxShadow: '0 20px 60px rgba(0,0,0,0.03)',
+        boxShadow: idx === 1 ? '0 30px 60px rgba(132, 0, 255, 0.15)' : '0 20px 60px rgba(0,0,0,0.03)',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'flex-start',
         textAlign: 'left',
         position: 'relative',
-        cursor: 'pointer'
+        cursor: 'pointer',
+        marginTop: idx === 1 ? '12px' : '0'
       }}
     >
-      {idx === 1 && <span style={{ position: 'absolute', top: '1.5rem', right: '1.5rem', backgroundColor: '#8400ff', color: 'white', padding: '0.35rem 1rem', borderRadius: '100px', fontSize: '0.7rem', fontWeight: 800 }}>MOST POPULAR</span>}
-      <h3 style={{ fontSize: '1.5rem', marginBottom: '0.2rem', marginTop: '0' }}>{plan.name}</h3>
-      {plan.subtitle && <p style={{ fontSize: '0.85rem', color: idx === 1 ? '#aaa' : '#777', margin: '0 0 1rem 0' }}>{plan.subtitle}</p>}
+      {idx === 1 && (
+        <span style={{ 
+          position: 'absolute', 
+          top: '-12px', 
+          left: '50%', 
+          transform: 'translateX(-50%)', 
+          backgroundColor: '#8400ff', 
+          color: 'white', 
+          padding: '0.4rem 1rem', 
+          borderRadius: '100px', 
+          fontSize: '0.65rem', 
+          fontWeight: 900, 
+          letterSpacing: '0.05em',
+          boxShadow: '0 4px 15px rgba(132, 0, 255, 0.4)',
+          whiteSpace: 'nowrap',
+          zIndex: 10
+        }}>
+          MOST POPULAR
+        </span>
+      )}
+      <h3 style={{ fontSize: '1.2rem', marginBottom: '0.2rem', marginTop: '0', fontWeight: 850, lineHeight: 1.2, letterSpacing: '-0.02em', maxWidth: '100%' }}>{plan.name}</h3>
+      {plan.subtitle && <p style={{ fontSize: '0.78rem', color: idx === 1 ? '#888' : '#777', margin: '0 0 0.8rem 0', fontWeight: 500 }}>{plan.subtitle}</p>}
       
-      <div className="pricing-value" style={{ fontSize: '2.5rem', fontWeight: 900, margin: '0.4rem 0', display: 'flex', alignItems: 'baseline', gap: '0.5rem' }}>
+      <div className="pricing-value" style={{ fontSize: '2.1rem', fontWeight: 900, margin: '0.3rem 0', display: 'flex', alignItems: 'baseline', gap: '0.4rem' }}>
         {plan.price}
-        {plan.billing && <span style={{ fontSize: '1rem', fontWeight: 500, color: idx === 1 ? '#888' : '#888' }}>{plan.billing}</span>}
+        {plan.billing && <span style={{ fontSize: '0.85rem', fontWeight: 500, color: idx === 1 ? '#666' : '#888' }}>{plan.billing}</span>}
       </div>
       
       <div className="know-more-mobile" style={{ 
         width: '100%', 
-        marginTop: '0.5rem',
-        paddingTop: '0.8rem',
+        marginTop: '0.4rem',
+        paddingTop: '0.6rem',
         borderTop: `1px dashed ${idx === 1 ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.1)'}`,
         color: idx === 1 ? '#fff' : '#0a0a0c',
         fontWeight: 700,
-        fontSize: '0.85rem',
+        fontSize: '0.78rem',
         justifyContent: 'center',
         alignItems: 'center',
-        gap: '0.5rem'
+        gap: '0.4rem'
       }}>
-        Tap to know more <span style={{ color: '#8400ff', fontSize: '1rem' }}>↓</span>
+        Tap to know more <span style={{ color: '#8400ff', fontSize: '0.9rem' }}>↓</span>
       </div>
       
       <div className="pricing-features-wrap" style={{ width: '100%' }}>
-        <div style={{ width: '100%', height: '1px', backgroundColor: idx === 1 ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)', margin: '1.25rem 0' }}></div>
+        <div style={{ width: '100%', height: '1px', backgroundColor: idx === 1 ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)', margin: '1rem 0' }}></div>
         
-        <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 2rem 0', display: 'flex', flexDirection: 'column', gap: '0.85rem', width: '100%' }}>
+        <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 1.5rem 0', display: 'flex', flexDirection: 'column', gap: '0.65rem', width: '100%' }}>
           {plan.features.map((feature, fIdx) => (
-            <li key={fIdx} style={{ fontSize: '0.9rem', color: idx === 1 ? '#bbb' : '#555', display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '0.6rem' }}>
-              <Check size={16} style={{ color: '#8400ff', flexShrink: 0 }} /> {feature}
+            <li key={fIdx} style={{ fontSize: '0.82rem', color: idx === 1 ? '#aaa' : '#555', display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '0.5rem' }}>
+              <Check size={14} style={{ color: '#8400ff', flexShrink: 0 }} /> {feature}
             </li>
           ))}
         </ul>
@@ -367,14 +383,14 @@ const PricingCard = ({ plan, idx }) => {
           aria-label="Book a consultation for this plan"
           style={{ 
             width: '100%', 
-            padding: '1rem', 
+            padding: '0.85rem', 
             borderRadius: '100px', 
             border: 'none', 
             backgroundColor: idx === 1 ? 'white' : '#0a0a0c', 
             color: idx === 1 ? '#0a0a0c' : 'white',
             fontWeight: 800,
             cursor: 'pointer',
-            fontSize: '0.9rem'
+            fontSize: '0.82rem'
           }}
         >
           Book a Consultation
@@ -389,6 +405,7 @@ const ServicePage = () => {
   const navigate = useNavigate();
   const service = servicesData.find(s => s.id === id);
   const pricingRef = useRef(null);
+  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -436,140 +453,20 @@ const ServicePage = () => {
         breadcrumbs={breadcrumbs}
       />
 
-      {/* 1. Internal Header Section */}
-      <section className="svc-header-section" style={{ backgroundColor: '#0c0c10', paddingTop: 'clamp(130px, 18vh, 180px)', paddingBottom: 'clamp(80px, 12vh, 120px)' }}>
-        <style>{`
-          @media (max-width: 768px) {
-            .svc-header-section { padding-top: 160px !important; padding-bottom: 80px !important; }
-          }
-        `}</style>
-        <div style={{ maxWidth: '1400px', margin: '0 auto', width: '100%', padding: '0 5%' }}>
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            >
-              {/* Breadcrumb navigation */}
-              <nav aria-label="Breadcrumb" style={{ marginBottom: '1.5rem' }}>
-                <ol style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', listStyle: 'none', padding: 0, margin: 0, fontSize: '0.75rem', color: '#888' }}>
-                  <li><Link to="/" style={{ color: '#888', textDecoration: 'none' }}>Home</Link></li>
-                  <li style={{ color: '#555' }}>/</li>
-                  <li><span style={{ color: '#8400ff' }}>{service.title}</span></li>
-                </ol>
-              </nav>
-
-              <div style={{ 
-                color: '#8400ff', 
-                fontSize: '0.8rem', 
-                fontWeight: 800, 
-                letterSpacing: '0.4em', 
-                marginBottom: '1.5rem',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '1rem'
-              }}>
-                <div style={{ width: '40px', height: '1px', backgroundColor: '#8400ff' }}></div>
-                SERVICE // {service.id.toUpperCase().replace(/-/g, ' ')}
-              </div>
-              
-              {/* SEO: H1 with primary keyword */}
-              <h1 className="hero-title-shimmer" style={{ 
-                fontSize: 'clamp(1.8rem, 7vw, 6.5rem)', 
-                fontWeight: 800, 
-                marginBottom: '2.5rem', 
-                lineHeight: 1.1,
-                textAlign: 'left',
-                wordWrap: 'break-word'
-              }}>
-                {service.title}
-              </h1>
-
-              <div style={{ display: 'flex', gap: '3rem', alignItems: 'flex-start' }} className="flex-col-mobile">
-                <div style={{ 
-                  width: '60px', 
-                  height: '60px', 
-                  borderRadius: '16px', 
-                  backgroundColor: 'rgba(132, 0, 255, 0.1)', 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  justifyContent: 'center',
-                  color: '#8400ff',
-                  flexShrink: 0
-                }}>
-                  <IconComponent size={32} />
-                </div>
-                <p style={{ fontSize: '1.25rem', color: '#888', lineHeight: '1.7', maxWidth: '750px', textAlign: 'left' }}>
-                  {service.description}
-                </p>
-              </div>
-
-              {/* GEO: Answer-first block */}
-              <div style={{ marginTop: '2.5rem' }}>
-                <AnswerBlock answerBlock={service.answerBlock} />
-              </div>
-
-              {/* CTA */}
-              <div style={{ marginTop: '1rem', display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => {
-                    navigate('/');
-                    setTimeout(() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }), 300);
-                  }}
-                  aria-label="Get a free strategy call for this service"
-                  style={{
-                    padding: '14px 32px',
-                    borderRadius: '100px',
-                    background: 'white',
-                    color: '#0a0a0c',
-                    border: 'none',
-                    fontWeight: 800,
-                    fontSize: '0.85rem',
-                    cursor: 'pointer',
-                    letterSpacing: '0.03em',
-                  }}
-                >
-                  Get a Free Strategy Call
-                </motion.button>
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => {
-                    navigate('/');
-                    setTimeout(() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }), 300);
-                  }}
-                  aria-label="Book a consultation"
-                  style={{
-                    padding: '14px 32px',
-                    borderRadius: '100px',
-                    background: 'transparent',
-                    color: 'white',
-                    border: '1px solid rgba(255,255,255,0.2)',
-                    fontWeight: 700,
-                    fontSize: '0.85rem',
-                    cursor: 'pointer',
-                    letterSpacing: '0.03em',
-                  }}
-                >
-                  Let's Grow Your Brand
-                </motion.button>
-              </div>
-            </motion.div>
-          </div>
-        </section>
+      {/* 1. Internal Header Section (Sticky) */}
+      <ServiceHeroSection service={service} isMobile={isMobile} navigate={navigate} />
 
       {/* 1.5 Offerings Section */}
-      <OfferingsSection service={service} />
+      <OfferingsSection service={service} isMobile={isMobile} />
 
       {/* 1.6 FAQ Section */}
-      <ServiceFAQSection faqs={service.faqs} />
+      <ServiceFAQSection faqs={service.faqs} isMobile={isMobile} />
 
       {/* 1.7 Related Services Section */}
-      <RelatedServicesSectionComp currentId={service.id} />
+      <RelatedServicesSectionComp currentId={service.id} isMobile={isMobile} />
 
       {/* 3. Pricing Section */}
-      <PricingSection service={service} pricingRef={pricingRef} />
+      <PricingSection service={service} pricingRef={pricingRef} isMobile={isMobile} />
 
       {/* Footer */}
       <Footer />
@@ -582,7 +479,7 @@ const ServicePage = () => {
    Sticky sub-components for ServicePage
    ───────────────────────────────────────────────────────────────────────── */
 
-const OfferingsSection = ({ service }) => {
+const OfferingsSection = ({ service, isMobile }) => {
   const outerRef = useRef(null);
   const { scrollYProgress } = useScroll({ target: outerRef, offset: ['start end', 'start start'] });
   const borderRad = useTransform(scrollYProgress, [0, 1], ['60px', '0px']);
@@ -591,20 +488,120 @@ const OfferingsSection = ({ service }) => {
       <motion.section className="sticky-section" style={{ backgroundColor: '#f8f9fc', borderTop: '1px solid rgba(0,0,0,0.05)', borderTopLeftRadius: borderRad, borderTopRightRadius: borderRad }}>
         <div style={{ width: '100%', height: '100%', overflowY: 'auto', padding: '10vh 0' }}>
           <div style={{ maxWidth: '1400px', margin: '0 auto', width: '100%', padding: '0 5%' }}>
-            <div style={{ textAlign: 'center', paddingBottom: '4vh' }}>
-              <h2 className="hero-title-shimmer-dark" style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 800, marginBottom: '0.5rem' }}>How we deliver value</h2>
-              <p style={{ color: '#55555f', fontSize: '1.1rem', maxWidth: '600px', margin: '0 auto' }}>Specific specializations tailored to scaling your digital footprint efficiently.</p>
+            <div style={{ textAlign: 'center', paddingBottom: isMobile ? '2vh' : '4vh' }}>
+              <h2 className="hero-title-shimmer-dark" style={{ 
+                fontSize: isMobile ? 'clamp(1.5rem, 6vw, 2rem)' : 'clamp(2.5rem, 5vw, 4rem)', 
+                fontWeight: 800, 
+                marginBottom: '0.5rem',
+                lineHeight: 1.2,
+                wordBreak: 'break-word',
+                maxWidth: '100%'
+              }}>
+                How we deliver value
+              </h2>
+              <p style={{ color: '#55555f', fontSize: isMobile ? '0.9rem' : '1.1rem', maxWidth: '600px', margin: '0 auto', lineHeight: 1.5 }}>
+                Specific specializations tailored to scaling your digital footprint efficiently.
+              </p>
             </div>
-            <div className="value-grid-fix" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.25rem', marginTop: '2rem' }}>
+            <div className="value-grid-redesign" style={{ 
+              display: 'grid', 
+              gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)', 
+              gap: isMobile ? '0.75rem' : '1.25rem', 
+              marginTop: isMobile ? '2rem' : '3rem',
+              maxWidth: '1200px',
+              marginRight: 'auto',
+              marginLeft: 'auto'
+            }}>
               {service.subItems.map((item, idx) => (
-                <motion.div key={idx} initial="initial" whileInView="view" whileHover="hover" viewport={{ once: true }}
-                  variants={{ initial: { opacity: 0, x: -25, y: 15, backgroundColor: '#ffffff' }, view: { opacity: 1, x: 0, y: 0, backgroundColor: '#ffffff', transition: { delay: idx * 0.08, duration: 0.6, ease: [0.16, 1, 0.3, 1] } }, hover: { scale: 1.03, x: 10, backgroundColor: '#8763df', borderColor: 'transparent', boxShadow: '0 20px 40px rgba(135,99,223,0.3)' } }}
-                  className="value-card" style={{ padding: '1.5rem 2.5rem', display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '1.5rem', backgroundColor: '#ffffff', border: '1px solid rgba(0,0,0,0.06)', borderRadius: '24px', cursor: 'pointer', transition: 'background-color 0.4s ease, border-color 0.4s ease' }}
+                <motion.div 
+                  key={idx} 
+                  initial="initial" 
+                  whileInView="view" 
+                  whileHover="hover" 
+                  viewport={{ once: true }}
+                  variants={{ 
+                    initial: { opacity: 0, y: 20 }, 
+                    view: { 
+                      opacity: 1, 
+                      y: 0, 
+                      transition: { delay: idx * 0.05, duration: 0.6, ease: [0.16, 1, 0.3, 1] } 
+                    }, 
+                    hover: { 
+                      y: isMobile ? 0 : -5,
+                      backgroundColor: 'rgba(255,255,255,1)',
+                      borderColor: '#8400ff',
+                      boxShadow: '0 25px 50px rgba(132, 0, 255, 0.08)'
+                    } 
+                  }}
+                  style={{ 
+                    padding: isMobile ? '1.5rem 1rem' : '1.8rem 1.5rem', 
+                    display: 'flex', 
+                    flexDirection: 'column', 
+                    alignItems: 'flex-start', 
+                    gap: isMobile ? '0.8rem' : '1rem', 
+                    backgroundColor: '#ffffff', 
+                    border: '1px solid rgba(0,0,0,0.06)', 
+                    borderRadius: isMobile ? '16px' : '20px', 
+                    cursor: 'pointer', 
+                    transition: 'all 0.4s ease',
+                    position: 'relative',
+                    overflow: 'hidden',
+                    minHeight: isMobile ? '140px' : 'auto'
+                  }}
                 >
-                  <motion.div variants={{ initial: { scale: 0, rotate: -45, backgroundColor: 'rgba(132,0,255,0.08)' }, view: { scale: 1, rotate: 0, backgroundColor: 'rgba(132,0,255,0.08)', transition: { delay: idx * 0.08 + 0.2, type: 'spring', damping: 12 } }, hover: { scale: 1.1, backgroundColor: 'rgba(255,255,255,0.25)' } }} className="value-icon" style={{ width: '44px', height: '44px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                    <MotionCheck size={20} variants={{ initial: { color: '#8400ff' }, view: { color: '#8400ff' }, hover: { color: '#ffffff' } }} />
+                  {/* Subtle Numbering */}
+                  <div style={{ 
+                    position: 'absolute', 
+                    top: isMobile ? '0.8rem' : '1.2rem', 
+                    right: isMobile ? '0.8rem' : '1.2rem', 
+                    fontSize: isMobile ? '1.5rem' : '2rem', 
+                    fontWeight: 900, 
+                    opacity: 0.02, 
+                    lineHeight: 1,
+                    userSelect: 'none'
+                  }}>
+                    0{idx + 1}
+                  </div>
+
+                  <motion.div 
+                    variants={{ 
+                      initial: { scale: 0.8 }, 
+                      view: { scale: 1 },
+                      hover: { scale: 1.1, backgroundColor: '#8400ff', color: '#fff' }
+                    }} 
+                    style={{ 
+                      width: isMobile ? '32px' : '36px', 
+                      height: isMobile ? '32px' : '36px', 
+                      borderRadius: isMobile ? '8px' : '10px', 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      justifyContent: 'center', 
+                      flexShrink: 0,
+                      backgroundColor: 'rgba(132,0,255,0.06)',
+                      color: '#8400ff',
+                      transition: 'all 0.4s ease'
+                    }}
+                  >
+                    <MotionCheck size={isMobile ? 16 : 18} />
                   </motion.div>
-                  <motion.h3 variants={{ initial: { color: '#0a0a0c' }, view: { color: '#0a0a0c' }, hover: { color: '#ffffff' } }} style={{ fontSize: '1.2rem', fontWeight: 600, margin: 0, letterSpacing: '-0.01em' }}>{item}</motion.h3>
+                  
+                  <div style={{ textAlign: 'left', zIndex: 1, width: '100%' }}>
+                    <motion.h3 
+                      style={{ 
+                        fontSize: isMobile ? '1.25rem' : '1.05rem', 
+                        fontWeight: 850, 
+                        margin: '0.1rem 0 0.4rem', 
+                        color: '#0a0a0c',
+                        letterSpacing: '-0.02em',
+                        lineHeight: 1.2
+                      }}
+                    >
+                      {item}
+                    </motion.h3>
+                    <p style={{ color: '#666', fontSize: isMobile ? '0.9rem' : '0.8rem', lineHeight: 1.6, margin: 0 }}>
+                      Focused on high-performance {service.title.toLowerCase()} results.
+                    </p>
+                  </div>
                 </motion.div>
               ))}
             </div>
@@ -615,7 +612,7 @@ const OfferingsSection = ({ service }) => {
   );
 };
 
-const ServiceFAQSection = ({ faqs }) => {
+const ServiceFAQSection = ({ faqs, isMobile }) => {
   const outerRef = useRef(null);
   const { scrollYProgress } = useScroll({ target: outerRef, offset: ['start end', 'start start'] });
   const borderRad = useTransform(scrollYProgress, [0, 1], ['60px', '0px']);
@@ -632,7 +629,7 @@ const ServiceFAQSection = ({ faqs }) => {
   );
 };
 
-const RelatedServicesSectionComp = ({ currentId }) => {
+const RelatedServicesSectionComp = ({ currentId, isMobile }) => {
   const outerRef = useRef(null);
   const { scrollYProgress } = useScroll({ target: outerRef, offset: ['start end', 'start start'] });
   const borderRad = useTransform(scrollYProgress, [0, 1], ['60px', '0px']);
@@ -649,7 +646,7 @@ const RelatedServicesSectionComp = ({ currentId }) => {
   );
 };
 
-const PricingSection = ({ service, pricingRef: externalRef }) => {
+const PricingSection = ({ service, pricingRef: externalRef, isMobile }) => {
   const outerRef = useRef(null);
   const setRefs = (el) => { outerRef.current = el; if (externalRef) externalRef.current = el; };
   const { scrollYProgress } = useScroll({ target: outerRef, offset: ['start end', 'start start'] });
@@ -668,7 +665,7 @@ const PricingSection = ({ service, pricingRef: externalRef }) => {
             <p style={{ color: '#55555f', textAlign: 'center', marginBottom: '2.5rem', fontSize: '1.1rem', marginTop: '0.5rem' }}>
               Transparent pricing in INR — no hidden fees. All plans include dedicated support.
             </p>
-            <div className="auto-grid pricing-grid-fix" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2rem', width: '100%' }}>
+            <div className="auto-grid pricing-grid-fix" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem', width: '100%', maxWidth: '1100px', margin: '0 auto' }}>
               {service.plans.map((plan, idx) => <PricingCard key={idx} plan={plan} idx={idx} />)}
             </div>
           </div>
@@ -712,6 +709,132 @@ const MaintenanceSection = ({ data }) => {
           </div>
         </div>
       </motion.section>
+    </div>
+  );
+};
+
+const ServiceHeroSection = ({ service, isMobile, navigate }) => {
+  const IconComponent = iconMap[service.icon] || Zap;
+  return (
+    <div className="sticky-outer" style={{ zIndex: 10 }}>
+      <section className="sticky-section" style={{ backgroundColor: '#0c0c10', height: '100dvh' }}>
+        <div style={{ width: '100%', height: '100%', overflowY: 'auto', padding: isMobile ? '120px 5% 60px' : '15vh 5% 10vh' }}>
+          <div style={{ maxWidth: '1400px', margin: '0 auto', width: '100%' }}>
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            >
+              {/* Breadcrumb navigation */}
+              <nav aria-label="Breadcrumb" style={{ marginBottom: '1.5rem' }}>
+                <ol style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', listStyle: 'none', padding: 0, margin: 0, fontSize: isMobile ? '0.85rem' : '0.75rem', color: '#888' }}>
+                  <li><Link to="/" style={{ color: '#888', textDecoration: 'none' }}>Home</Link></li>
+                  <li style={{ color: '#555' }}>/</li>
+                  <li><span style={{ color: '#8400ff', fontWeight: isMobile ? 700 : 400 }}>{service.title}</span></li>
+                </ol>
+              </nav>
+
+              <div style={{ 
+                color: '#8400ff', 
+                fontSize: isMobile ? '0.7rem' : '0.8rem', 
+                fontWeight: 800, 
+                letterSpacing: '0.4em', 
+                marginBottom: '1rem',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '1rem'
+              }}>
+                <div style={{ width: isMobile ? '20px' : '40px', height: '1px', backgroundColor: '#8400ff' }}></div>
+                SERVICE // {service.id.toUpperCase().replace(/-/g, ' ')}
+              </div>
+              
+              {/* SEO: H1 with primary keyword */}
+              <h1 className="hero-title-shimmer" style={{ 
+                fontSize: isMobile ? 'clamp(2.5rem, 8vw, 3.5rem)' : 'clamp(3rem, 7vw, 5.5rem)', 
+                fontWeight: 800, 
+                marginBottom: '2rem', 
+                lineHeight: 1.05,
+                textAlign: 'left',
+                wordWrap: 'break-word',
+                maxWidth: '1200px'
+              }}>
+                {service.title}
+              </h1>
+
+              <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1.2fr 0.8fr', gap: isMobile ? '2.5rem' : '4rem', marginTop: '3rem', alignItems: 'flex-start' }}>
+                {/* Primary Content */}
+                <div style={{ textAlign: 'left' }}>
+                  <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'flex-start', marginBottom: '2rem' }}>
+                    <div style={{ 
+                      width: '56px', height: '56px', borderRadius: '16px', 
+                      backgroundColor: 'rgba(132, 0, 255, 0.1)', 
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      color: '#8400ff', flexShrink: 0
+                    }}>
+                      <IconComponent size={28} />
+                    </div>
+                    <p style={{ fontSize: isMobile ? '1.1rem' : '1.35rem', color: '#fff', lineHeight: '1.6', fontWeight: 600, margin: 0 }}>
+                      {service.description}
+                    </p>
+                  </div>
+
+                  {/* CTA Buttons - Moved here for better flow */}
+                  <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginTop: '2.5rem' }}>
+                    <motion.button
+                      whileHover={{ scale: 1.05, backgroundColor: '#8400ff', color: 'white' }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => {
+                        navigate('/');
+                        setTimeout(() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }), 300);
+                      }}
+                      style={{ padding: '16px 32px', borderRadius: '100px', background: 'white', color: '#0a0a0c', border: 'none', fontWeight: 800, fontSize: '0.9rem', cursor: 'pointer', letterSpacing: '0.03em' }}
+                    >
+                      Free Strategy Call
+                    </motion.button>
+                    <motion.button
+                      whileHover={{ scale: 1.05, borderColor: 'white' }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => {
+                        navigate('/');
+                        setTimeout(() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }), 300);
+                      }}
+                      style={{ padding: '16px 32px', borderRadius: '100px', background: 'transparent', color: 'white', border: '1px solid rgba(255,255,255,0.2)', fontWeight: 700, fontSize: '0.9rem', cursor: 'pointer' }}
+                    >
+                      Book Consultation
+                    </motion.button>
+                  </div>
+                </div>
+
+                {/* Integrated Definition / Answer Block */}
+                {service.answerBlock && (
+                  <motion.div 
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 }}
+                    itemScope itemType="https://schema.org/Question"
+                    style={{
+                      padding: '2rem',
+                      backgroundColor: 'rgba(255, 255, 255, 0.03)',
+                      border: '1px solid rgba(255, 255, 255, 0.08)',
+                      borderRadius: '24px',
+                      backdropFilter: 'blur(10px)'
+                    }}
+                  >
+                    <h2 itemProp="name" style={{ fontSize: '1.1rem', fontWeight: 700, color: '#8400ff', marginBottom: '1rem', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+                      Key Insight
+                    </h2>
+                    <div itemScope itemType="https://schema.org/Answer" itemProp="acceptedAnswer">
+                      <p itemProp="text" style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.95rem', lineHeight: 1.7, margin: 0 }}>
+                        {service.answerBlock.answer}
+                      </p>
+                    </div>
+                  </motion.div>
+                )}
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 };
