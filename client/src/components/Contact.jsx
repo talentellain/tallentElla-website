@@ -55,7 +55,7 @@ const Contact = () => {
   };
 
   return (
-    <div id="contact" ref={containerRef} className="relative z-40" style={{ minHeight: '250vh', marginBottom: '-100vh' }}>
+    <div id="contact" ref={containerRef} className="relative z-40" style={{ minHeight: '350vh', marginBottom: '-100vh' }}>
       <motion.section className="section-overlap" style={{ 
         position: 'sticky',
         top: 0,

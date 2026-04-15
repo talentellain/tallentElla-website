@@ -49,11 +49,9 @@ const Footer = () => {
     return (
         <motion.footer id="footer" ref={containerRef} style={{ 
             zIndex: 50, 
-            position: 'sticky',
-            top: 0,
-            marginTop: '1px',
+            position: 'relative', 
             backgroundColor: '#050508', 
-            height: '100vh', // strictly lock to full screen
+            minHeight: '110vh', 
             borderTop: '1px solid rgba(255, 255, 255, 0.05)',
             boxShadow: '0 -40px 100px rgba(0,0,0,0.5)',
             borderTopLeftRadius: borderRad,
@@ -61,7 +59,7 @@ const Footer = () => {
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',
-            padding: '5rem 5% 3rem'
+            padding: '10vh 5% 12vh'
         }}>
             {/* Subtle Center Glow */}
             <div style={{ 
