@@ -1,6 +1,3 @@
-import React from 'react';
-import bgImage from '../assets/bg5.png'; // Assuming bg5.png since bg5.jpg didn't exist in assets
-
 const StaticBackground = () => {
   return (
     <div
@@ -12,7 +9,7 @@ const StaticBackground = () => {
         height: '100%',
         zIndex: 0,
         backgroundColor: '#000', // Ensure dark theme behind
-        backgroundImage: `url(${bgImage})`,
+        backgroundImage: `url('/bg5.png')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundAttachment: 'fixed',

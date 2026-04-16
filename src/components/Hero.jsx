@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, ChevronDown } from 'lucide-react';
-import fgImage from '../assets/fg.png';
+// Critical hero assets are served from /public for stable preloading paths
+const fgImage = '/fg.png';
 
 const Hero = () => {
   const heroWrapperRef = useRef(null);
@@ -142,6 +143,10 @@ const Hero = () => {
 
           {/* LAYER 30: Intro and Content Over Mountain */}
           <div style={{ position: 'absolute', zIndex: 30, top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none' }}>
+            {/* Priority Hit: Ensures the browser prioritized these large assets immediately */}
+            <img src="/bg5.png" style={{ display: 'none' }} fetchpriority="high" alt="" />
+            <img src="/fg.png" style={{ display: 'none' }} fetchpriority="high" alt="" />
+            
             <div style={{ position: 'relative', maxWidth: '1600px', width: '100%', margin: '0 auto', height: '100%' }}>
               
               {/* Bottom Left Content — Primary keyword in first 100 words */}

@@ -85,20 +85,29 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .hero-title-shimmer {
-  background: linear-gradient(
-    110deg,
-    #ffffff 30%,
-    #ececf1 45%,
-    #aa3bff 50%,
-    #ececf1 55%,
-    #ffffff 70%
-  );
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: titleShimmer 8s linear infinite;
-  filter: drop-shadow(0 10px 40px rgba(170, 59, 255, 0.3));
+  color: #ffffff;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: default;
+}
+
+.hero-title-shimmer:hover {
+  text-shadow: 
+    0px 1px 0px #9722fa,
+    0px 2px 0px #9319f8,
+    0px 3px 0px #8b10f0,
+    0px 4px 0px #860ce8,
+    0px 5px 0px #7e03df,
+    0px 6px 0px #7700d6,
+    0px 7px 0px #7000cc,
+    0px 8px 0px #6700bc,
+    0px 9px 0px #5f00ad,
+    0px 10px 0px #5800a1,
+    0px 11px 0px #510094,
+    0px 12px 0px #4a0088,
+    0px 13px 0px #420079,
+    0px 14px 0px #350063,
+    0px 15px 20px rgba(0, 0, 0, 0.8);
+  transform: translateY(-5px);
 }
 
 .hero-title-shimmer-dark {
@@ -120,6 +129,11 @@ h1, h2, h3, h4, h5, h6 {
 
 .hero-title-3d {
   color: #ffffff;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: default;
+}
+
+.hero-title-3d:hover {
   text-shadow: 
     0px 1px 0px #9722fa,
     0px 2px 0px #9319f8,
@@ -136,13 +150,14 @@ h1, h2, h3, h4, h5, h6 {
     0px 13px 0px #420079,
     0px 14px 0px #350063,
     0px 15px 20px rgba(0, 0, 0, 0.8);
+  transform: scale(1.02);
 }
 
 /* Premium Dark Gradient */
 .black-purple-gradient {
   background: 
     linear-gradient(180deg, rgba(31, 14, 54, 0.6) 0%, rgba(5, 5, 8, 0.8) 400px, #050508 100%),
-    url('./assets/bg5.png') !important;
+    url('/bg5.png') !important;
   background-attachment: fixed !important;
   background-size: cover !important;
   background-position: center !important;
