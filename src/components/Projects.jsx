@@ -184,9 +184,8 @@ const Projects = () => {
       zIndex: 30 // Higher than Services (20)
     }}>
       <motion.section 
-        className="sticky-section"
+        className="sticky-section black-purple-gradient"
         style={{ 
-          backgroundColor: '#050508',
           overflow: 'hidden',
           borderTopLeftRadius: isMobile ? '0px' : borderProgress,
           borderTopRightRadius: isMobile ? '0px' : borderProgress,

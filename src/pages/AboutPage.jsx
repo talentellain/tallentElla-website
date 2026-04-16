@@ -41,7 +41,7 @@ const eeatSignals = [
 
 const AboutPage = () => {
   return (
-    <div style={{ backgroundColor: '#0a0a0c', minHeight: '100vh' }}>
+    <div className="black-purple-gradient" style={{ minHeight: '100vh' }}>
       <SEO
         pageTitle="About TalentElla — India's 360° Marketing Agency"
         description="Learn why TalentElla is India's trusted 360° marketing agency. 50+ brands served, 200+ projects delivered, 95% client retention. Experience, expertise, and results."

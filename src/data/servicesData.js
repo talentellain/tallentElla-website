@@ -144,7 +144,7 @@ export const servicesData = [
     faqs: [
       {
         question: 'How much does social media management cost in India?',
-        answer: 'TalentElla offers social media management packages starting from ₹10,000/month for 2 platforms with 12 posts. Growth plans at ₹20,000/month cover 4 platforms with 24 posts, and premium plans at ₹35,000/month include all platforms, video production, and paid ads management.',
+        answer: 'TalentElla offers social media management packages starting from ₹10,000/month for 2 platforms with 12 posts and 6 reels. Growth plans at ₹20,000/month cover 4 platforms with 24 posts, and premium plans at ₹35,000/month include all platforms, video production, and paid ads management.',
       },
       {
         question: 'Which social media platforms do you manage?',
@@ -251,7 +251,7 @@ export const servicesData = [
         subtitle: 'Perfect for startups',
         price: '₹10,000', 
         billing: '/month',
-        features: ['2 Platforms (IG + FB)', '12 Posts/Month', 'Basic Graphic Design', 'Caption Writing', 'Monthly Report'],
+        features: ['2 Platforms (IG + FB)', '12 Posts/Month', '6 Reels/Month', 'Basic Graphic Design', 'Monthly Report'],
         priceNum: 10000
       },
       { 

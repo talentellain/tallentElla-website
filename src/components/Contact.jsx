@@ -128,9 +128,8 @@ const Contact = () => {
   return (
     <div id="contact" ref={outerRef} className="sticky-outer" style={{ zIndex: 70 }}>
       <motion.section
-        className="sticky-section"
+        className="sticky-section black-purple-gradient"
         style={{ 
-          backgroundColor: '#050508', 
           borderTop: '1px solid rgba(255,255,255,0.05)', 
           borderTopLeftRadius: isMobile ? '0px' : borderRad, 
           borderTopRightRadius: isMobile ? '0px' : borderRad, 

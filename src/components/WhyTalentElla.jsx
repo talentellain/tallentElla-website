@@ -67,9 +67,8 @@ const WhyTalentElla = () => {
         `}
       </style>
       <motion.section
-        className="sticky-section"
+        className="sticky-section black-purple-gradient"
         style={{ 
-          backgroundColor: '#0c0c10', 
           borderTop: '1px solid rgba(255,255,255,0.05)', 
           borderTopLeftRadius: isMobile ? '0px' : borderRad, 
           borderTopRightRadius: isMobile ? '0px' : borderRad,

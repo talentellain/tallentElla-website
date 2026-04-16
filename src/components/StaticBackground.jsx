@@ -16,7 +16,7 @@ const StaticBackground = () => {
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundAttachment: 'fixed',
-        opacity: 0.7,
+        opacity: 0.9,
       }}
     />
   );

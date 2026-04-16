@@ -138,6 +138,15 @@ h1, h2, h3, h4, h5, h6 {
     0px 15px 20px rgba(0, 0, 0, 0.8);
 }
 
+/* Premium Dark Gradient */
+.black-purple-gradient {
+  background: 
+    linear-gradient(180deg, rgba(31, 14, 54, 0.6) 0%, rgba(5, 5, 8, 0.8) 400px, #050508 100%),
+    url('./assets/bg5.png') !important;
+  background-attachment: fixed !important;
+  background-size: cover !important;
+  background-position: center !important;
+}
 /* ── Stacked sticky scroll ───────────────────────────────────────────────
    Each section pins at top:0, fills 100vh, and the next one slides up
    over it. Sections stack via z-index. The outer wrapper is just the
@@ -583,7 +592,7 @@ html.lenis {
     margin-top: 0.4rem !important;
   }
   .pricing-card.expanded .know-more-mobile {
-    display: none !important;
+    display: flex !important;
   }
 
   .process-gap-fix {

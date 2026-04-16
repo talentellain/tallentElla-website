@@ -1,3 +1,4 @@
+import React from 'react';
 import { ArrowLeft, Check, Code, Share2, Palette, Settings, Zap, ArrowUpRight, Shield, Database, LifeBuoy, Rocket, ChevronDown } from 'lucide-react';
 import { servicesData } from '../data/servicesData';
 import SEO, { generateFAQSchema, generateServiceSchema } from '../components/SEO';
@@ -30,11 +31,11 @@ const ServiceFAQ = ({ faqs }) => {
 
   return (
     <div style={{ maxWidth: '800px', margin: '0 auto', width: '100%' }}>
-      <div style={{ textAlign: 'center', marginBottom: 'clamp(1.5rem, 3vh, 2.5rem)' }}>
-        <span className="accent-gradient" style={{ fontWeight: 700, letterSpacing: '0.3em', textTransform: 'uppercase', fontSize: '0.7rem', display: 'block', marginBottom: '0.6rem' }}>
+      <div style={{ textAlign: 'center', marginBottom: 'clamp(1rem, 2vh, 1.8rem)' }}>
+        <span className="accent-gradient" style={{ fontWeight: 700, letterSpacing: '0.3em', textTransform: 'uppercase', fontSize: '0.65rem', display: 'block', marginBottom: '0.4rem' }}>
           FAQ
         </span>
-        <h2 style={{ fontSize: 'clamp(1.8rem, 5vw, 2.4rem)', fontWeight: 800, color: '#ffffff', marginBottom: '0.4rem', lineHeight: 1.15 }}>
+        <h2 style={{ fontSize: 'clamp(1.5rem, 4vw, 2rem)', fontWeight: 800, color: '#ffffff', marginBottom: '0.2rem', lineHeight: 1.15 }}>
           Frequently Asked Questions
         </h2>
       </div>
@@ -52,7 +53,7 @@ const ServiceFAQ = ({ faqs }) => {
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                padding: 'clamp(0.9rem, 2vw, 1.25rem) 0',
+                padding: 'clamp(0.75rem, 1.5vw, 1rem) 0',
                 background: 'none',
                 border: 'none',
                 cursor: 'pointer',
@@ -62,7 +63,7 @@ const ServiceFAQ = ({ faqs }) => {
               }}
             >
               <h3 style={{
-                fontSize: 'clamp(1rem, 3.2vw, 1.15rem)', fontWeight: 700, margin: 0, lineHeight: 1.4, flex: 1, color: '#ffffff'
+                fontSize: 'clamp(0.9rem, 2.8vw, 1.05rem)', fontWeight: 700, margin: 0, lineHeight: 1.4, flex: 1, color: '#ffffff'
               }}>
                 {faq.question}
               </h3>
@@ -88,9 +89,9 @@ const ServiceFAQ = ({ faqs }) => {
                 >
                   <p style={{
                     color: '#888',
-                    fontSize: 'clamp(0.95rem, 3vw, 1.05rem)',
-                    lineHeight: 1.65,
-                    paddingBottom: 'clamp(0.8rem, 2vw, 1.2rem)',
+                    fontSize: 'clamp(0.85rem, 2.5vw, 0.95rem)',
+                    lineHeight: 1.6,
+                    paddingBottom: 'clamp(0.6rem, 1.5vw, 1rem)',
                     margin: 0,
                     maxWidth: '750px',
                   }}>
@@ -120,70 +121,127 @@ const RelatedServices = ({ currentId, isMobile }) => {
   return (
     <div style={{ maxWidth: '1200px', margin: '3rem auto 0', width: '100%' }}>
       <div style={{ textAlign: 'center', marginBottom: '2.2rem' }}>
-        <h3 style={{ fontSize: 'clamp(1.4rem, 3.5vw, 1.8rem)', fontWeight: 800, color: '#0a0a0c', marginBottom: '0.4rem', letterSpacing: '-0.02em' }}>
+        <h3 style={{ fontSize: 'clamp(1.4rem, 3.5vw, 1.8rem)', fontWeight: 800, color: '#0a0a0c', marginBottom: '0.4rem', letterSpacing: '-0.02em', textTransform: 'uppercase' }}>
           Explore More Services
         </h3>
-        <p style={{ color: '#666', fontSize: '0.9rem' }}>Discover more ways we can help you grow your brand.</p>
+        <p style={{ color: '#666', fontSize: '0.9rem', fontWeight: 500 }}>Discover more ways we can help you grow your brand.</p>
       </div>
 
-      <div style={{ 
-        display: 'grid', 
-        gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)', 
-        gap: isMobile ? '1.5rem' : '2rem' 
-      }}>
+      <style>{`
+        .related-grid-fix {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 1.5rem;
+          width: 100%;
+        }
+        .rel-card-modern {
+          background-color: #ebeae4;
+          min-height: 280px;
+          border-radius: 24px;
+          overflow: hidden;
+          position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: background-color 0.4s ease;
+          cursor: pointer;
+          text-decoration: none;
+        }
+        .rel-card-modern:hover {
+          background-color: #8763df;
+        }
+        .rel-giant-text {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          font-size: clamp(1.2rem, 3vw, 2.2rem);
+          font-weight: 900;
+          color: #121212;
+          line-height: 1;
+          letter-spacing: -0.02em;
+          text-align: center;
+          width: 100%;
+          transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+          z-index: 1;
+          text-transform: uppercase;
+        }
+        .rel-card-modern:hover .rel-giant-text {
+          opacity: 0.1;
+          transform: translate(-50%, -100%);
+        }
+        .rel-hover-content {
+          opacity: 0;
+          transform: translateY(20px);
+          transition: all 0.4s ease;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 0.8rem;
+          z-index: 5;
+          padding: 0 10%;
+          text-align: center;
+        }
+        .rel-card-modern:hover .rel-hover-content {
+          opacity: 1;
+          transform: translateY(0);
+          transition-delay: 0.15s;
+        }
+        .rel-blob-icon {
+          width: 60px;
+          height: 60px;
+          background-color: #ffcc00;
+          border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+          margin-bottom: 0.5rem;
+        }
+        .rel-hover-desc {
+          color: #fff;
+          font-size: 0.85rem;
+          font-weight: 600;
+          line-height: 1.4;
+          margin: 0;
+        }
+        @media (max-width: 768px) {
+          .related-grid-fix {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+          }
+          .rel-card-modern {
+            min-height: 180px;
+          }
+          .rel-giant-text {
+            font-size: 1.5rem !important;
+          }
+        }
+      `}</style>
+
+      <div className="related-grid-fix">
         {displayServices.map((s) => {
           const Icon = iconMap[s.icon] || Zap;
+          const displayTitle = s.title.toUpperCase().split(' ').map((word, idx) => (
+            <React.Fragment key={idx}>{word}<br /></React.Fragment>
+          ));
           return (
             <Link
               key={s.id}
               to={`/services/${s.id}`}
-              style={{ textDecoration: 'none' }}
+              className="rel-card-modern"
               onClick={() => window.scrollTo(0, 0)}
             >
-              <motion.div
-                whileHover={{ y: -8, boxShadow: '0 25px 50px rgba(132, 0, 255, 0.12)', borderColor: 'rgba(132, 0, 255, 0.2)' }}
-                style={{
-                  padding: isMobile ? '2rem' : '2.5rem',
-                  borderRadius: '28px',
-                  backgroundColor: '#fff',
-                  border: '1px solid rgba(0,0,0,0.06)',
-                  transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'flex-start',
-                  gap: '1.5rem',
-                  height: '100%',
-                  textAlign: 'left'
-                }}
-              >
-                <div style={{
-                  width: '56px', height: '56px', borderRadius: '14px',
-                  backgroundColor: 'rgba(132, 0, 255, 0.08)',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  color: '#8400ff', flexShrink: 0
-                }}>
-                  <Icon size={28} />
+              <div className="rel-giant-text">{displayTitle}</div>
+              <div className="rel-hover-content">
+                <div className="rel-blob-icon">
+                  <Icon size={32} color="#000" strokeWidth={2.5} />
                 </div>
-                <div>
-                  <div style={{ fontWeight: 800, color: '#0a0a0c', fontSize: '1.35rem', marginBottom: '0.75rem', letterSpacing: '-0.01em' }}>
-                    {s.title}
-                  </div>
-                  <p style={{ color: '#555', fontSize: '0.95rem', lineHeight: 1.6, margin: 0 }}>
-                    {s.description.split('.')[0]}. {/* Direct simple description */}
-                  </p>
+                <p className="rel-hover-desc">{s.description}</p>
+                <div style={{ color: '#fff', fontSize: '0.75rem', fontWeight: 800, marginTop: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                  VIEW DETAILS <ArrowUpRight size={14} />
                 </div>
-                <div style={{ 
-                  marginTop: 'auto', 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  gap: '0.5rem', 
-                  color: '#8400ff', 
-                  fontWeight: 700, 
-                  fontSize: '0.9rem' 
-                }}>
-                  View Details <ArrowUpRight size={18} />
-                </div>
-              </motion.div>
+              </div>
             </Link>
           );
         })}
@@ -291,7 +349,7 @@ const PortfolioCard = ({ work, index, total, scrollProgress, exitPoint }) => {
   );
 };
 
-const PricingCard = ({ plan, idx }) => {
+const PricingCard = ({ plan, idx, isMobile }) => {
   const [expanded, setExpanded] = useState(false);
   const navigate = useNavigate();
 
@@ -310,7 +368,7 @@ const PricingCard = ({ plan, idx }) => {
       className={`pricing-card ${expanded ? 'expanded' : ''}`}
       onClick={() => setExpanded(!expanded)}
       style={{ 
-        padding: '1rem 1.1rem 1rem', 
+        padding: '1.25rem', 
         backgroundColor: idx === 1 ? '#0a0a0c' : 'white', 
         color: idx === 1 ? 'white' : '#0a0a0c',
         borderRadius: '28px', 
@@ -322,7 +380,8 @@ const PricingCard = ({ plan, idx }) => {
         textAlign: 'left',
         position: 'relative',
         cursor: 'pointer',
-        marginTop: idx === 1 ? '12px' : '0'
+        width: '100%',
+        minHeight: 'auto'
       }}
     >
       {idx === 1 && (
@@ -361,11 +420,21 @@ const PricingCard = ({ plan, idx }) => {
         color: idx === 1 ? '#fff' : '#0a0a0c',
         fontWeight: 700,
         fontSize: '0.78rem',
+        display: isMobile ? 'flex' : 'none',
         justifyContent: 'center',
         alignItems: 'center',
         gap: '0.4rem'
       }}>
-        Tap to know more <span style={{ color: '#8400ff', fontSize: '0.9rem' }}>↓</span>
+        {expanded ? 'Tap again to close' : 'Tap to know more'} 
+        <span style={{ 
+          color: '#8400ff', 
+          fontSize: '0.9rem',
+          transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)',
+          transition: 'transform 0.3s ease',
+          display: 'inline-block'
+        }}>
+          ↓
+        </span>
       </div>
       
       <div className="pricing-features-wrap" style={{ width: '100%' }}>
@@ -633,7 +702,7 @@ const ServiceFAQSection = ({ faqs, isMobile }) => {
   const borderRad = useTransform(scrollYProgress, [0, 1], ['60px', '0px']);
   return (
     <div ref={outerRef} className="sticky-outer" style={{ zIndex: 20 }}>
-      <motion.section className="sticky-section" style={{ backgroundColor: '#050508', borderTop: '1px solid rgba(255,255,255,0.05)', borderTopLeftRadius: borderRad, borderTopRightRadius: borderRad }}>
+      <motion.section className="sticky-section black-purple-gradient" style={{ borderTop: '1px solid rgba(255,255,255,0.05)', borderTopLeftRadius: borderRad, borderTopRightRadius: borderRad }}>
         <div style={{ width: '100%', height: '100%', overflowY: 'auto', padding: '10vh 0' }}>
           <div style={{ maxWidth: '1400px', margin: '0 auto', width: '100%', padding: '0 5%' }}>
             <ServiceFAQ faqs={faqs} />
@@ -668,8 +737,8 @@ const PricingSection = ({ service, pricingRef: externalRef, isMobile }) => {
   const borderRad = useTransform(scrollYProgress, [0, 1], ['60px', '0px']);
   return (
     <div ref={setRefs} className="sticky-outer" style={{ zIndex: 30 }}>
-      <motion.section className="sticky-section pricing-section-fix" style={{ backgroundColor: '#050508', borderTop: '1px solid rgba(255,255,255,0.05)', borderTopLeftRadius: borderRad, borderTopRightRadius: borderRad, color: '#ffffff' }}>
-        <div style={{ width: '100%', height: '100%', overflowY: 'auto', padding: 'clamp(90px, 12vh, 140px) 0 6vh' }}>
+      <motion.section className="sticky-section pricing-section-fix black-purple-gradient" style={{ borderTop: '1px solid rgba(255,255,255,0.05)', borderTopLeftRadius: borderRad, borderTopRightRadius: borderRad, color: '#ffffff' }}>
+        <div style={{ width: '100%', height: '100%', overflowY: 'auto', padding: isMobile ? '60px 0 6vh' : 'clamp(90px, 12vh, 140px) 0 6vh' }}>
           <div style={{ maxWidth: '1400px', margin: '0 auto', width: '100%', padding: '0 5%' }}>
             <p style={{ color: '#8400ff', textAlign: 'center', marginBottom: '0.5rem', fontSize: '0.85rem', fontWeight: 800, letterSpacing: '0.15em', textTransform: 'uppercase' }}>
               {service.id === 'visual-identity-design' ? 'BRANDING SERVICES' : service.title.toUpperCase()}
@@ -680,8 +749,41 @@ const PricingSection = ({ service, pricingRef: externalRef, isMobile }) => {
             <p style={{ color: 'rgba(255,255,255,0.6)', textAlign: 'center', marginBottom: '2rem', fontSize: '1rem', marginTop: '0.4rem' }}>
               Transparent pricing in INR — no hidden fees. All plans include dedicated support.
             </p>
-            <div className="auto-grid pricing-grid-fix" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem', width: '100%', maxWidth: '1100px', margin: '0 auto' }}>
-              {service.plans.map((plan, idx) => <PricingCard key={idx} plan={plan} idx={idx} />)}
+            <style>{`
+              .pricing-grid-responsive {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1.5rem;
+                width: 100%;
+                max-width: 1100px;
+                margin: 0 auto;
+              }
+              .pricing-card-wrapper {
+                display: flex;
+                height: 100%;
+              }
+              .popular-offset {
+                margin-top: 15px;
+              }
+              
+              @media (max-width: 1024px) {
+                .pricing-grid-responsive {
+                  grid-template-columns: 1fr;
+                  gap: 2.5rem;
+                  max-width: 450px;
+                }
+                .popular-offset {
+                  margin-top: 0;
+                }
+              }
+            `}</style>
+
+            <div className="pricing-grid-responsive">
+              {service.plans.map((plan, idx) => (
+                <div key={idx} className={`pricing-card-wrapper ${idx === 1 ? 'popular-offset' : ''}`}>
+                  <PricingCard plan={plan} idx={idx} isMobile={isMobile} />
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -811,7 +913,7 @@ const ServiceHeroSection = ({ service, isMobile, navigate }) => {
         }
       `}</style>
 
-      <section className="sticky-section" style={{ backgroundColor: '#0c0c10', height: '100dvh' }}>
+      <section className="sticky-section black-purple-gradient" style={{ height: '100dvh' }}>
         <div style={{ width: '100%', height: '100%', overflowY: 'auto', padding: 'clamp(80px, 12vh, 120px) 5% 6vh' }}>
           <div style={{ maxWidth: '1400px', margin: '0 auto', width: '100%' }}>
             <motion.div

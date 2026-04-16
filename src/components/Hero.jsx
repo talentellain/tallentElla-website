@@ -60,7 +60,7 @@ const Hero = () => {
   return (
     <div id="hero" className="sticky-outer" style={{ zIndex: 10 }}>
       <section 
-        className="sticky-section" 
+        className="sticky-section black-purple-gradient" 
         style={{ 
           backgroundSize: 'cover',
           backgroundPosition: 'center',
@@ -132,7 +132,9 @@ const Hero = () => {
               backgroundImage: `url(${fgImage})`,
               backgroundSize: 'cover',
               backgroundPosition: 'bottom center',
-              backgroundRepeat: 'no-repeat'
+              backgroundRepeat: 'no-repeat',
+              opacity: 1,
+              mixBlendMode: 'normal'
             }}
             role="img"
             aria-label="TalentElla hero background — India's leading 360 degree marketing agency creative landscape"
