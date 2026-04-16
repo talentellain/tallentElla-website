@@ -72,8 +72,8 @@ const Services = () => {
         @media (max-width: 1024px) { .services-grid-new { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 768px) { .services-grid-new { grid-template-columns: 1fr; gap: 1rem; } }
 
-        .modern-service-card { background-color: #ebeae4; min-height: 400px; transition: background-color 0.4s ease; }
-        @media (max-width: 768px) { .modern-service-card { min-height: 240px !important; border-radius: 20px !important; } }
+        .modern-service-card { background-color: #ebeae4; min-height: 340px; transition: background-color 0.4s ease; }
+        @media (max-width: 768px) { .modern-service-card { min-height: 200px !important; border-radius: 20px !important; } }
         
         .modern-service-card:hover { background-color: #8763df; }
         .card-giant-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-size: clamp(1.2rem,3.5vw,2.8rem); font-weight: 900; color: #121212; line-height: 1; letter-spacing: -0.02em; pointer-events: none; transition: left 0.7s cubic-bezier(0.8,0,0.2,1), transform 0.7s cubic-bezier(0.8,0,0.2,1), opacity 0.5s ease; z-index: 1; width: 100%; text-align: center; }

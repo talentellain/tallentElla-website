@@ -80,7 +80,7 @@ const PortfolioCard = ({
       }}
       style={{ 
         position: 'absolute',
-        width: 'clamp(260px, 60vw, 380px)',
+        width: 'clamp(240px, 50vw, 340px)',
         aspectRatio: '1/1.2',
         zIndex: 10 - Math.abs(diff),
         filter: selectedId && selectedId !== item.id ? 'blur(10px) brightness(0.3)' : 'none',
@@ -136,8 +136,8 @@ const PortfolioCard = ({
             pointerEvents: 'none'
           }}
         >
-          <h2 style={{ color: 'white', margin: 0, fontSize: 'clamp(1.15rem, 5vw, 1.5rem)', fontWeight: 800 }}>{item.title}</h2>
-          <p style={{ color: 'rgba(255,255,255,0.6)', margin: '0.25rem 0 0 0', fontSize: 'clamp(0.75rem, 3vw, 0.9rem)', lineHeight: 1.3 }}>{item.description}</p>
+          <h2 style={{ color: 'white', margin: 0, fontSize: 'clamp(1rem, 4vw, 1.35rem)', fontWeight: 800 }}>{item.title}</h2>
+          <p style={{ color: 'rgba(255,255,255,0.6)', margin: '0.2rem 0 0 0', fontSize: 'clamp(0.7rem, 2.5vw, 0.85rem)', lineHeight: 1.3 }}>{item.description}</p>
         </motion.div>
       </motion.div>
     </motion.div>
@@ -164,8 +164,8 @@ const SocialMediaPortfolio = ({ portfolio }) => {
   return (
     <div ref={containerRef} style={{ 
       position: 'relative', 
-      minHeight: '80vh', 
-      padding: '2rem 5%', 
+      minHeight: '70vh', 
+      padding: '1.5rem 5%', 
       backgroundColor: '#050505', 
       overflow: 'visible',
       display: 'flex',
@@ -191,7 +191,7 @@ const SocialMediaPortfolio = ({ portfolio }) => {
         zIndex: 2,
         width: '100%',
         maxWidth: '1200px',
-        height: '500px',
+        height: '420px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',

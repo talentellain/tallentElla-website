@@ -52,7 +52,7 @@ const Contact = () => {
   const borderRad = useTransform(scrollYProgress, [0, 1], ['60px', '0px']);
 
 
-  const [formData, setFormData] = useState({ fullName: '', email: '', confirmEmail: '', phone: '', message: '' });
+  const [formData, setFormData] = useState({ fullName: '', email: '', phone: '', message: '' });
   const [honeypot, setHoneypot] = useState(''); // bot trap
 
   const [status, setStatus] = useState('idle'); // idle | loading | success | error | rate_limited
@@ -79,9 +79,7 @@ const Contact = () => {
     if (!validateEmail(formData.email)) {
       return setValidationError('Please enter a valid email address.');
     }
-    if (formData.email.toLowerCase() !== formData.confirmEmail.toLowerCase()) {
-      return setValidationError('Email addresses do not match. Please check and try again.');
-    }
+
     if (!validatePhone(formData.phone)) {
       return setValidationError('Please enter a valid phone number.');
     }
@@ -258,38 +256,11 @@ const Contact = () => {
                   />
                 </div>
 
-                {/* Confirm Email */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
-                  <div className="relative w-full group">
-                    <input 
-                      type="email" 
-                      name="confirmEmail"
-                      value={formData.confirmEmail}
-                      onChange={handleChange}
-                      required
-                      maxLength={150}
-                      placeholder="Confirm Email *"
-                      disabled={status === 'loading'}
-                      autoComplete="off"
-                      onPaste={e => e.preventDefault()}
-                      className={`w-full bg-transparent border-b-[2px] py-4 text-lg md:text-xl text-white font-medium placeholder-white/20 outline-none transition-all duration-300 disabled:opacity-50 ${
-                        formData.confirmEmail && formData.email.toLowerCase() !== formData.confirmEmail.toLowerCase()
-                          ? 'border-red-500/50 focus:border-red-500'
-                          : 'border-white/10 focus:border-white'
-                      }`}
-                    />
-                    {formData.confirmEmail && formData.email.toLowerCase() !== formData.confirmEmail.toLowerCase() && (
-                      <span style={{ fontSize: '0.75rem', color: '#ef4444', position: 'absolute', bottom: '-22px', left: 0 }}>
-                        Emails don't match
-                      </span>
-                    )}
-                  </div>
-                </div>
 
                 {/* Message */}
                 <div className="relative w-full group">
                   <textarea 
-                    rows="2" 
+                    rows="4" 
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
@@ -303,21 +274,42 @@ const Contact = () => {
 
                 {/* Status Messages */}
                 {validationError && (
-                  <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex items-center gap-3 text-white bg-orange-950/30 border border-orange-500/20 p-5 rounded-2xl font-semibold text-sm">
-                    <AlertCircle size={20} className="text-orange-500 flex-shrink-0" />
-                    <span>{validationError}</span>
+                  <motion.div 
+                    initial={{ opacity: 0, scale: 0.95 }} 
+                    animate={{ opacity: 1, scale: 1 }} 
+                    className="flex flex-col items-center justify-center gap-3 text-white bg-gradient-to-br from-orange-500/20 via-orange-900/30 to-black/40 border border-orange-500/30 py-6 px-6 rounded-[1.5rem] backdrop-blur-xl text-center"
+                  >
+                    <div className="bg-orange-500/20 p-3 rounded-full">
+                      <AlertCircle size={24} className="text-orange-500" />
+                    </div>
+                    <span className="text-base font-bold tracking-tight">{validationError}</span>
                   </motion.div>
                 )}
                 {status === 'success' && (
-                  <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex items-center gap-3 text-white bg-green-900/30 border border-green-500/20 p-5 rounded-2xl font-bold">
-                    <CheckCircle size={24} className="text-green-500" />
-                    <span>Message received loud and clear!</span>
+                  <motion.div 
+                    initial={{ opacity: 0, scale: 0.95 }} 
+                    animate={{ opacity: 1, scale: 1 }} 
+                    className="flex flex-col items-center justify-center gap-3 text-white bg-gradient-to-br from-green-500/20 via-green-900/30 to-black/40 border border-green-500/30 py-8 px-6 rounded-[1.5rem] backdrop-blur-xl text-center"
+                  >
+                    <div className="bg-green-500/20 p-4 rounded-full shadow-[0_0_20px_rgba(34,197,94,0.2)]">
+                      <CheckCircle size={32} className="text-green-500 animate-pulse" />
+                    </div>
+                    <div className="flex flex-col gap-0.5">
+                      <span className="text-xl font-black tracking-tighter uppercase italic text-green-400">Success!</span>
+                      <span className="text-base text-white/90 font-medium">Message received loud and clear.</span>
+                    </div>
                   </motion.div>
                 )}
                 {status === 'error' && (
-                  <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex items-center gap-3 text-white bg-red-900/30 border border-red-500/20 p-5 rounded-2xl font-bold">
-                    <AlertCircle size={24} className="text-red-500" />
-                    <span>Failed to route. Try sending an email directly.</span>
+                  <motion.div 
+                    initial={{ opacity: 0, scale: 0.95 }} 
+                    animate={{ opacity: 1, scale: 1 }} 
+                    className="flex flex-col items-center justify-center gap-3 text-white bg-gradient-to-br from-red-500/20 via-red-900/30 to-black/40 border border-red-500/30 py-6 px-6 rounded-[1.5rem] backdrop-blur-xl text-center"
+                  >
+                    <div className="bg-red-500/20 p-3 rounded-full">
+                      <AlertCircle size={24} className="text-red-500" />
+                    </div>
+                    <span className="text-base font-bold tracking-tight">Failed to route. Try sending an email directly.</span>
                   </motion.div>
                 )}
 

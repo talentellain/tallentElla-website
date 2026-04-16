@@ -10,10 +10,10 @@ const stats = [
 ];
 
 const eeatSignals = [
-  { icon: Award, title: 'Experience', description: 'Founded in 2026, TalentElla brings hands-on experience across 50+ brands in India — from early-stage startups to established enterprises in retail, tech, healthcare, and education.' },
-  { icon: Zap, title: 'Expertise', description: 'Our team combines certified digital marketers, brand strategists, UI/UX designers, and full-stack developers. We specialize in integrated marketing solutions and omnichannel marketing strategies for the Indian market.' },
-  { icon: Shield, title: 'Authoritativeness', description: 'Recognized as a leading 360° marketing agency in India, TalentElla delivers measurable results with transparent analytics and reporting. Our client portfolio spans diverse industries across India.' },
-  { icon: TrendingUp, title: 'Trustworthiness', description: 'We build trust through transparent pricing in INR, detailed performance reports, dedicated account managers, and a 95% client retention rate. Every project is backed by clear deliverables and timelines.' },
+  { icon: Award, title: 'Experience', color: '#aa3bff', description: 'Founded in 2026, TalentElla brings hands-on experience across 50+ brands in India.' },
+  { icon: Zap, title: 'Expertise', color: '#00d2ff', description: 'Certified digital marketers, brand strategists, and UI/UX designers for the Indian market.' },
+  { icon: Shield, title: 'Authority', color: '#ff3b3b', description: 'Leading 360° agency in India delivering measurable results with transparent analytics.' },
+  { icon: TrendingUp, title: 'Trust', color: '#3bffaa', description: '95% client retention built on transparent pricing and detailed performance reports.' },
 ];
 
 const WhyTalentElla = () => {
@@ -48,15 +48,20 @@ const WhyTalentElla = () => {
               gap: 0.75rem;
             }
             .card-wte {
-              min-width: 0;
+              min-height: 180px;
             }
           }
           @media (max-width: 480px) {
             .stats-grid-wte {
               gap: 0.5rem;
+              margin-bottom: 1.5rem !important;
             }
             .cards-grid-wte {
               gap: 0.5rem;
+            }
+            .card-wte {
+              min-height: 140px;
+              padding: 1rem 0.75rem !important;
             }
           }
         `}
@@ -124,22 +129,41 @@ const WhyTalentElla = () => {
                     transition={{ delay: idx * 0.1 }} 
                     whileHover={{ y: -5, backgroundColor: 'rgba(255,255,255,0.05)', borderColor: 'rgba(132,0,255,0.3)' }} 
                     style={{ 
-                      padding: isMobile ? '1.2rem 0.85rem' : '1.65rem 1.4rem', 
-                      borderRadius: isMobile ? '20px' : '28px', 
+                      padding: isMobile ? '1.2rem 1rem' : '2rem 1.75rem', 
+                      borderRadius: isMobile ? '24px' : '32px', 
                       backgroundColor: 'rgba(255,255,255,0.02)', 
                       border: '1px solid rgba(255,255,255,0.06)', 
                       transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)', 
                       display: 'flex', 
                       flexDirection: 'column', 
-                      gap: '0.65rem',
+                      gap: isMobile ? '0.5rem' : '1.25rem',
                       height: '100%',
-                      alignSelf: 'stretch'
+                      alignSelf: 'stretch',
+                      position: 'relative',
+                      overflow: 'hidden'
                     }}
                   >
-                    <div style={{ width: isMobile ? '36px' : '42px', height: isMobile ? '36px' : '42px', borderRadius: '10px', backgroundColor: 'rgba(132,0,255,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#8400ff', flexShrink: 0 }}><Icon size={isMobile ? 18 : 20} /></div>
+                    {/* Subtle inner glow */}
+                    <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: `radial-gradient(circle at top left, ${signal.color}10 0%, transparent 60%)`, pointerEvents: 'none' }} />
+                    
+                    <div style={{ 
+                      width: isMobile ? '38px' : '48px', 
+                      height: isMobile ? '38px' : '48px', 
+                      borderRadius: '12px', 
+                      backgroundColor: `${signal.color}15`, 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      justifyContent: 'center', 
+                      color: signal.color, 
+                      flexShrink: 0,
+                      border: `1px solid ${signal.color}20`
+                    }}>
+                      <Icon size={isMobile ? 20 : 24} />
+                    </div>
+                    
                     <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
-                      <h3 style={{ fontSize: isMobile ? '0.85rem' : '1.05rem', fontWeight: 800, marginBottom: '0.3rem', color: '#fff', letterSpacing: '-0.01em' }}>{signal.title}</h3>
-                      <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: isMobile ? '0.68rem' : '0.82rem', lineHeight: 1.45, margin: 0 }}>{signal.description}</p>
+                      <h3 style={{ fontSize: isMobile ? '0.9rem' : '1.2rem', fontWeight: 800, marginBottom: '0.4rem', color: '#fff', letterSpacing: '-0.01em' }}>{signal.title}</h3>
+                      <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: isMobile ? '0.7rem' : '0.9rem', lineHeight: 1.5, margin: 0 }}>{signal.description}</p>
                     </div>
                   </motion.div>
                 );
