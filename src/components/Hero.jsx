@@ -123,10 +123,10 @@ const Hero = () => {
             className="hero-mountain"
             style={{
               position: 'absolute',
-              bottom: '-20%', 
+              bottom: '-27%', 
               left: '-20%', 
               width: '140%', 
-              height: '120%', 
+              height: '115%', 
               pointerEvents: 'none',
               zIndex: 20, 
               backgroundImage: `url(${fgImage})`,
@@ -147,6 +147,7 @@ const Hero = () => {
               {/* Bottom Left Content — Primary keyword in first 100 words */}
               <div 
                 ref={addToContentRefs}
+                className="hero-description-mobile"
                 style={{ 
                   position: 'absolute', 
                   bottom: '12%', 
@@ -256,7 +257,7 @@ const Hero = () => {
         /* Tablet: push title down a bit, zoom mountain */
         @media (max-width: 1024px) {
           .hero-title-block {
-            top: 34% !important;
+            top: 25% !important;
           }
           .hero-mountain {
             height: 140% !important;
@@ -264,17 +265,45 @@ const Hero = () => {
             width: 160% !important;
             left: -30% !important;
           }
+          .hero-description-mobile {
+             bottom: 8% !important;
+             left: 50% !important;
+             transform: translateX(-50%) !important;
+             text-align: center !important;
+             width: 90% !important;
+             max-width: 500px !important;
+          }
         }
         /* Mobile: push title further down, mountain covers more */
         @media (max-width: 768px) {
           .hero-title-block {
-            top: 36% !important;
+            top: 22% !important;
           }
           .hero-mountain {
             height: 160% !important;
             bottom: -30% !important;
             width: 200% !important;
             left: -50% !important;
+          }
+          .hero-description-mobile {
+             bottom: auto !important;
+             top: 30% !important;
+             left: 50% !important;
+             transform: translateX(-50%) !important;
+             text-align: center !important;
+             width: 92% !important;
+             max-width: 400px !important;
+             display: flex !important;
+             flex-direction: column !important;
+             align-items: center !important;
+          }
+          .hero-description-mobile h2 {
+             font-size: 0.8rem !important;
+          }
+          .hero-description-mobile p {
+             font-size: 0.8rem !important;
+             line-height: 1.5 !important;
+             margin-bottom: 1rem !important;
           }
         }
       `}</style>

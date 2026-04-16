@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import ServicePage from './pages/ServicePage';
 import AboutPage from './pages/AboutPage';
 import StaticBackground from './components/StaticBackground';
+import ScrollToTop from './components/ScrollToTop';
 
 /** Redirect from old /service/:id to new /services/:id URL structure */
 function ServiceRedirect() {
@@ -16,6 +17,7 @@ function ServiceRedirect() {
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <StaticBackground />
       <SmoothScroll>
         <div className="page-container">

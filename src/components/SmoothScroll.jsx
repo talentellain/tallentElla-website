@@ -21,9 +21,11 @@ const SmoothScroll = ({ children }) => {
     }
 
     requestAnimationFrame(raf);
+    window.lenis = lenis;
 
     return () => {
       lenis.destroy();
+      window.lenis = null;
     };
   }, []);
 

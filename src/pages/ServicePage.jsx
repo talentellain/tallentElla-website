@@ -476,10 +476,6 @@ const ServicePage = () => {
   const pricingRef = useRef(null);
   const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [id]);
-
   if (!service) {
     return (
       <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', color: 'white' }}>
