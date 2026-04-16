@@ -150,7 +150,7 @@ const Contact = () => {
           height: '100dvh'
         }}
       >
-        <div style={{ width: '100%', height: '100%', overflowY: 'auto', padding: 'clamp(5rem, 20vh, 10rem) 5%' }}>
+        <div className="hide-scrollbar" style={{ width: '100%', height: '100%', overflowY: 'auto', padding: 'clamp(5rem, 20vh, 10rem) 5%' }}>
           <div style={{ maxWidth: '1400px', width: '100%', margin: '0 auto', position: 'relative' }}>
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-12 xl:gap-32 items-center">
             
