@@ -82,7 +82,7 @@ const WhyTalentElla = () => {
 
         <div style={{ width: '100%', height: 'auto', maxHeight: '100%', overflowY: 'auto', padding: isMobile ? '8vh 0 6vh' : '12vh 10% 8vh', position: 'relative', zIndex: 2 }}>
           <div style={{ maxWidth: '1400px', width: '100%', padding: '0 5%', margin: '0 auto' }}>
-            <div style={{ textAlign: 'center', marginBottom: 'clamp(2rem, 4vh, 3.5rem)' }}>
+            <div style={{ textAlign: 'center', marginBottom: 'clamp(1.5rem, 3vh, 2.5rem)' }}>
               <motion.span initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="accent-gradient" style={{ fontWeight: 700, letterSpacing: '0.3em', textTransform: 'uppercase', fontSize: '0.75rem', display: 'block', marginBottom: '1rem' }}>Why Choose Us</motion.span>
               <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="hero-title-shimmer" style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', fontWeight: 800, marginBottom: '0.75rem', letterSpacing: '-0.02em' }}>Why TalentElla?</motion.h2>
               <motion.p initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }} style={{ color: 'rgba(255,255,255,0.5)', fontSize: '1rem', maxWidth: '750px', margin: '0 auto', lineHeight: 1.6 }}>
@@ -90,7 +90,7 @@ const WhyTalentElla = () => {
               </motion.p>
             </div>
 
-            <div className="stats-grid-wte" style={{ marginBottom: isMobile ? '2rem' : 'clamp(3rem, 6vh, 4rem)' }}>
+            <div className="stats-grid-wte" style={{ marginBottom: isMobile ? '1.5rem' : 'clamp(2rem, 4vh, 3rem)' }}>
               {stats.map((stat, idx) => (
                 <motion.div 
                   key={idx} 
@@ -100,7 +100,7 @@ const WhyTalentElla = () => {
                   transition={{ delay: idx * 0.1 }} 
                   style={{ 
                     textAlign: 'center',
-                    padding: isMobile ? '1.2rem 0.5rem' : '1.4rem 1rem',
+                    padding: isMobile ? '0.8rem 0.5rem' : '1rem 1rem',
                     backgroundColor: 'rgba(255,255,255,0.03)',
                     borderRadius: '20px',
                     border: '1px solid rgba(255,255,255,0.05)',
@@ -129,14 +129,14 @@ const WhyTalentElla = () => {
                     transition={{ delay: idx * 0.1 }} 
                     whileHover={{ y: -5, backgroundColor: 'rgba(255,255,255,0.05)', borderColor: 'rgba(132,0,255,0.3)' }} 
                     style={{ 
-                      padding: isMobile ? '1.2rem 1rem' : '2rem 1.75rem', 
+                      padding: isMobile ? '1rem 1rem' : '1.5rem 1.75rem', 
                       borderRadius: isMobile ? '24px' : '32px', 
                       backgroundColor: 'rgba(255,255,255,0.02)', 
                       border: '1px solid rgba(255,255,255,0.06)', 
                       transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)', 
                       display: 'flex', 
                       flexDirection: 'column', 
-                      gap: isMobile ? '0.5rem' : '1.25rem',
+                      gap: isMobile ? '0.5rem' : '0.8rem',
                       height: '100%',
                       alignSelf: 'stretch',
                       position: 'relative',
@@ -162,8 +162,8 @@ const WhyTalentElla = () => {
                     </div>
                     
                     <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
-                      <h3 style={{ fontSize: isMobile ? '0.9rem' : '1.2rem', fontWeight: 800, marginBottom: '0.4rem', color: '#fff', letterSpacing: '-0.01em' }}>{signal.title}</h3>
-                      <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: isMobile ? '0.7rem' : '0.9rem', lineHeight: 1.5, margin: 0 }}>{signal.description}</p>
+                      <h3 style={{ fontSize: isMobile ? '0.85rem' : '1.1rem', fontWeight: 800, marginBottom: '0.2rem', color: '#fff', letterSpacing: '-0.01em' }}>{signal.title}</h3>
+                      <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: isMobile ? '0.68rem' : '0.85rem', lineHeight: 1.4, margin: 0 }}>{signal.description}</p>
                     </div>
                   </motion.div>
                 );
