@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 import emailjs from '@emailjs/browser';
-import ReCAPTCHA from 'react-google-recaptcha';
+
 
 // ── Security helpers ──────────────────────────────────────────────
 const RATE_LIMIT_KEY = 'te_contact_submissions';
@@ -51,10 +51,10 @@ const Contact = () => {
   const { scrollYProgress } = useScroll({ target: outerRef, offset: ['start end', 'start start'] });
   const borderRad = useTransform(scrollYProgress, [0, 1], ['60px', '0px']);
 
-  const recaptchaRef = useRef(null);
+
   const [formData, setFormData] = useState({ fullName: '', email: '', confirmEmail: '', phone: '', message: '' });
   const [honeypot, setHoneypot] = useState(''); // bot trap
-  const [recaptchaToken, setRecaptchaToken] = useState(null);
+
   const [status, setStatus] = useState('idle'); // idle | loading | success | error | rate_limited
   const [validationError, setValidationError] = useState('');
 
@@ -89,11 +89,6 @@ const Contact = () => {
       return setValidationError('Message must be at least 10 characters.');
     }
 
-    // 3. reCAPTCHA check
-    if (!recaptchaToken) {
-      return setValidationError('Please complete the reCAPTCHA verification.');
-    }
-
     // 3. Rate limiting
     const { allowed, wait } = checkRateLimit();
     if (!allowed) {
@@ -121,14 +116,10 @@ const Contact = () => {
       .then(() => {
         setStatus('success');
         setFormData({ fullName: '', email: '', phone: '', message: '' });
-        setRecaptchaToken(null);
-        recaptchaRef.current?.reset();
         setTimeout(() => setStatus('idle'), 5000);
       }, (error) => {
         console.error('EmailJS error:', error?.text ?? error);
         setStatus('error');
-        setRecaptchaToken(null);
-        recaptchaRef.current?.reset();
         setTimeout(() => setStatus('idle'), 5000);
       });
   };
@@ -330,21 +321,11 @@ const Contact = () => {
                   </motion.div>
                 )}
 
-                {/* reCAPTCHA - Centered */}
-                <div style={{ display: 'flex', justifyContent: 'center', margin: '1rem 0' }}>
-                  <ReCAPTCHA
-                    ref={recaptchaRef}
-                    sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY || "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"}
-                    onChange={(token) => { setRecaptchaToken(token); setValidationError(''); }}
-                    onExpired={() => setRecaptchaToken(null)}
-                    theme="dark"
-                  />
-                </div>
 
                 {/* Submit Button */}
                 <button 
                   type="submit"
-                  disabled={status === 'loading' || !recaptchaToken}
+                  disabled={status === 'loading'}
                   className="mt-2 flex items-center justify-between w-full bg-white text-black rounded-full transition-all duration-300 hover:bg-neutral-200 hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50"
                   style={{ padding: '20px 32px 20px 42px' }}
                 >

@@ -666,17 +666,7 @@ html.lenis {
      * (style={{ padding: '6vh 5% 10vh 5%' }}) which is not affected by this override */
   }
 
-  /* reCAPTCHA: scale down to fit small screens and never clip */
-  .g-recaptcha,
-  .g-recaptcha iframe,
-  .rc-anchor-light {
-    max-width: 100% !important;
-    overflow: visible !important;
-  }
-  .g-recaptcha {
-    transform: scale(0.85);
-    transform-origin: left center;
-  }
+
 
   /* Submit button: always full width, always visible */
   .contact-submit-btn {
