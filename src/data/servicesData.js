@@ -251,7 +251,7 @@ export const servicesData = [
         subtitle: 'Perfect for startups',
         price: '₹10,000', 
         billing: '/month',
-        features: ['2 Platforms (IG + FB)', '12 Posts/Month', '6 Reels/Month', 'Basic Graphic Design', 'Monthly Report'],
+        features: ['2 Platforms (IG + FB)', '12 Posts/Month', '7 Reels/Month', 'Basic Graphic Design', 'Monthly Report'],
         priceNum: 10000
       },
       { 
@@ -259,7 +259,7 @@ export const servicesData = [
         subtitle: 'For scaling brands',
         price: '₹20,000', 
         billing: '/month',
-        features: ['4 Platforms (All Major)', '24 Posts/Month', 'Premium Graphics + Reels', 'Community Management', 'Weekly Analytics'],
+        features: ['4 Platforms (All Major)', '24 Posts/Month','12 Reels/Month', 'Premium Graphics + Reels', 'Community Management', 'Weekly Analytics'],
         priceNum: 20000
       },
       { 
@@ -267,7 +267,7 @@ export const servicesData = [
         subtitle: 'Full-service solution',
         price: '₹35,000', 
         billing: '/month',
-        features: ['All Platforms', '24 Posts + Videos', 'Video Production', 'Paid Ads Management', 'Dedicated Manager'],
+        features: ['All Platforms', '24 Posts + Videos', 'Video Production','20 Reels/Month', 'Paid Ads Management', 'Dedicated Manager'],
         priceNum: 35000
       }
     ]
