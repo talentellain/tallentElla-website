@@ -1,20 +1,6 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Award, TrendingUp, Users, Shield, BarChart3, Zap } from 'lucide-react';
-
-const stats = [
-  { number: '50+', label: 'Brands Served', icon: Users },
-  { number: '200+', label: 'Projects Delivered', icon: TrendingUp },
-  { number: '95%', label: 'Client Retention', icon: Award },
-  { number: '3x', label: 'Average ROI Boost', icon: BarChart3 },
-];
-
-const eeatSignals = [
-  { icon: Award, title: 'Experience', color: '#aa3bff', description: 'Founded in 2026, TalentElla brings hands-on experience across 50+ brands in India.' },
-  { icon: Zap, title: 'Expertise', color: '#00d2ff', description: 'Certified digital marketers, brand strategists, and UI/UX designers for the Indian market.' },
-  { icon: Shield, title: 'Authority', color: '#ff3b3b', description: 'Leading 360° agency in India delivering measurable results with transparent analytics.' },
-  { icon: TrendingUp, title: 'Trust', color: '#3bffaa', description: '95% client retention built on transparent pricing and detailed performance reports.' },
-];
+import { aboutStats as stats, eeatSignals } from '../data/aboutData';
 
 const WhyTalentElla = () => {
   const outerRef = useRef(null);
@@ -162,7 +148,7 @@ const WhyTalentElla = () => {
                     
                     <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
                       <h3 style={{ fontSize: isMobile ? '0.85rem' : '1.1rem', fontWeight: 800, marginBottom: '0.2rem', color: '#fff', letterSpacing: '-0.01em' }}>{signal.title}</h3>
-                      <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: isMobile ? '0.68rem' : '0.85rem', lineHeight: 1.4, margin: 0 }}>{signal.description}</p>
+                      <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: isMobile ? '0.68rem' : '0.85rem', lineHeight: 1.4, margin: 0 }}>{signal.shortDescription}</p>
                     </div>
                   </motion.div>
                 );

@@ -1,47 +1,18 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Award, TrendingUp, Users, Shield, BarChart3, Zap } from 'lucide-react';
+import { aboutStats as stats, eeatSignals } from '../data/aboutData';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 import SEO from '../components/SEO';
 
-const stats = [
-  { number: '50+', label: 'Brands Served', icon: Users },
-  { number: '200+', label: 'Projects Delivered', icon: TrendingUp },
-  { number: '95%', label: 'Client Retention', icon: Award },
-  { number: '3x', label: 'Average ROI Boost', icon: BarChart3 },
-];
-
-const eeatSignals = [
-  {
-    icon: Award,
-    title: 'Experience',
-    description:
-      'Founded in 2026, TalentElla brings hands-on experience across 50+ brands in India — from early-stage startups to established enterprises in retail, tech, healthcare, and education.',
-  },
-  {
-    icon: Zap,
-    title: 'Expertise',
-    description:
-      'Our team combines certified digital marketers, brand strategists, UI/UX designers, and full-stack developers. We specialize in integrated marketing solutions and omnichannel marketing strategies for the Indian market.',
-  },
-  {
-    icon: Shield,
-    title: 'Authoritativeness',
-    description:
-      'Recognized as a leading 360° marketing agency in India, TalentElla delivers measurable results with transparent analytics and reporting. Our client portfolio spans diverse industries across India.',
-  },
-  {
-    icon: TrendingUp,
-    title: 'Trustworthiness',
-    description:
-      'We build trust through transparent pricing in INR, detailed performance reports, dedicated account managers, and a 95% client retention rate. Every project is backed by clear deliverables and timelines.',
-  },
-];
-
 const AboutPage = () => {
   return (
-    <div className="black-purple-gradient" style={{ minHeight: '100vh' }}>
+    <div className="black-purple-gradient" style={{ minHeight: '100vh', position: 'relative', overflow: 'hidden' }}>
+      {/* Decorative glows */}
+      <div style={{ position: 'absolute', top: '5%', right: '10%', width: '400px', height: '400px', background: 'radial-gradient(circle, rgba(132,0,255,0.08) 0%, transparent 70%)', filter: 'blur(80px)', pointerEvents: 'none', zIndex: 0 }} />
+      <div style={{ position: 'absolute', top: '40%', left: '5%', width: '350px', height: '350px', background: 'radial-gradient(circle, rgba(0,210,255,0.06) 0%, transparent 70%)', filter: 'blur(80px)', pointerEvents: 'none', zIndex: 0 }} />
+      <div style={{ position: 'absolute', bottom: '10%', right: '5%', width: '300px', height: '300px', background: 'radial-gradient(circle, rgba(132,0,255,0.05) 0%, transparent 70%)', filter: 'blur(60px)', pointerEvents: 'none', zIndex: 0 }} />
+
       <SEO
         pageTitle="About TalentElla — India's 360° Marketing Agency"
         description="Learn why TalentElla is India's trusted 360° marketing agency. 50+ brands served, 200+ projects delivered, 95% client retention. Experience, expertise, and results."
@@ -135,12 +106,13 @@ const AboutPage = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          style={{ fontSize: 'clamp(1.8rem, 4vw, 2.5rem)', fontWeight: 800, color: '#fff', marginBottom: 'clamp(2rem, 4vh, 3rem)', textAlign: 'center' }}
+          className="hero-title-shimmer"
+          style={{ fontSize: 'clamp(1.8rem, 5vw, 3rem)', fontWeight: 800, color: '#fff', marginBottom: 'clamp(2.5rem, 5vh, 4rem)', textAlign: 'center' }}
         >
           Built on Trust & Results
         </motion.h2>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.25rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem' }}>
           {eeatSignals.map((signal, idx) => {
             const Icon = signal.icon;
             return (
@@ -150,20 +122,36 @@ const AboutPage = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.1 }}
-                whileHover={{ y: -5, backgroundColor: 'rgba(255,255,255,0.04)' }}
+                whileHover={{ y: -8, backgroundColor: 'rgba(255,255,255,0.04)', borderColor: `${signal.color}40` }}
                 style={{
-                  padding: 'clamp(1.5rem, 2.5vw, 2.5rem)',
-                  borderRadius: '24px',
+                  padding: 'clamp(1.5rem, 3vw, 2.5rem)',
+                  borderRadius: '32px',
                   backgroundColor: 'rgba(255,255,255,0.02)',
                   border: '1px solid rgba(255,255,255,0.06)',
-                  transition: 'all 0.3s ease',
+                  transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+                  position: 'relative',
+                  overflow: 'hidden'
                 }}
               >
-                <div style={{ width: '48px', height: '48px', borderRadius: '14px', backgroundColor: 'rgba(132,0,255,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#8400ff', marginBottom: '1.25rem' }}>
-                  <Icon size={24} />
+                {/* Subtle inner glow matching home page */}
+                <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: `radial-gradient(circle at top left, ${signal.color}10 0%, transparent 60%)`, pointerEvents: 'none' }} />
+                
+                <div style={{ 
+                  width: '56px', 
+                  height: '56px', 
+                  borderRadius: '16px', 
+                  backgroundColor: `${signal.color}15`, 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center', 
+                  color: signal.color, 
+                  marginBottom: '1.5rem',
+                  border: `1px solid ${signal.color}20`
+                }}>
+                  <Icon size={28} />
                 </div>
-                <h3 style={{ fontSize: '1.2rem', fontWeight: 700, marginBottom: '0.6rem', color: '#fff' }}>{signal.title}</h3>
-                <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.95rem', lineHeight: 1.7, margin: 0 }}>{signal.description}</p>
+                <h3 style={{ fontSize: '1.4rem', fontWeight: 800, marginBottom: '0.75rem', color: '#fff', letterSpacing: '-0.01em' }}>{signal.title}</h3>
+                <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '1rem', lineHeight: 1.7, margin: 0 }}>{signal.fullDescription}</p>
               </motion.div>
             );
           })}

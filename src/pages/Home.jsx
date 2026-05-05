@@ -8,6 +8,7 @@ import WhyTalentElla from '../components/WhyTalentElla';
 import HomeFAQ from '../components/HomeFAQ';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer';
+import VideoSection from '../components/VideoSection';
 import { homepageFAQs } from '../data/servicesData';
 
 const Home = () => {
@@ -30,6 +31,7 @@ const Home = () => {
       <Hero />
       <Services />
       <Projects />
+      <VideoSection />
       <Process />
       <WhyTalentElla />
       <HomeFAQ faqs={homepageFAQs} />
