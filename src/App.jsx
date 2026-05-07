@@ -4,7 +4,7 @@ import Navbar from './components/Navbar';
 import SmoothScroll from './components/SmoothScroll';
 import Home from './pages/Home';
 import ServicePage from './pages/ServicePage';
-import AboutPage from './pages/AboutPage';
+import PortfolioPage from './pages/PortfolioPage';
 import StaticBackground from './components/StaticBackground';
 import ScrollToTop from './components/ScrollToTop';
 
@@ -26,7 +26,7 @@ function App() {
             <Route path="/" element={<Home />} />
             {/* Clean URL structure: /services/website-development */}
             <Route path="/services/:id" element={<ServicePage />} />
-            <Route path="/about" element={<AboutPage />} />
+            <Route path="/portfolio" element={<PortfolioPage />} />
             {/* Redirect old /service/:id URLs to /services/:id for SEO */}
             <Route path="/service/:id" element={<ServiceRedirect />} />
           </Routes>

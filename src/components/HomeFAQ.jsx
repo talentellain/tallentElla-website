@@ -46,7 +46,7 @@ const FAQItem = ({ faq, index, isOpen, onToggle, isMobile }) => (
 );
 
 const HomeFAQ = ({ faqs }) => {
-  const [openIndex, setOpenIndex] = useState(0);
+  const [openIndex, setOpenIndex] = useState(-1);
   const outerRef = useRef(null);
   const contentWrapRef = useRef(null);
   
@@ -60,23 +60,26 @@ const HomeFAQ = ({ faqs }) => {
     <div 
       id="faq" 
       ref={outerRef} 
-      className="sticky-outer" 
-      style={{ zIndex: 60, minHeight: '270vh', backgroundColor: '#050508' }}
+      className="sticky-outer"
+      style={{ 
+        zIndex: 70, 
+        minHeight: '200vh', 
+      }}
     >
-      <motion.section
+      <section
         className="sticky-section"
         style={{ 
           backgroundColor: '#f5f5f0', 
           borderTop: '1px solid rgba(0,0,0,0.05)', 
-          borderTopLeftRadius: isMobile ? '0px' : borderRad, 
-          borderTopRightRadius: isMobile ? '0px' : borderRad,
           height: '100dvh',
-          overflow: 'hidden'
+          display: 'flex',
+          alignItems: 'center',
+          padding: isMobile ? '14vh 5%' : '12vh 5%'
         }}
       >
-        <motion.div 
+        <div 
           ref={contentWrapRef}
-          style={{ width: '100%', height: '100%', padding: '12vh 5% 10vh', display: 'flex', flexDirection: 'column', alignItems: 'center', y: contentY }}
+          style={{ width: '100%', maxWidth: '820px', margin: '0 auto' }}
         >
           <div style={{ maxWidth: '820px', width: '100%', margin: '0 auto' }}>
             <div style={{ textAlign: 'center', marginBottom: 'clamp(1rem, 3vh, 2rem)' }}>
@@ -106,17 +109,9 @@ const HomeFAQ = ({ faqs }) => {
               ))}
             </div>
 
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ textAlign: 'center', marginTop: '1.5rem' }}>
-              <motion.button 
-                whileHover={{ scale: 1.05, backgroundColor: '#000' }} whileTap={{ scale: 0.95 }} onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })} 
-                style={{ padding: isMobile ? '16px 36px' : '10px 28px', borderRadius: '100px', background: '#121212', color: '#ffffff', border: 'none', fontWeight: 800, fontSize: isMobile ? '0.9rem' : '0.75rem', cursor: 'pointer', letterSpacing: '0.05em', transition: 'background-color 0.3s ease' }}
-              >
-                FREE STRATEGY CALL
-              </motion.button>
-            </motion.div>
           </div>
-        </motion.div>
-      </motion.section>
+        </div>
+      </section>
     </div>
   );
 };

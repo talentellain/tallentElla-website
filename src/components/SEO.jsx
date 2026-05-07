@@ -66,6 +66,14 @@ const SEO = ({
       <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'} />
       <link rel="canonical" href={canonicalUrl} />
 
+      {/* Resource Hints */}
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      
+      {/* Critical Asset Preloads */}
+      <link rel="preload" href="/fg.png" as="image" fetchpriority="high" />
+      <link rel="preload" href="/bg5.png" as="image" fetchpriority="high" />
+
       {/* Open Graph */}
       <meta property="og:type" content={type} />
       <meta property="og:url" content={canonicalUrl} />

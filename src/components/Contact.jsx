@@ -126,7 +126,7 @@ const Contact = () => {
   const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
 
   return (
-    <div id="contact" ref={outerRef} className="sticky-outer" style={{ zIndex: 70 }}>
+    <div id="contact" ref={outerRef} className="sticky-outer" style={{ zIndex: 80 }}>
       <motion.section
         className="sticky-section black-purple-gradient"
         style={{ 

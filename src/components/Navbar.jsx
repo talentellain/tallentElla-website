@@ -5,7 +5,13 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import logo from '../assets/talentella-logo.png';
 
 // Nav items that are anchor-scroll vs page links
-const PAGE_LINKS = { ABOUT: '/about' };
+const PAGE_LINKS = { 
+    HOME: '/',
+    PORTFOLIO: '/portfolio',
+    WEBSITE: '/services/website-development',
+    'SMM': '/services/social-media-management',
+    IDENTITY: '/services/visual-identity-design'
+};
 
 const MobileMenuItem = ({ item, index, handleNavClick }) => {
     const [isHovered, setIsHovered] = useState(false);
@@ -13,8 +19,16 @@ const MobileMenuItem = ({ item, index, handleNavClick }) => {
 
     return (
         <a 
-            href={`#${item.toLowerCase()}`}
-            onClick={(e) => handleNavClick(e, item.toLowerCase())}
+            href={PAGE_LINKS[item] ? PAGE_LINKS[item] : `#${item.toLowerCase()}`}
+            onClick={(e) => {
+                if (!PAGE_LINKS[item]) {
+                    handleNavClick(e, item.toLowerCase());
+                } else {
+                    // Let the Link handle it if possible, but this is a raw <a>
+                    // So we'll let it navigate normally and close the menu
+                    if (typeof handleNavClick === 'function') handleNavClick(e, null); 
+                }
+            }}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
             onFocus={() => setIsHovered(true)}
@@ -73,7 +87,7 @@ const MobileMenuItem = ({ item, index, handleNavClick }) => {
                                 overflow: 'hidden',
                                 display: 'inline-block'
                             }}>
-                                <img src={pillImg} alt="ocean" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                <img src={pillImg} alt="ocean" style={{ width: '100%', height: '100%', objectFit: 'cover' }} loading="lazy" decoding="async" />
                             </div>
                         </div>
                     ))}
@@ -93,22 +107,23 @@ const Navbar = () => {
     const toggleMenu = () => setIsOpen(!isOpen);
 
     const handleNavClick = (e, targetId) => {
-        e.preventDefault();
-        
-        if (location.pathname !== '/') {
-            // Navigate to home and then trigger scroll
-            navigate('/');
-            setTimeout(() => {
+        if (targetId) {
+            e.preventDefault();
+            if (location.pathname !== '/') {
+                // Navigate to home and then trigger scroll
+                navigate('/');
+                setTimeout(() => {
+                    const el = document.getElementById(targetId);
+                    if (el) {
+                        el.scrollIntoView({ behavior: 'auto' });
+                    }
+                }, 400); // More time for pages with high-quality media
+            } else {
                 const el = document.getElementById(targetId);
                 if (el) {
+                    // Let Lenis handle the smoothing natively
                     el.scrollIntoView({ behavior: 'auto' });
                 }
-            }, 400); // More time for pages with high-quality media
-        } else {
-            const el = document.getElementById(targetId);
-            if (el) {
-                // Let Lenis handle the smoothing natively
-                el.scrollIntoView({ behavior: 'auto' });
             }
         }
         if (isOpen) setIsOpen(false);
@@ -196,6 +211,8 @@ const Navbar = () => {
                     <img 
                       src={logo} 
                       alt="Talent Ella Logo" 
+                      fetchpriority="high"
+                      decoding="async"
                       style={{ 
                         height: '45px',
                         width: 'auto',
@@ -227,7 +244,7 @@ const Navbar = () => {
                     transition: 'all 0.4s ease'
                 }}
             >
-                {['SERVICES', 'PROJECTS', 'PROCESS', 'ABOUT', 'CONTACT'].map((item, index) => {
+                {['HOME', 'PORTFOLIO', 'WEBSITE', 'SMM', 'IDENTITY'].map((item, index) => {
                     const isPageLink = !!PAGE_LINKS[item];
                     return isPageLink ? (
                         <Link
@@ -253,7 +270,7 @@ const Navbar = () => {
                                 <motion.div
                                     layoutId="nav-underline"
                                     transition={{ type: 'spring', stiffness: 350, damping: 30 }}
-                                    style={{ position: 'absolute', bottom: '-2px', left: 0, right: 0, height: '2px', backgroundColor: '#8400ff', borderRadius: '2px' }}
+                                    style={{ position: 'absolute', bottom: '-2px', left: 0, right: 0, height: '2px', backgroundColor: '#7226FF', borderRadius: '2px' }}
                                 />
                             )}
                         </Link>
@@ -282,7 +299,7 @@ const Navbar = () => {
                                 <motion.div
                                     layoutId="nav-underline"
                                     transition={{ type: 'spring', stiffness: 350, damping: 30 }}
-                                    style={{ position: 'absolute', bottom: '-2px', left: 0, right: 0, height: '2px', backgroundColor: '#8400ff', borderRadius: '2px' }}
+                                    style={{ position: 'absolute', bottom: '-2px', left: 0, right: 0, height: '2px', backgroundColor: '#7226FF', borderRadius: '2px' }}
                                 />
                             )}
                         </motion.a>
@@ -349,7 +366,7 @@ const Navbar = () => {
                         </button>
                         
                         <div style={{ display: 'flex', flexDirection: 'column', width: '100%', textAlign: 'center', marginTop: '4rem' }}>
-                            {['SERVICES', 'PROJECTS', 'PROCESS', 'ABOUT', 'CONTACT'].map((item, index) => (
+                            {['HOME', 'PORTFOLIO', 'WEBSITE', 'SMM', 'IDENTITY'].map((item, index) => (
                                 PAGE_LINKS[item] ? (
                                     <Link
                                         key={item}

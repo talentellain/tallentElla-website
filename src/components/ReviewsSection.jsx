@@ -48,12 +48,12 @@ const reviewsData = [
 
 const ReviewCard = ({ review }) => (
   <motion.div
-    whileHover={{ scale: 1.02, borderColor: 'rgba(132, 0, 255, 0.4)', boxShadow: '0 15px 35px rgba(132, 0, 255, 0.1)' }}
+    whileHover={{ scale: 1.02, borderColor: 'rgba(114, 38, 255, 0.4)', boxShadow: '0 15px 35px rgba(114, 38, 255, 0.1)' }}
     style={{
       minWidth: '320px',
       padding: '1.25rem',
       backgroundColor: '#ffffff',
-      border: '1px solid rgba(132, 0, 255, 0.08)',
+      border: '1px solid rgba(114, 38, 255, 0.08)',
       borderRadius: '20px',
       margin: '0 0.5rem',
       display: 'flex',
@@ -72,13 +72,15 @@ const ReviewCard = ({ review }) => (
           width: '30px', 
           height: '30px', 
           borderRadius: '50%', 
-          backgroundColor: 'rgba(132, 0, 255, 0.05)',
-          border: '1px solid rgba(132, 0, 255, 0.1)'
+          backgroundColor: 'rgba(114, 38, 255, 0.05)',
+          border: '1px solid rgba(114, 38, 255, 0.1)'
         }} 
+        loading="lazy"
+        decoding="async"
       />
       <div>
         <h4 style={{ color: '#0a0a0c', margin: 0, fontSize: '0.9rem', fontWeight: 700 }}>{review.name}</h4>
-        <p style={{ color: '#8400ff', margin: 0, fontSize: '0.65rem', letterSpacing: '0.05em', textTransform: 'uppercase', fontWeight: 600 }}>{review.role}</p>
+        <p style={{ color: '#7226FF', margin: 0, fontSize: '0.65rem', letterSpacing: '0.05em', textTransform: 'uppercase', fontWeight: 600 }}>{review.role}</p>
       </div>
     </div>
     <p style={{ color: '#444444', fontSize: '0.85rem', lineHeight: '1.4', margin: 0, fontWeight: 500 }}>
@@ -115,10 +117,10 @@ const ReviewsSection = () => {
         borderTopLeftRadius: borderRad,
         borderTopRightRadius: borderRad,
         minHeight: '200vh', 
-        boxShadow: '0 -60px 150px rgba(132, 0, 255, 0.08), 0 -20px 40px rgba(0,0,0,0.03)',
+        boxShadow: '0 -60px 150px rgba(114, 38, 255, 0.08), 0 -20px 40px rgba(0,0,0,0.03)',
         backgroundImage: `
-          radial-gradient(circle at 10% 10%, rgba(132, 0, 255, 0.04) 0%, transparent 40%),
-          radial-gradient(circle at 90% 90%, rgba(132, 0, 255, 0.04) 0%, transparent 40%)
+          radial-gradient(circle at 10% 10%, rgba(114, 38, 255, 0.04) 0%, transparent 40%),
+          radial-gradient(circle at 90% 90%, rgba(114, 38, 255, 0.04) 0%, transparent 40%)
         `
       }}
     >
@@ -138,7 +140,7 @@ const ReviewsSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            style={{ color: '#8400ff', fontWeight: 700, letterSpacing: '0.3em', margin: '0 0 0.5rem 0', fontSize: '0.75rem' }}
+            style={{ color: '#7226FF', fontWeight: 700, letterSpacing: '0.3em', margin: '0 0 0.5rem 0', fontSize: '0.75rem' }}
           >
             REVIEWS // CLIENT SUCCESS
           </motion.p>
@@ -149,7 +151,7 @@ const ReviewsSection = () => {
             transition={{ delay: 0.1, duration: 0.8 }}
             style={{ color: '#0a0a0c', fontSize: 'clamp(2rem, 5vw, 3.5rem)', fontWeight: 900, margin: 0, letterSpacing: '-0.05em', lineHeight: 1.1 }}
           >
-            What They <span style={{ color: 'rgba(132, 0, 255, 0.4)' }}>Are Saying</span>
+            What They <span style={{ color: 'rgba(114, 38, 255, 0.4)' }}>Are Saying</span>
             <span style={{ marginLeft: '15px', fontSize: '0.8em' }}>💜</span>
           </motion.h2>
         </div>

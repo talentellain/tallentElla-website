@@ -7,11 +7,11 @@ import samikshaVideo from '../assets/video/samiksha.mp4';
 import manishVideo from '../assets/video/manish-insta.mp4';
 
 const videos = [
-  { id: 1, title: "Social Media Campaign 1", src: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", videoSrc: manishVideo },
-  { id: 2, title: "Brand Identity", src: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", videoSrc: samikshaVideo },
-  { id: 3, title: "Commercial Shoot", src: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", videoSrc: jeetVideo },
-  { id: 4, title: "Event Coverage", src: "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", videoSrc: samikshaVideo },
-  { id: 5, title: "Corporate Story", src: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", videoSrc: manishVideo },
+  { id: 1, title: "Production Reel 01", src: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", videoSrc: manishVideo },
+  { id: 2, title: "Creative Showcase", src: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", videoSrc: samikshaVideo },
+  { id: 3, title: "Talent Feature", src: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", videoSrc: jeetVideo },
+  { id: 4, title: "Production Reel 02", src: "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", videoSrc: samikshaVideo },
+  { id: 5, title: "Brand Story", src: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80", videoSrc: manishVideo },
 ];
 
 // Calculate 3D perspective outside of component render cycle for performance
@@ -67,7 +67,7 @@ const VideoSection = () => {
   const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
 
   return (
-    <div className="sticky-outer" ref={containerRef} style={{ zIndex: 35 }}>
+    <div className="sticky-outer" ref={containerRef} style={{ zIndex: 60 }}>
       <motion.section 
         className="sticky-section"
         style={{
@@ -91,16 +91,17 @@ const VideoSection = () => {
           color: '#ffffff',
           maxWidth: '600px',
           margin: '2rem auto 0 auto',
-          letterSpacing: '-0.02em'
+          letterSpacing: '-0.02em',
+          textTransform: 'uppercase'
         }}>
-          Engage Audiences<br/>with Stunning Videos
+          SMM & Social Media<br/>Showcase
         </h2>
 
         {/* Decorative Top Arrow */}
         {!isMobile && (
           <div style={{ position: 'absolute', right: '10%', top: '15%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <span style={{ fontFamily: 'var(--sans)', fontStyle: 'italic', transform: 'rotate(5deg)', marginBottom: '0.5rem', color: 'rgba(255, 255, 255, 0.5)' }}>
-              Elevate<br/>your brand
+              Curated<br/>Creatives
             </span>
             <svg width="60" height="60" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ position: 'absolute', right: '-40px', top: '10px' }}>
               <path d="M10 20 Q 50 10 80 50" stroke="rgba(255, 255, 255, 0.3)" strokeWidth="2" fill="none" strokeLinecap="round" />

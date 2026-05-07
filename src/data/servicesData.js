@@ -10,6 +10,9 @@ import socialVideo6 from '../assets/social6.mp4';
 import socialVideo7 from '../assets/social7.mp4';
 import socialVideo8 from '../assets/social8.mp4';
 import socialVideo9 from '../assets/social9.mp4';
+import jeetVideo from '../assets/video/jeet-insta-01.mp4';
+import samikshaVideo from '../assets/video/samiksha.mp4';
+import manishVideo from '../assets/video/manish-insta.mp4';
 
 export const servicesData = [
   {
@@ -55,12 +58,12 @@ export const servicesData = [
     // ── Internal linking: related services ──
     relatedServices: ['social-media-management', 'visual-identity-design'],
     subItems: [
-      'Custom Web Applications',
-      'E-commerce Solutions',
-      'Responsive Design',
-      'Performance Optimization',
-      'SEO Friendly Architecture',
-      'Custom API Development'
+      { title: 'Custom Web Applications', description: 'Highly interactive, data-driven web apps built for speed and high-user engagement.' },
+      { title: 'E-commerce Solutions', description: 'Scalable online stores with seamless checkouts, inventory sync, and high-conversion UX.' },
+      { title: 'Responsive Design', description: 'Pixel-perfect layouts that provide a premium, consistent experience on any screen size.' },
+      { title: 'Performance Optimization', description: 'Lightning-fast load times and smooth animations to maximize retention and SEO rankings.' },
+      { title: 'SEO Friendly Architecture', description: 'Structured data and semantic code built-in to ensure your brand dominates search results.' },
+      { title: 'Custom API Development', description: 'Robust back-end integrations to connect your digital ecosystem with speed and security.' }
     ],
     maintenance: {
       title: "Long-term Maintenance & Support",
@@ -125,76 +128,72 @@ export const servicesData = [
   },
   {
     id: 'social-media-management',
-    title: 'Social Media Management',
+    title: 'SMM Social Media Management',
     icon: 'Share2',
     description: 'Strategic content creation and community management to build a powerful brand presence across all platforms.',
     // ── SEO Meta ──
     seo: {
-      pageTitle: 'Social Media Marketing Agency India',
-      metaDescription: 'TalentElla — India\'s top social media marketing agency. Content creation, community management, influencer marketing & ad campaigns. Plans from ₹10,000/month.',
-      keywords: 'social media marketing agency India, social media management, content creation agency, influencer marketing agency, affordable influencer marketing agency India, social media management and content creation agency, community management',
-      primaryKeyword: 'social media marketing agency India',
+      pageTitle: 'SMM Social Media Management — Talent Ella',
+      metaDescription: 'Top-tier SMM and social media management services by Talent Ella. Content creation, community management, and growth strategies.',
+      keywords: 'SMM, social media management, content creation, brand growth, digital marketing',
+      primaryKeyword: 'SMM social media management',
     },
     // ── GEO: Answer-first block ──
     answerBlock: {
-      question: 'What is Social Media Management?',
-      answer: 'Social media management is the process of creating, scheduling, and publishing content across social platforms like Instagram, Facebook, LinkedIn, and X (Twitter) to build brand awareness, engage audiences, and drive business growth. TalentElla is India\'s leading social media marketing agency offering strategic content creation, community management, influencer coordination, and ad campaign management — with packages starting from ₹10,000/month.',
+      question: 'What is the Talent Ella Showcase?',
+      answer: 'The Talent Ella Showcase is a curated collection of our most impactful video productions, brand films, and creative content. It highlights our expertise in cinematic storytelling and visual production, demonstrating how we elevate brands through stunning visuals and creative direction.',
     },
     // ── FAQs ──
     faqs: [
       {
-        question: 'How much does social media management cost in India?',
-        answer: 'TalentElla offers social media management packages starting from ₹10,000/month for 2 platforms with 12 posts and 6 reels. Growth plans at ₹20,000/month cover 4 platforms with 24 posts, and premium plans at ₹35,000/month include all platforms, video production, and paid ads management.',
+        question: 'What types of videos are in the showcase?',
+        answer: 'Our showcase features a variety of work including brand identity films, commercial shoots, event coverage, and high-energy production reels. Each piece is crafted to reflect the unique vision of the brand while maintaining the Talent Ella aesthetic.',
       },
       {
-        question: 'Which social media platforms do you manage?',
-        answer: 'We manage all major social media platforms including Instagram, Facebook, LinkedIn, X (Twitter), YouTube, and Pinterest. Our strategy is tailored to each platform\'s unique audience and content format.',
+        question: 'Can you create custom video content for my brand?',
+        answer: 'Absolutely. We specialize in end-to-end video production, from concept and scriptwriting to filming and post-production. Our goal is to create content that resonates with your audience and builds a powerful brand story.',
       },
       {
-        question: 'Do you offer influencer marketing services?',
-        answer: 'Yes, TalentElla is an affordable influencer marketing agency in India. We coordinate with relevant influencers for your brand, manage collaborations, and track campaign ROI across all platforms.',
+        question: 'How do you approach creative production?',
+        answer: 'We combine data-driven strategy with artistic storytelling. Every frame is designed to capture attention and deliver a clear message, ensuring your brand stands out in a crowded digital landscape.',
       },
       {
-        question: 'How do you measure social media success?',
-        answer: 'We provide detailed analytics and reporting — monthly for Starter plans and weekly for Growth and Premium plans. We track engagement rate, follower growth, reach, impressions, website traffic, and conversions.',
-      },
-      {
-        question: 'Can you create video content and reels?',
-        answer: 'Absolutely. Our Growth and Premium plans include premium graphics and reels creation. Our Premium plan includes full video production, ensuring your brand stays ahead with trending video content formats.',
+        question: 'What industries do you work with?',
+        answer: 'We work across various industries including tech, fashion, lifestyle, and corporate. Our versatile team adapts to different brand voices while maintaining a high standard of creative excellence.',
       },
     ],
     relatedServices: ['website-development', 'visual-identity-design'],
     subItems: [
-      'Content Strategy',
-      'Daily Posting',
-      'Engagement Growth',
-      'Influencer Coordination',
-      'Ad Campaign Management'
+      { title: 'Content Strategy', description: 'Data-backed roadmaps designed to turn followers into loyal brand advocates.' },
+      { title: 'Daily Posting', description: 'Consistent, high-quality presence to keep your brand at the top of every feed, every day.' },
+      { title: 'Engagement Growth', description: 'Active community management to spark real conversations and build human connections.' },
+      { title: 'Influencer Coordination', description: 'Strategic partnerships with creators to amplify your reach and build authentic trust.' },
+      { title: 'Ad Campaign Management', description: 'ROI-focused paid strategies that target the right audience with precision and scale.' }
     ],
     portfolio: [
       { 
         id: 'sm1',
-        title: 'Neon Pulse Campaign', 
-        description: 'High-energy visuals and dynamic content strategy for a tech brand launch campaign.', 
+        title: 'Elite Fitness Reel', 
+        description: 'Dynamic fitness content capturing high-intensity training and performance storytelling.', 
         type: 'video',
-        content: socialVideo,
-        alt: 'Neon Pulse social media campaign — high-energy tech brand content created by TalentElla social media marketing agency India'
+        content: manishVideo,
+        alt: 'Fitness production reel — high-energy gym content created by TalentElla agency'
       },
       { 
         id: 'sm2',
-        title: 'Urban Style Reel', 
-        description: 'Streetwear fashion showcase with trend-focused reels and engagement optimization.', 
+        title: 'Fashion Showcase', 
+        description: 'Elegant streetwear and fashion production with trend-focused visual aesthetics.', 
         type: 'video',
-        content: socialVideo2,
-        alt: 'Urban Style fashion reel — streetwear social media content by TalentElla content creation agency'
+        content: samikshaVideo,
+        alt: 'Fashion production reel — creative lifestyle content by TalentElla'
       },
       { 
         id: 'sm3',
-        title: 'Aura Glow Branding', 
-        description: 'Minimalist brand aesthetic reveal with cohesive visual identity across platforms.', 
+        title: 'Creative Cinematic', 
+        description: 'Compelling brand storytelling through cinematic visuals and artistic direction.', 
         type: 'video',
-        content: socialVideo3,
-        alt: 'Aura Glow brand aesthetic — minimalist social media branding by TalentElla influencer marketing agency'
+        content: jeetVideo,
+        alt: 'Cinematic brand story — professional video production by TalentElla'
       },
       { 
         id: 'sm4',
@@ -314,11 +313,11 @@ export const servicesData = [
     ],
     relatedServices: ['website-development', 'social-media-management'],
     subItems: [
-      'Logo & Visual System',
-      'Brand Guidelines',
-      'Marketing Assets',
-      'Typography & Color Palette',
-      'Iconography Systems'
+      { title: 'Logo & Visual System', description: 'A unique, memorable mark paired with a cohesive system that defines your brand DNA.' },
+      { title: 'Brand Guidelines', description: 'Comprehensive bibles ensuring your brand looks perfect and professional everywhere.' },
+      { title: 'Marketing Assets', description: 'Premium templates for social, print, and digital that keep your message consistent.' },
+      { title: 'Typography & Color Palette', description: 'Psychologically-tuned color and type choices that evoke the right emotions.' },
+      { title: 'Iconography Systems', description: 'Custom-crafted visual language that simplifies complex ideas into stunning graphics.' }
     ],
     portfolio: [
       { 

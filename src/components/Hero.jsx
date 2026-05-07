@@ -144,8 +144,8 @@ const Hero = () => {
           {/* LAYER 30: Intro and Content Over Mountain */}
           <div style={{ position: 'absolute', zIndex: 30, top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none' }}>
             {/* Priority Hit: Ensures the browser prioritized these large assets immediately */}
-            <img src="/bg5.png" style={{ display: 'none' }} fetchpriority="high" alt="" />
-            <img src="/fg.png" style={{ display: 'none' }} fetchpriority="high" alt="" />
+            <img src="/bg5.png" style={{ display: 'none' }} fetchpriority="high" decoding="async" alt="" />
+            <img src="/fg.png" style={{ display: 'none' }} fetchpriority="high" decoding="async" alt="" />
             
             <div style={{ position: 'relative', maxWidth: '1600px', width: '100%', margin: '0 auto', height: '100%' }}>
               

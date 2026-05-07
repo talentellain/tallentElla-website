@@ -1,6 +1,6 @@
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 
 const PortfolioCard = ({ 
   item, 
@@ -48,17 +48,21 @@ const PortfolioCard = ({
   };
 
   const handleMouseEnter = () => {
-    if (videoRef.current) videoRef.current.play();
+    // Keep tilt interaction but no need to play() manually if autoPlay is on
   };
 
   const handleMouseLeave = () => {
     x.set(0);
     y.set(0);
-    if (videoRef.current) {
-        videoRef.current.pause();
-        videoRef.current.currentTime = 0;
-    }
+    // Removed pause and reset to keep videos playing
   };
+
+  // Ensure video plays on mount/update
+  useEffect(() => {
+    if (videoRef.current) {
+        videoRef.current.play().catch(e => console.log("Autoplay blocked:", e));
+    }
+  }, [item.content]);
 
   if (!isVisible && !isActive) return null;
 
@@ -80,8 +84,8 @@ const PortfolioCard = ({
       }}
       style={{ 
         position: 'absolute',
-        width: 'clamp(240px, 50vw, 340px)',
-        aspectRatio: '1/1.2',
+        width: 'clamp(200px, 40vw, 280px)',
+        aspectRatio: '1/1.3',
         zIndex: 10 - Math.abs(diff),
         filter: selectedId && selectedId !== item.id ? 'blur(10px) brightness(0.3)' : 'none',
         transformStyle: 'preserve-3d',
@@ -100,8 +104,8 @@ const PortfolioCard = ({
           borderRadius: '32px',
           overflow: 'hidden',
           backgroundColor: '#111',
-          border: isActive ? '2px solid rgba(132, 0, 255, 0.5)' : '1px solid rgba(255,255,255,0.1)',
-          boxShadow: isActive ? '0 30px 60px rgba(132, 0, 255, 0.2)' : '0 10px 30px rgba(0,0,0,0.5)',
+          border: isActive ? '2px solid rgba(114, 38, 255, 0.5)' : '1px solid rgba(255,255,255,0.1)',
+          boxShadow: isActive ? '0 30px 60px rgba(114, 38, 255, 0.2)' : '0 10px 30px rgba(0,0,0,0.5)',
           rotateX: tiltX,
           rotateY: tiltY,
           transformStyle: 'preserve-3d',
@@ -113,13 +117,21 @@ const PortfolioCard = ({
             ref={videoRef}
             src={item.content}
             poster={item.thumbnail}
+            autoPlay
             muted
             loop
             playsInline
+            preload="auto"
             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           />
         ) : (
-          <img src={item.content} alt={item.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          <img 
+            src={item.content} 
+            alt={item.title} 
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+            loading="lazy"
+            decoding="async"
+          />
         )}
 
         {/* Rolling Overlay */}
@@ -136,8 +148,8 @@ const PortfolioCard = ({
             pointerEvents: 'none'
           }}
         >
-          <h2 style={{ color: 'white', margin: 0, fontSize: 'clamp(1rem, 4vw, 1.35rem)', fontWeight: 800 }}>{item.title}</h2>
-          <p style={{ color: 'rgba(255,255,255,0.6)', margin: '0.2rem 0 0 0', fontSize: 'clamp(0.7rem, 2.5vw, 0.85rem)', lineHeight: 1.3 }}>{item.description}</p>
+          <h2 style={{ color: 'white', margin: 0, fontSize: 'clamp(0.9rem, 3.5vw, 1.15rem)', fontWeight: 800 }}>{item.title}</h2>
+          <p style={{ color: 'rgba(255,255,255,0.6)', margin: '0.15rem 0 0 0', fontSize: 'clamp(0.65rem, 2.2vw, 0.75rem)', lineHeight: 1.25 }}>{item.description}</p>
         </motion.div>
       </motion.div>
     </motion.div>
@@ -164,8 +176,9 @@ const SocialMediaPortfolio = ({ portfolio }) => {
   return (
     <div ref={containerRef} style={{ 
       position: 'relative', 
-      minHeight: '70vh', 
-      padding: '1.5rem 5%', 
+      minHeight: '55vh', 
+      width: '100%',
+      padding: '0', 
       backgroundColor: '#050505', 
       overflow: 'visible',
       display: 'flex',
@@ -180,7 +193,7 @@ const SocialMediaPortfolio = ({ portfolio }) => {
         transform: 'translate(-50%, -50%)',
         width: '100vw',
         height: '100vh',
-        background: 'radial-gradient(circle, rgba(132, 0, 255, 0.08) 0%, transparent 70%)',
+        background: 'radial-gradient(circle, rgba(114, 38, 255, 0.08) 0%, transparent 70%)',
         pointerEvents: 'none',
         zIndex: 1
       }} />
@@ -191,7 +204,7 @@ const SocialMediaPortfolio = ({ portfolio }) => {
         zIndex: 2,
         width: '100%',
         maxWidth: '1200px',
-        height: '420px',
+        height: '400px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -200,9 +213,9 @@ const SocialMediaPortfolio = ({ portfolio }) => {
       }}>
         {portfolio.map((item, index) => (
           <PortfolioCard 
-            key={item.id}
-            item={item}
-            index={index}
+            key={item.id} 
+            item={item} 
+            index={index} 
             activeIndex={activeIndex}
             portfolioLength={portfolio.length}
             setSelectedId={setSelectedId}
@@ -219,11 +232,11 @@ const SocialMediaPortfolio = ({ portfolio }) => {
         onClick={handlePrev}
         style={{ 
           position: 'absolute',
-          left: '2rem',
+          left: '5%',
           top: '50%',
           y: '-50%',
-          width: '60px', 
-          height: '60px', 
+          width: '44px', 
+          height: '44px', 
           borderRadius: '50%', 
           backgroundColor: 'rgba(255,255,255,0.05)', 
           border: '1px solid rgba(255,255,255,0.1)',
@@ -233,10 +246,10 @@ const SocialMediaPortfolio = ({ portfolio }) => {
           justifyContent: 'center',
           cursor: 'pointer',
           backdropFilter: 'blur(10px)',
-          zIndex: 20
+          zIndex: 30
         }}
       >
-        <ChevronLeft size={32} />
+        <ChevronLeft size={20} />
       </motion.button>
 
       <motion.button
@@ -245,11 +258,11 @@ const SocialMediaPortfolio = ({ portfolio }) => {
         onClick={handleNext}
         style={{ 
           position: 'absolute',
-          right: '2rem',
+          right: '5%',
           top: '50%',
           y: '-50%',
-          width: '60px', 
-          height: '60px', 
+          width: '44px', 
+          height: '44px', 
           borderRadius: '50%', 
           backgroundColor: 'rgba(255,255,255,0.05)', 
           border: '1px solid rgba(255,255,255,0.1)',
@@ -259,10 +272,10 @@ const SocialMediaPortfolio = ({ portfolio }) => {
           justifyContent: 'center',
           cursor: 'pointer',
           backdropFilter: 'blur(10px)',
-          zIndex: 20
+          zIndex: 30
         }}
       >
-        <ChevronRight size={32} />
+        <ChevronRight size={20} />
       </motion.button>
 
       {/* Pop-out Modal */}
